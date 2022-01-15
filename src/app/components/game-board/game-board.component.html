@@ -1,0 +1,92 @@
+
+<mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
+
+<mat-sidenav-container>
+    <!-- SIDE BAR-->
+    <mat-sidenav class="sidenav" #sidenav position="end">
+        <div class="page-sidebar">    
+            <table class="sidebar-table">
+                <tr>
+                    <label class="options-label">Options</label>
+                    <mat-divider class="divider"></mat-divider>
+                </tr>
+                <tr>
+                    <mat-slide-toggle title="Subsequent guesses must use all previous clues" class="hardModeToggle" [(ngModel)]="hardMode">Hard Mode</mat-slide-toggle>
+                    <label class="options-check" *ngIf="hardMode">✔</label>
+                </tr>
+
+                <tr>
+                    <mat-button-toggle-group class="button-group" [(ngModel)]="wordLength" [value]="wordLength">
+                        <mat-button-toggle class="word-size-button" value=5>5</mat-button-toggle>
+                        <mat-button-toggle class="word-size-button" value=6>6</mat-button-toggle>
+                        <mat-button-toggle class="word-size-button" value=7>7</mat-button-toggle>
+                    </mat-button-toggle-group>
+                </tr>
+
+                <tr>
+                    <label class="word-button-label">Word Length: {{wordLength}}</label>
+                </tr>
+
+                <tr></tr>
+
+                <tr>
+                    <label class="clock-label">Time Spent:</label>
+                    <label class="clock">{{formatClock(timeSpan)}}</label>
+                    <mat-divider class="divider"></mat-divider>
+                </tr>
+
+                <tr></tr>
+
+                <tr>
+                    <button class="reset-button" mat-raised-button type="button" (click)="reset()">Generate new word</button>
+                </tr>
+            </table>
+        </div>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+        <div class="container" *ngIf="initialized">     
+            <!-- MAIN CONTENT -->
+            <div class="page-main">
+                <div class="page-header">
+                    <!-- Secret Word: {{secretWord}} -->
+                    <label class="game-title">Untitled Word Game</label>
+                    <button mat-stroked-button class="options-toggle" type="button" (click)="sidenav.toggle()">Options</button>
+                    <mat-divider class="header-divider"></mat-divider>
+                </div>
+        
+                <table class="game-board">
+                    <tr *ngFor="let word of boardState.words">
+                        <td 
+                            [ngClass]="{
+                            'letter--pending': !letter.committed, 
+                            'letter--normal': letter.letter.length > 0, 
+                            'letter--perfect': letter.perfect, 
+                            'letter--partial': letter.partial, 
+                            'letter--committed': letter.committed}" *ngFor="let letter of word.letters">
+                            {{letter.letter}}
+                        </td>
+                    </tr>
+                </table>
+        
+                <mat-form-field class="user-input-form" appearance="fill">
+                    <mat-label>Enter a guess</mat-label>
+                    <input class="user-input" matInput [maxlength]="wordLength" placeholder="Guess" [disabled]="success || failure"
+                        [(ngModel)]="userInput" (ngModelChange)="userInput = $event.toUpperCase()" (keyup)="handleUserInput()"
+                        (keyup.enter)="guess()" autofocus />
+                    <mat-hint class="input-error">{{message}}</mat-hint>
+                </mat-form-field>
+        
+                <table class="keyboard">
+                    <tr *ngFor="let row of keyBoard.rows">
+                        <td [ngClass]="{'key--correct': key.correct, 'key--used': key.guessed, 'key--unused': !key.guessed, 'key--empty': key.letter === ' '}"
+                            *ngFor="let key of row.keys">
+                            {{key.letter}}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>

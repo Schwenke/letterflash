@@ -1,0 +1,312 @@
+.divider {
+    margin-top: .5rem;
+}
+
+.spinner {
+    height: 50vh;
+    margin: 25vh auto;
+}
+
+.flip {
+    transition: transform .7s;
+    transform-style: preserve-3d;
+    transform: rotateX(360deg);
+}
+
+// LEADERBOARD
+.page-leaderboard {
+    .header {
+        font-size: xx-large;
+        font-weight: bold;
+        margin-bottom: 2rem;
+    }
+
+    .leaderboard {
+        font-size: x-large;
+
+        &--header {
+            @extend .leaderboard;
+            font-weight: bold;
+        }
+
+        &--leader {
+            @extend .leaderboard;
+        }
+
+        &--cell {
+            border: 2px solid black;
+            min-width: 8rem;
+            text-align: center;
+        }
+
+        &--guess {
+            font-size: large;
+        }
+    }
+}
+
+// SIDE BAR CONTENT
+.sidenav {
+    width: 600px;
+}
+
+.sidebar-table {
+    border-spacing: 1.5rem;
+    border-collapse: separate;
+}
+
+.clock-label {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.clock {
+    font-size: xx-large;
+    margin-left: 1rem;
+}
+
+.options-label {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.options-check {
+    font-size: x-large;
+    margin-left: .5rem;
+    color: green;
+}
+
+.hardModeToggle {
+    font-size: x-large;
+}
+
+.showLeaderBoardToggle {
+    margin-top: 1rem;
+    font-size: x-large;
+}
+
+.word-button-label {
+    font-size: x-large;
+}
+
+.button-group {
+    
+}
+
+.word-size-button {
+    font-size: x-large;
+    min-width: 50px;
+}
+
+.reset-button {
+    font-size: x-large;
+}
+
+// MAIN PAGE CONTENT
+
+.page-header {
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-areas: 
+        "a b c"
+        "d d d";
+}
+
+.game-title {
+    font-size: x-large;
+    align-self: center;
+    text-align: center;
+    grid-area: b;
+}
+
+.header-divider {
+    grid-area: d;
+}
+
+.options-toggle {
+    justify-self: end;
+    align-self: center;
+    grid-area: c;
+}
+
+.game-board {
+    border-spacing: 8px;
+    max-width: 600px;
+    grid-area: game;
+    align-self: center;
+    justify-self: center;
+}
+
+.letter {
+    width: 70px;
+    height: 70px;
+    font-size: xx-large;
+    text-align: center;
+    border: 1px solid black;
+
+    &--pending {
+        @extend .letter;
+        background-color: white;
+    }
+
+    &--committed {
+        @extend .letter;
+        @extend .flip;
+        background-color: grey;
+        color: white;
+    }
+
+      &--perfect {
+        @extend .letter;
+        @extend .flip;
+        background-color: green;
+        color: white;
+    }
+    
+    &--partial {
+        @extend .letter;
+        @extend .flip;
+        background-color: purple;
+        color: white;
+    }
+}
+
+.user-input-form {
+    font-size: x-large;
+    grid-area: game;
+    align-self: flex-end;
+}
+
+.input-error {
+    color: red;
+}
+
+.keyboard {
+    border-spacing: 5px;
+    grid-area: keyboard;
+    align-self: flex-end;
+
+    .key {
+        width: 50px;
+        height: 50px;
+        font-size: large;
+        text-align: center;
+        user-select: none;
+        border-radius: 10px;
+
+        &--unused {
+            @extend .key;
+            background-color: grey;
+            color: white;
+            font-weight: bold;
+        }
+
+        &--used {
+            @extend .key;
+            background-color: black;
+            color: white;
+        }
+
+        &--correct {
+            @extend .key;
+            background-color: green;
+            color: white;
+        }
+
+        &--empty {
+            @extend .key;
+            background-color: gainsboro;
+        }
+    }
+}
+
+.container {
+    .page-main {
+        height: 100vh;
+        margin: 0vh auto;
+        max-width: 600px;
+        display: grid;
+        grid-template-rows: 5% 70% 25%;
+        grid-template-areas:
+            "header"
+            "game"
+            "keyboard";
+    }
+}
+
+// MEDIA QUERIES
+@media only screen and (max-width: 450px) {
+    .page-main {
+        max-width: 350px;
+    }
+
+    .game-title {
+        font-size: large;
+    }
+
+    .sidenav {
+        width: 250px;
+    }
+
+    .clock-label {
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .clock {
+        font-size: large;
+    }
+
+    .options-label {
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .options-check {
+        font-size: large;
+        margin-left: .5rem;
+        color: green;
+    }
+
+    .hardModeToggle {
+        font-size: large;
+    }
+
+    .showLeaderBoardToggle {
+        margin-top: 1rem;
+        font-size: large;
+    }
+
+    .word-button-label {
+        font-size: large;
+    }
+
+    .word-size-button {
+        font-size: large;
+        text-align: center;
+        max-width: 40px;
+        max-height: 40px;
+    }
+
+    .reset-button {
+        font-size: large;
+    }
+
+    .user-input-form {
+        font-size: large;
+        margin-bottom: 1rem;
+    }
+
+    .game-board {
+        margin-bottom: 6rem;
+    }
+
+    .letter {
+        max-width: 40px;
+        height: 40px;
+        font-size: large;
+        text-align: center;
+        border: .5px solid black;
+        padding: .5px;
+    }
+}
