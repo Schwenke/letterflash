@@ -139,14 +139,12 @@
     }
 }
 
-.user-input-form {
-    font-size: x-large;
-    grid-area: game;
-    align-self: flex-end;
-}
-
-.input-error {
+.message {
     color: red;
+    font-size: x-large;
+    grid-area: message;
+    align-self: flex-start;
+    justify-self: center;
 }
 
 .keyboard {
@@ -193,11 +191,13 @@
         height: 100vh;
         margin: 0vh auto;
         max-width: 600px;
+        min-height: 490px;
         display: grid;
-        grid-template-rows: 5% 70% 25%;
+        grid-template-rows: 5% 70% 5% 20%;
         grid-template-areas:
             "header"
             "game"
+            "message"
             "keyboard";
     }
 }
@@ -260,13 +260,16 @@
         font-size: large;
     }
 
-    .user-input-form {
-        font-size: large;
-        margin-bottom: 1rem;
+    .keyboard {
+        max-width: 300px;
+        justify-self: center;
+        border-spacing: 3px;
     }
 
-    .game-board {
-        margin-bottom: 6rem;
+    .key {
+        width: 30px;
+        height: 25px;
+        font-size: small;
     }
 
     .letter {
@@ -276,5 +279,9 @@
         text-align: center;
         border: .5px solid black;
         padding: .5px;
+    }
+
+    .message {
+        font-size: large;
     }
 }

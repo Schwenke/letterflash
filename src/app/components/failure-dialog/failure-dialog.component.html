@@ -1,0 +1,5 @@
+<section class="container">
+    <label class="message-header">Too bad! You failed to guess the word {{data.secretWord}}!</label>
+    <label class="message-time">Time spent: {{formatClock(data.timeSpan)}}</label>
+    <button mat-raised-button class="reset-button" type="button" (click)="resetBoard()">Try again!</button>
+</section>

@@ -68,14 +68,7 @@
                         </td>
                     </tr>
                 </table>
-        
-                <mat-form-field class="user-input-form" appearance="fill">
-                    <mat-label>Enter a guess</mat-label>
-                    <input class="user-input" matInput [maxlength]="wordLength" placeholder="Guess" [disabled]="success || failure"
-                        [(ngModel)]="userInput" (ngModelChange)="userInput = $event.toUpperCase()" (keyup)="handleUserInput()"
-                        (keyup.enter)="guess()" autofocus />
-                    <mat-hint class="input-error">{{message}}</mat-hint>
-                </mat-form-field>
+                <label class="message" *ngIf="message.length > 0">{{message}}</label>
         
                 <table class="keyboard">
                     <tr *ngFor="let row of keyBoard.rows">

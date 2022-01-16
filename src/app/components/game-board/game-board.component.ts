@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { BoardState, Letter, Word } from 'src/app/models/board-state.interface';
 import { DictionaryService } from '../../services/dictionary.service';
 import { TimerService } from 'src/app/services/timer.service';
@@ -7,6 +7,7 @@ import { KeyBoard, KeyBoardRow } from 'src/app/models/keyboard.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { VictoryDialogComponent } from '../victory-dialog/victory-dialog.component';
 import { DialogData } from 'src/app/models/dialog-data.interface';
+import { FailureDialogComponent } from '../failure-dialog/failure-dialog.component';
 
 @Component({
   selector: 'app-game-board',
@@ -18,7 +19,6 @@ export class GameBoardComponent implements OnInit {
   initialized: boolean = false;
   wordLength: string = "5";
   maxGuesses: number = 6;
-  userInput = "";
   message: string = "";
   previousGuesses: string[] = [];
   success: boolean = false;
@@ -29,13 +29,18 @@ export class GameBoardComponent implements OnInit {
   //  game state
   boardState: BoardState = {} as BoardState;
   secretWord: string = "";
-  guessIndex: number = 0;
+  rowIndex: number = 0;
+  columnIndex: number = -1;
 
   //  timer
   timeSpan: TimeSpan = {} as TimeSpan;
 
   // keyboard
   keyBoard: KeyBoard = {} as KeyBoard;
+
+  // constants
+  enterKey: string = "Enter";
+  backspaceKey: string = "Backspace";
 
   constructor(
     private dictionaryService: DictionaryService,
@@ -63,12 +68,12 @@ export class GameBoardComponent implements OnInit {
     let randomWord = this.dictionaryService.generateWord(wordLength);
     this.secretWord = randomWord;
     this.generateDefaultBoardState();
-    this.userInput = "";
     this.message = "";
     this.previousGuesses = [];
     this.success = false;
     this.failure = false;
-    this.guessIndex = 0;
+    this.rowIndex = 0;
+    this.columnIndex = -1;
     this.timerService.start();
     this.initialized = true;
   }
@@ -123,6 +128,53 @@ export class GameBoardComponent implements OnInit {
     ];
   }
 
+  @HostListener('window:keyup', ['$event'])
+  handleInput(event: KeyboardEvent): void {
+    if (event.key === this.enterKey) {
+      this.guess();
+    } else if (event.key === this.backspaceKey) {
+      this.removeInput();
+    } else {
+      this.appendInput(event.key);
+    }
+  }
+
+  private removeInput(): void {
+    //  Cannot remove input - already at the first column
+    if (this.columnIndex === -1) return;
+
+    let word = this.getCurrentWord();
+
+    word.letters[this.columnIndex].letter = "";
+
+    --this.columnIndex;
+  }
+
+  private appendInput(key: string): void {
+    let wordLength = this.getWordLength() -1;
+
+    //  Can't append any more characters - word is at max length
+    if (this.columnIndex === wordLength) return;
+
+    let validInput: boolean = this.validateInput(key);
+
+    if (validInput) {
+      ++this.columnIndex;
+
+      let word = this.getCurrentWord();
+
+      word.letters[this.columnIndex].letter = key.toLocaleUpperCase();
+    }
+  }
+
+  private validateInput(key: string): boolean {
+    return /^[a-zA-Z]$/.test(key);
+  }
+
+  private getCurrentWord(): Word {
+    return this.boardState.words[this.rowIndex];
+  }
+
   private getWordLength(): number {
     return +this.wordLength;
   }
@@ -154,34 +206,50 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  guess(): void {
-    let guess = this.userInput.toLocaleUpperCase();
+  getUserGuess(): string {
+    let userGuess: string = "";
+    let letters = this.boardState.words[this.rowIndex].letters;
 
-    this.message = this.validate(guess);
+    for (let i = 0; i < letters.length; i++) {
+      let letter = letters[i];
+
+      userGuess += letter.letter;
+    }
+
+    return userGuess;
+  }
+
+  guess(): void {
+    let word = this.getUserGuess().toLocaleUpperCase();
+
+    this.message = this.validate(word);
 
     if (this.message.length > 0) {
       //  User input error - don't process further
       return;
     }
 
-    this.processGuess(guess);
+    this.processGuess(word);
 
-    if (this.checkVictory(guess)) return;
+    if (this.checkVictory(word)) return;
     if (this.checkFailure()) return;
 
-    this.previousGuesses.push(guess);
+    this.previousGuesses.push(word);
   }
 
   private processGuess(guess: string): void {
     this.updateBoardState(guess);
-    ++this.guessIndex;
+    //  Move to the next row
+    ++this.rowIndex;
+    //  Reset column index
+    this.columnIndex = -1;
   }
 
   private checkFailure(): boolean {
-    if (!this.success && this.guessIndex >= this.maxGuesses) {
+    if (!this.success && this.rowIndex >= this.maxGuesses) {
       this.failure = true;
       this.timerService.stop();
-      this.message = `Too bad! You failed to guess the secret word: ${this.secretWord}`;
+      this.openFailureDialog();
       return true;
     }
 
@@ -192,7 +260,7 @@ export class GameBoardComponent implements OnInit {
     if (guess === this.secretWord) {
       this.success = true;
       this.timerService.stop();
-      this.openDialog();
+      this.openVictoryDialog();
       return true;
     }
 
@@ -282,9 +350,6 @@ export class GameBoardComponent implements OnInit {
   }
 
   private updateBoardState(guess: string): void {
-    //  Clear the input field
-    this.userInput = "";
-
     let secretWordLetters = this.secretWord.split('');
     let correctlyGuessedLetters: string[] = [];
 
@@ -296,7 +361,7 @@ export class GameBoardComponent implements OnInit {
       // see if the letter is in the word and correct position
       if (guessLetter === answerLetter) {
         correctlyGuessedLetters.push(guessLetter);
-        this.boardState.words[this.guessIndex].letters[i].perfect = true;
+        this.boardState.words[this.rowIndex].letters[i].perfect = true;
         let index = secretWordLetters.indexOf(guessLetter);
         secretWordLetters.splice(index, 1);
       }
@@ -305,7 +370,7 @@ export class GameBoardComponent implements OnInit {
     //  Validate correct letter, incorrect position
     for (let i = 0; i < guess.length; i++) {
       let guessLetter = guess[i];
-      let boardStateLetter = this.boardState.words[this.guessIndex].letters[i];
+      let boardStateLetter = this.boardState.words[this.rowIndex].letters[i];
 
       //  All letters have been validated, so committ them
       boardStateLetter.committed = true;
@@ -319,7 +384,7 @@ export class GameBoardComponent implements OnInit {
 
       if (index > -1) {
         correctlyGuessedLetters.push(guessLetter);
-        this.boardState.words[this.guessIndex].letters[i].partial = true;
+        this.boardState.words[this.rowIndex].letters[i].partial = true;
         secretWordLetters.splice(index, 1);
       }
     }
@@ -349,39 +414,29 @@ export class GameBoardComponent implements OnInit {
     }
   }
 
-  handleUserInput() {
-    let userInput = this.userInput;
-    let wordLength = this.getWordLength();
+  openFailureDialog(): void {
+    let dialogData: DialogData = {
+      guessIndex: this.rowIndex,
+      maxGuesses: this.maxGuesses,
+      boardState: this.boardState,
+      secretWord: this.secretWord,
+      timeSpan: this.timeSpan
+    };
 
-    for (let i = 0; i < wordLength; i++) {
-      let letter = userInput[i];
+    const dialogRef = this.dialog.open(FailureDialogComponent, {
+      data: dialogData,
+    });
 
-      if (letter) {
-        this.boardState.words[this.guessIndex].letters[i].letter = userInput[i];
-      } else {
-        this.boardState.words[this.guessIndex].letters[i].letter = "";
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result === true) {
+        this.reset();
       }
-    }
-  }
-
-  handleUserInput2(event: KeyboardEvent) {
-    let userInput = this.userInput;
-    let wordLength = this.getWordLength();
-
-    for (let i = 0; i < wordLength; i++) {
-      let letter = userInput[i];
-
-      if (letter) {
-        this.boardState.words[this.guessIndex].letters[i].letter = userInput[i];
-      } else {
-        this.boardState.words[this.guessIndex].letters[i].letter = "";
-      }
-    }
+    });
   }
   
-  openDialog(): void {
+  openVictoryDialog(): void {
     let dialogData: DialogData = {
-      guessIndex: this.guessIndex,
+      guessIndex: this.rowIndex,
       maxGuesses: this.maxGuesses,
       boardState: this.boardState,
       secretWord: this.secretWord,

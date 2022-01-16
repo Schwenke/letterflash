@@ -16,12 +16,14 @@ import { MatDialogModule } from "@angular/material/dialog";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { HttpClientModule } from "@angular/common/http";
+import { FailureDialogComponent } from './components/failure-dialog/failure-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameBoardComponent,
-    VictoryDialogComponent
+    VictoryDialogComponent,
+    FailureDialogComponent
   ],
   imports: [
     BrowserModule,
