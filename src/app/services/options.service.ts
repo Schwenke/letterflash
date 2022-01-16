@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { ReplaySubject } from 'rxjs';
 import { Options } from '../models/options.interface';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,18 +10,24 @@ export class OptionsService {
 
   options: ReplaySubject<Options> = new ReplaySubject<Options>();
 
-  constructor() { 
-    //  todo - check session (local storage) for anything stored
-    
-    this.setDefaultOptions();
-  }
+  constructor(
+    private sessionService: SessionService
+  ) {   
+    let options: Options | null;
 
-  private setDefaultOptions(): void {
-    let defaultOptions = {
-      hardMode: false,
-      wordLength: "5"
+    options = this.sessionService.getOptions();
+
+    if (!options) {
+      options = this.getDefaultOptions();
     }
 
-    this.options.next(defaultOptions);
+    this.options.next(options);
+  }
+
+  private getDefaultOptions(): Options {
+    return {
+      hardMode: false,
+      wordLength: "5"
+    };
   }
 }
