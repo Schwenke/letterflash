@@ -51,8 +51,8 @@ export class GameBoardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.dictionaryService.dictionary.subscribe(dictionary => {
-      if (dictionary.length === 0) return;
+    this.dictionaryService.initialized.subscribe(initialized => {
+      if (!initialized) return;
 
       this.initialize();
 
@@ -353,39 +353,25 @@ export class GameBoardComponent implements OnInit {
     let secretWordLetters = this.secretWord.split('');
     let correctlyGuessedLetters: string[] = [];
 
-    // Validate correct letter && position first
-    for (let i = 0; i < this.secretWord.length; i++) {
-      let answerLetter = this.secretWord[i];
-      let guessLetter = guess[i];
-
-      // see if the letter is in the word and correct position
-      if (guessLetter === answerLetter) {
-        correctlyGuessedLetters.push(guessLetter);
-        this.boardState.words[this.rowIndex].letters[i].perfect = true;
-        let index = secretWordLetters.indexOf(guessLetter);
-        secretWordLetters.splice(index, 1);
-      }
-    }
-
-    //  Validate correct letter, incorrect position
     for (let i = 0; i < guess.length; i++) {
       let guessLetter = guess[i];
+      let correctLetter = this.secretWord[i];
       let boardStateLetter = this.boardState.words[this.rowIndex].letters[i];
 
-      //  All letters have been validated, so committ them
       boardStateLetter.committed = true;
 
-      if (boardStateLetter.perfect) {
-        //  Can't be partial if its already perfect
-        continue;
-      }
-
-      const index = secretWordLetters.indexOf(guessLetter);
-
-      if (index > -1) {
+      if (guessLetter === correctLetter) {
+        boardStateLetter.perfect = true;
         correctlyGuessedLetters.push(guessLetter);
-        this.boardState.words[this.rowIndex].letters[i].partial = true;
-        secretWordLetters.splice(index, 1);
+      } else {
+        const index = secretWordLetters.indexOf(guessLetter);
+
+        if (index > -1) {
+          //  The letter is partially correct - secret word contains it, just not in this position
+          correctlyGuessedLetters.push(guessLetter);
+          boardStateLetter.partial = true;
+          secretWordLetters.splice(index, 1);
+        }
       }
     }
 
