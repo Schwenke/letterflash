@@ -1,40 +1,42 @@
 .container {
     width: 250px;
-    height: 200px;
+    height: 300px;
     display: grid;
     justify-items: center;
-    grid-template-columns: 1fr;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-areas:
+        "header header"
+        "guesses guesses"
+        "copy copy"
+        "reset reset";
 
 
     .message-header {
-        grid-row-start: 1;
-        grid-row-end: 1;
+        grid-area: header;
         font-size: x-large;
         color: blue;
         align-self: flex-start;
         justify-content: center;
     }
 
-    .message-time {
-        grid-row-start: 2;
-        grid-row-end: 2;
+    .message-tries {
+        grid-area: guesses;
         font-size: large;
-        color: blue;
+        color: blue;        
     }
 
-    .message-tries {
-        grid-row-start: 3;
-        grid-row-end: 3;
-        font-size: large;
-        color: blue;
-    }
-    
     .copy-button {
-        grid-row-start: 4;
-        align-self: flex-end;
+        grid-area: copy;
         font-size: large;
         width: auto;
         height: 50px;
+        justify-self: center;
+    }
+
+    .reset-button {
+        grid-area: reset;
+        font-size: large;
+        width: auto;
+        height: 50px;
+        justify-self: center;
     }
 }

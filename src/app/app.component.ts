@@ -1,5 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatSidenav } from '@angular/material/sidenav';
+import { BoardState } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
 import { OptionsService } from './services/options.service';
@@ -12,7 +13,7 @@ import { OptionsService } from './services/options.service';
 export class AppComponent {
 
   initialized: boolean = false;
-  error: string = "";
+  boardState: BoardState;
 
   constructor(
     private dictionaryService: DictionaryService,
@@ -39,7 +40,7 @@ export class AppComponent {
     this.boardStateService.boardState.subscribe(boardState => {
       if (!boardState) return;
 
-      this.error = boardState.error;
+      this.boardState = boardState;
     })
   }
 

@@ -38,6 +38,10 @@ export class VictoryDialogComponent implements OnInit {
   public copyToClipboard(): void {
     let text: string = this.generateEmojis();
     this.writeToClipboard(text);
+  }
+
+  public reset(): void {
+    this.boardStateService.reset();
     this.dialogRef.close();
   }
 
