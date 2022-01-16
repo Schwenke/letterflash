@@ -1,5 +1,14 @@
 export interface BoardState {
     words: Word[];
+    //  Grid indexes
+    rowIndex: number;
+    columnIndex: number;
+
+    //  Game State
+    secretWord: string;
+    success: boolean;
+    failure: boolean;
+    error: string;
 }
 
 export interface Word {

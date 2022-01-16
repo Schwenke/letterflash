@@ -1,0 +1,38 @@
+<div class="options-container">    
+    <table class="options-table">
+        <tr>
+            <label class="options-label">Options</label>
+            <mat-divider class="divider"></mat-divider>
+        </tr>
+        <tr>
+            <mat-slide-toggle title="Subsequent guesses must use all previous clues" class="hardModeToggle" [(ngModel)]="options.hardMode">Hard Mode</mat-slide-toggle>
+            <label class="options-check" *ngIf="options.hardMode">✔</label>
+        </tr>
+
+        <tr>
+            <mat-button-toggle-group class="button-group" [(ngModel)]="options.wordLength" [value]="options.wordLength">
+                <mat-button-toggle class="word-size-button" value=5>5</mat-button-toggle>
+                <mat-button-toggle class="word-size-button" value=6>6</mat-button-toggle>
+                <mat-button-toggle class="word-size-button" value=7>7</mat-button-toggle>
+            </mat-button-toggle-group>
+        </tr>
+
+        <tr>
+            <label class="word-button-label">Word Length: {{options.wordLength}}</label>
+        </tr>
+
+        <tr></tr>
+
+        <tr>
+            <label class="clock-label">Time Spent:</label>
+            <label class="clock">{{clockTime}}</label>
+            <mat-divider class="divider"></mat-divider>
+        </tr>
+
+        <tr></tr>
+
+        <tr>
+            <button class="reset-button" mat-raised-button type="button" (click)="reset()">Generate new word</button>
+        </tr>
+    </table>
+</div>

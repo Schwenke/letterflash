@@ -1,6 +1,6 @@
 <section class="container">
     <label class="message-header">Congratulations!</label>
-    <label class="message-time">Time: {{formatClock(data.timeSpan)}}</label>
-    <label class="message-tries">Guesses left: {{6-data.guessIndex}}</label>
+    <label class="message-time">Time: {{timeSpent}}</label>
+    <label class="message-tries">Guesses left: {{6-boardState.rowIndex}}</label>
     <button mat-raised-button class="copy-button" type="button" (click)="copyToClipboard()">Copy to clipboard</button>
 </section>

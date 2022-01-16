@@ -1,0 +1,8 @@
+<table class="keyboard">
+    <tr *ngFor="let row of keyboard.rows">
+        <td [ngClass]="{'key--correct': key.correct, 'key--used': key.guessed, 'key--unused': !key.guessed, 'key--empty': key.letter === ' '}"
+            *ngFor="let key of row.keys">
+            {{key.letter}}
+        </td>
+    </tr>
+</table>

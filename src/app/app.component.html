@@ -1,6 +1,28 @@
 <!DOCTYPE html>
 <title>Word-Game</title>
 
-<app-game-board></app-game-board>
+<mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
+
+<mat-sidenav-container *ngIf="initialized">
+    <mat-sidenav class="sidenav" #sidenav position="end">
+        <app-options></app-options>
+    </mat-sidenav>
+
+    <mat-sidenav-content class="page-main">
+        <div class="header">
+            <!-- Secret Word: {{secretWord}} -->
+            <label class="game-title">Untitled Word Game</label>
+            <button mat-stroked-button class="options-toggle" type="button" #optionsToggle (click)="sidenav.toggle()" (keydown)="buttonKeyDown($event)">Options</button>
+            <mat-divider class="header-divider"></mat-divider>
+        </div>
+
+        <app-game-board class="gameboard"></app-game-board>
+
+        <label #errorLabel class="user-error">{{error}}</label>
+
+        <app-keyboard class="keyboard"></app-keyboard>
+    </mat-sidenav-content>
+
+  </mat-sidenav-container>
 
 <router-outlet></router-outlet>

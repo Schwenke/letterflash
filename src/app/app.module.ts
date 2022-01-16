@@ -17,13 +17,17 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { HttpClientModule } from "@angular/common/http";
 import { FailureDialogComponent } from './components/failure-dialog/failure-dialog.component';
+import { KeyboardComponent } from './components/keyboard/keyboard.component';
+import { OptionsComponent } from './components/options/options.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     GameBoardComponent,
     VictoryDialogComponent,
-    FailureDialogComponent
+    FailureDialogComponent,
+    KeyboardComponent,
+    OptionsComponent
   ],
   imports: [
     BrowserModule,

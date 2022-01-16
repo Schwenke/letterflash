@@ -1,0 +1,87 @@
+.header {
+    grid-area: header;
+
+    display: grid;
+    grid-template-columns: 33% 33% 33%;
+    grid-template-areas: 
+        "a b c"
+        "d d d";
+}
+
+.game-title {
+    font-size: x-large;
+    align-self: center;
+    text-align: center;
+    grid-area: b;
+}
+
+.options-toggle {
+    justify-self: end;
+    align-self: center;
+    grid-area: c;
+}
+
+.header-divider {
+    grid-area: d;
+}
+
+.spinner {
+    height: 50vh;
+    margin: 25vh auto;
+}
+
+.sidenav {
+    width: 600px;
+}
+
+.page-main {
+    height: 100vh;
+    margin: 0vh auto;
+    max-width: 600px;
+    min-height: 490px;
+    display: grid;
+    grid-template-rows: 5% 65% 5% 25%;
+    grid-template-areas:
+        "header"
+        "game"
+        "error"
+        "keyboard";
+}
+
+.gameboard {
+    grid-area: game;
+    margin-top: 1rem;
+    align-self: center;
+    justify-self: center;
+}
+
+.user-error {
+    color: red;
+    font-size: large;
+    grid-area: error;
+    justify-self: center;
+}
+
+.keyboard {
+    grid-area: keyboard;
+    align-self: center;
+    justify-self: center;
+}
+
+@media only screen and (max-width: 450px) {
+    .page-main {
+        max-width: 350px;
+    }
+
+    .game-title {
+        font-size: large;
+    }
+
+    .sidenav {
+        width: 250px;
+    }
+
+    .user-error {
+        font-size: large;
+    }
+}

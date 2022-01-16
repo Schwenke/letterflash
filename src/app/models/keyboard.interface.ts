@@ -1,8 +1,8 @@
-export interface KeyBoard {
-    rows: KeyBoardRow[];
+export interface Keyboard {
+    rows: KeyboardRow[];
 }
 
-export interface KeyBoardRow {
+export interface KeyboardRow {
     keys: Key[];
     index: number;
 }

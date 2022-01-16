@@ -1,8 +1,7 @@
 import {Component, OnInit, Inject} from '@angular/core';
-import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Letter } from 'src/app/models/board-state.interface';
-import { DialogData } from 'src/app/models/dialog-data.interface';
-import { TimeSpan } from 'src/app/models/watch.interface';
+import { MatDialogRef} from '@angular/material/dialog';
+import { BoardState, Letter } from 'src/app/models/board-state.interface';
+import { BoardStateService } from 'src/app/services/board-state.service';
 import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
@@ -18,18 +17,22 @@ export class VictoryDialogComponent implements OnInit {
   private greyBlock = "⬜";
   private purpleBlock = "🟪";
 
+  boardState: BoardState = {} as BoardState;
+  timeSpent: string = "";
+
   constructor(
     private timerService: TimerService,
-    public dialogRef: MatDialogRef<VictoryDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private boardStateService: BoardStateService,
+    public dialogRef: MatDialogRef<VictoryDialogComponent>
   ) {}
 
   ngOnInit(): void {
+    this.boardStateService.boardState.subscribe(boardState => {
+      if (!boardState) return;
 
-  }
-
-  public formatClock(timeSpan: TimeSpan): string {
-    return this.timerService.formatClock(timeSpan);
+      this.boardState = boardState;
+      this.timeSpent = this.timerService.getClockTime();
+    })
   }
 
   public copyToClipboard(): void {
@@ -40,11 +43,10 @@ export class VictoryDialogComponent implements OnInit {
 
   // best function ever
   private generateEmojis(): string {
-    let guesses = this.data.guessIndex;
-    let message: string = `${this.data.secretWord} (${guesses}/${this.data.maxGuesses})\n`;
+    let message: string = `${this.boardState.secretWord} (${this.boardState.rowIndex}/${6})\n`;
 
-    for (let i = 0; i < this.data.guessIndex; i++) {
-      let word = this.data.boardState.words[i];
+    for (let i = 0; i < this.boardState.rowIndex; i++) {
+      let word = this.boardState.words[i];
 
       for (let k = 0; k < word.letters.length; k++) {
         let letter = word.letters[k];
@@ -61,8 +63,6 @@ export class VictoryDialogComponent implements OnInit {
     return message;
   }
 
-  //  todo - append button to success message.
-  //  Build emoji block - Word + blocks line by line
   private writeToClipboard(text: string) {
     navigator.clipboard.writeText(text).then(function () {
 

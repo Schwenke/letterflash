@@ -32,7 +32,9 @@ export class TimerService {
     this.time = 0;
   }
 
-  public formatClock(timeSpan: TimeSpan): string {
+  public getClockTime(): string {
+    let timeSpan: TimeSpan = this.timeSpan.value;
+
     let hours = timeSpan.hours > 9 ? timeSpan.hours : `0${timeSpan.hours}`;
     let minutes = timeSpan.minutes > 9 ? timeSpan.minutes : `0${timeSpan.minutes}`;
     let seconds = timeSpan.seconds > 9 ? timeSpan.seconds : `0${timeSpan.seconds}`;

@@ -1,0 +1,95 @@
+.options-container {
+
+}
+
+.divider {
+    margin-top: .5rem;
+}
+
+.options-table {
+    border-spacing: 1.5rem;
+    border-collapse: separate;
+}
+
+.clock-label {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.clock {
+    font-size: xx-large;
+    margin-left: 1rem;
+}
+
+.options-label {
+    font-weight: bold;
+    font-size: xx-large;
+}
+
+.options-check {
+    font-size: x-large;
+    margin-left: .5rem;
+    color: green;
+}
+
+.hardModeToggle {
+    font-size: x-large;
+}
+
+.word-button-label {
+    font-size: x-large;
+}
+
+.button-group {
+    
+}
+
+.word-size-button {
+    font-size: x-large;
+    min-width: 50px;
+}
+
+.reset-button {
+    font-size: x-large;
+}
+
+@media only screen and (max-width: 450px) {
+    .clock-label {
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .clock {
+        font-size: large;
+    }
+
+    .options-label {
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .options-check {
+        font-size: large;
+        margin-left: .5rem;
+        color: green;
+    }
+
+    .hardModeToggle {
+        font-size: large;
+    }
+
+    .word-button-label {
+        font-size: large;
+    }
+
+    .word-size-button {
+        font-size: large;
+        text-align: center;
+        max-width: 40px;
+        max-height: 40px;
+    }
+
+    .reset-button {
+        font-size: large;
+    }
+}
