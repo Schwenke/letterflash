@@ -37,7 +37,7 @@
 .page-main {
     height: 100vh;
     margin: 0vh auto;
-    max-width: 600px;
+    max-width: 800px;
     min-height: 490px;
     display: grid;
     grid-template-rows: 5% 65% 5% 25%;
@@ -60,11 +60,12 @@
     font-size: large;
     grid-area: error;
     justify-self: center;
+    margin-top: 1rem;
 }
 
 .keyboard {
     grid-area: keyboard;
-    align-self: center;
+    align-self: flex-end;
     justify-self: center;
 }
 

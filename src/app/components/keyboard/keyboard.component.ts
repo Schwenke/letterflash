@@ -1,5 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
-import { Keyboard } from 'src/app/models/keyboard.interface';
+import { Key, Keyboard } from 'src/app/models/keyboard.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { KeyboardService } from 'src/app/services/keyboard.service';
 
@@ -36,6 +36,16 @@ export class KeyboardComponent implements OnInit {
       this.boardStateService.removeInput();
     } else {
       this.boardStateService.appendInput(event.key);
+    }
+  }
+
+  keyClicked(key: Key): void {
+    if (key.letter === "Ent") {
+      this.boardStateService.guess();
+    } else if (key.letter === "❌") {
+      this.boardStateService.removeInput();
+    } else {
+      this.boardStateService.appendInput(key.letter);
     }
   }
 

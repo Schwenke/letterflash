@@ -15,6 +15,10 @@ export class KeyboardService {
     this.initializeKeyBoard();
   }
 
+  public reset(): void {
+    this.initializeKeyBoard();
+  }
+
   public registerKeys(guess: string, correctLetters: string[]): void {
     let keyBoard = this.keyboard.value;
 
@@ -80,7 +84,7 @@ export class KeyboardService {
       { letter: "J", guessed: false, correct: false },
       { letter: "K", guessed: false, correct: false },
       { letter: "L", guessed: false, correct: false },
-      { letter: " ", guessed: false, correct: false }
+      { letter: "Ent", guessed: false, correct: false }
     ];
 
     keyBoard.rows[2].keys = [
@@ -93,7 +97,7 @@ export class KeyboardService {
       { letter: "N", guessed: false, correct: false },
       { letter: "M", guessed: false, correct: false },
       { letter: " ", guessed: false, correct: false },
-      { letter: " ", guessed: false, correct: false }
+      { letter: "❌", guessed: false, correct: false }
     ];
 
     this.keyboard.next(keyBoard);

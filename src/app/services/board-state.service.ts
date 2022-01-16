@@ -40,8 +40,7 @@ export class BoardStateService {
     boardState.success = false;
     boardState.failure = false;
     boardState.error = "";
-    // boardState.secretWord = this.dictionaryService.generateWord(wordLength);
-    boardState.secretWord = "HUMAN";
+    boardState.secretWord = this.dictionaryService.generateWord(wordLength);
 
     this.generateDefaultBoardState();
     this.previousGuesses = [];
@@ -52,6 +51,7 @@ export class BoardStateService {
   public reset(): void {
     this.timerService.reset();
     this.initialize();
+    this.keyboardService.reset();
     this.timerService.start();
   }
 
