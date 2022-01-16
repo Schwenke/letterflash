@@ -13,38 +13,6 @@
     transform: rotateX(360deg);
 }
 
-// LEADERBOARD
-.page-leaderboard {
-    .header {
-        font-size: xx-large;
-        font-weight: bold;
-        margin-bottom: 2rem;
-    }
-
-    .leaderboard {
-        font-size: x-large;
-
-        &--header {
-            @extend .leaderboard;
-            font-weight: bold;
-        }
-
-        &--leader {
-            @extend .leaderboard;
-        }
-
-        &--cell {
-            border: 2px solid black;
-            min-width: 8rem;
-            text-align: center;
-        }
-
-        &--guess {
-            font-size: large;
-        }
-    }
-}
-
 // SIDE BAR CONTENT
 .sidenav {
     width: 600px;

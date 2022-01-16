@@ -3,8 +3,6 @@ import { BoardState, Letter, Word } from 'src/app/models/board-state.interface';
 import { DictionaryService } from '../../services/dictionary.service';
 import { TimerService } from 'src/app/services/timer.service';
 import { TimeSpan } from 'src/app/models/watch.interface';
-import { Leader, LeaderBoard } from 'src/app/models/leader-board.interface';
-import { LeaderBoardService } from 'src/app/services/leader-board.service';
 import { KeyBoard, KeyBoardRow } from 'src/app/models/keyboard.interface';
 import { MatDialog } from '@angular/material/dialog';
 import { VictoryDialogComponent } from '../victory-dialog/victory-dialog.component';
@@ -26,7 +24,6 @@ export class GameBoardComponent implements OnInit {
   success: boolean = false;
   failure: boolean = false;
   hardMode: boolean = false;
-  showLeaderBoard: boolean = false;
   userName: string = "";
 
   //  game state
@@ -37,16 +34,12 @@ export class GameBoardComponent implements OnInit {
   //  timer
   timeSpan: TimeSpan = {} as TimeSpan;
 
-  //  leaderboard
-  leaderBoard: LeaderBoard = {} as LeaderBoard;
-
   // keyboard
   keyBoard: KeyBoard = {} as KeyBoard;
 
   constructor(
     private dictionaryService: DictionaryService,
     private timerService: TimerService,
-    private leaderBoardService: LeaderBoardService,
     public dialog: MatDialog
   ) {
 
@@ -60,10 +53,6 @@ export class GameBoardComponent implements OnInit {
 
       this.timerService.timeSpan.subscribe(time => {
         this.timeSpan = time;
-      });
-  
-      this.leaderBoardService.leaderBoard.subscribe(leaderBoard => {
-        this.leaderBoard = leaderBoard;
       });
     });
   }
@@ -203,7 +192,6 @@ export class GameBoardComponent implements OnInit {
     if (guess === this.secretWord) {
       this.success = true;
       this.timerService.stop();
-      this.registerPlayer();
       this.openDialog();
       return true;
     }
@@ -389,22 +377,6 @@ export class GameBoardComponent implements OnInit {
         this.boardState.words[this.guessIndex].letters[i].letter = "";
       }
     }
-  }
-
-  private registerPlayer(): void {
-    let date = new Date().toLocaleDateString("en-US");
-
-    let guesses = this.previousGuesses.length === 0 ? ["1st try!"] : this.previousGuesses;
-
-    let leader: Leader = {
-      name: "Ben Schwenke",
-      date: date,
-      time: this.timeSpan,
-      guesses: guesses,
-      word: this.secretWord
-    };
-
-    this.leaderBoardService.registerPlayer(leader);
   }
   
   openDialog(): void {
