@@ -34,7 +34,7 @@ export class KeyboardComponent implements OnInit {
     });
   }
 
-  @HostListener('window:keyup', ['$event'])
+  @HostListener('window:keydown', ['$event'])
   handleInput(event: KeyboardEvent): void {
     //  Game is in a state of not running - don't accept further keyboard clicks
     if (this.boardState.success || this.boardState.failure) return;
