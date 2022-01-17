@@ -53,7 +53,7 @@ export class KeyboardComponent implements OnInit {
     if (this.boardState.success || this.boardState.failure) return;
     if (key.letter === " ") return;
     
-    if (key.letter === "Ent") {
+    if (key.letter === "Enter") {
       this.boardStateService.guess();
     } else if (key.letter === "❌") {
       this.boardStateService.removeInput();
