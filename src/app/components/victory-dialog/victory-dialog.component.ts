@@ -1,7 +1,9 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import { MatDialogRef} from '@angular/material/dialog';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
+import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
+import { OptionsService } from 'src/app/services/options.service';
 import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
@@ -18,11 +20,14 @@ export class VictoryDialogComponent implements OnInit {
   private purpleBlock = "🟪";
 
   boardState: BoardState = {} as BoardState;
+  options: Options = {} as Options;
   timeSpent: string = "";
+  mode: string = "Default";
 
   constructor(
     private timerService: TimerService,
     private boardStateService: BoardStateService,
+    private optionsService: OptionsService,
     public dialogRef: MatDialogRef<VictoryDialogComponent>
   ) {}
 
@@ -30,9 +35,27 @@ export class VictoryDialogComponent implements OnInit {
     this.boardStateService.boardState.subscribe(boardState => {
       if (!boardState) return;
 
-      this.boardState = boardState;
-      this.timeSpent = this.timerService.getClockTime();
+      this.optionsService.options.subscribe(options => {
+        if (!options) return;
+
+        this.boardState = boardState;
+        this.options = options;
+        this.setModeMessage();
+        this.timeSpent = this.timerService.getClockTime();
+      });
     })
+  }
+
+  private setModeMessage(): void {
+    if (this.options.hardMode && this.options.masochistMode) {
+      this.mode = "Hard mode, Masochist mode";
+    } else if (this.options.hardMode) {
+      this.mode = "Hard mode";
+    } else if (this.options.masochistMode) {
+      this.mode = "Masochist mode";
+    } else {
+      this.mode = "Default";
+    }
   }
 
   public copyToClipboard(): void {
@@ -47,7 +70,11 @@ export class VictoryDialogComponent implements OnInit {
 
   // best function ever
   private generateEmojis(): string {
-    let message: string = `${this.boardState.secretWord} (${this.boardState.rowIndex}/${6})\n`;
+    let message: string = "";
+
+    let modeOptions: string = this.getModeOptionString();
+    
+    message += `${this.boardState.secretWord} (${this.boardState.rowIndex}/${6})${modeOptions}\n`;
 
     for (let i = 0; i < this.boardState.rowIndex; i++) {
       let word = this.boardState.words[i];
@@ -65,6 +92,14 @@ export class VictoryDialogComponent implements OnInit {
     message = message.trim();
 
     return message;
+  }
+
+  private getModeOptionString(): string {
+    if (this.options.hardMode && this.options.masochistMode) return "***";
+    if (this.options.masochistMode) return "**";
+    if (this.options.hardMode) return "*";
+
+    return "";
   }
 
   private writeToClipboard(text: string) {

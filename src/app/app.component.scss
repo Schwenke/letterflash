@@ -1,28 +1,16 @@
 .header {
-    grid-area: header;
-
-    display: grid;
-    grid-template-columns: 33% 33% 33%;
-    grid-template-areas: 
-        "a b c"
-        "d d d";
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .game-title {
-    font-size: x-large;
-    align-self: center;
-    text-align: center;
-    grid-area: b;
+    font-size: large;
 }
 
 .options-toggle {
-    justify-self: end;
-    align-self: center;
-    grid-area: c;
-}
 
-.header-divider {
-    grid-area: d;
 }
 
 .spinner {
@@ -30,7 +18,11 @@
     margin: 25vh auto;
 }
 
-.sidenav {
+.options-sidenav {
+    width: 600px;
+}
+
+.faq-sidenav {
     width: 600px;
 }
 
@@ -39,34 +31,24 @@
     margin: 0vh auto;
     max-width: 800px;
     min-height: 490px;
-    display: grid;
-    grid-template-rows: 5% 65% 5% 25%;
-    grid-template-areas:
-        "header"
-        "game"
-        "error"
-        "keyboard";
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .gameboard {
-    grid-area: game;
-    margin-top: 1rem;
     align-self: center;
-    justify-self: center;
 }
 
 .user-error {
     color: red;
     font-size: large;
-    grid-area: error;
-    justify-self: center;
-    margin-top: 1rem;
+    text-align: center;
+    height: 20px;
 }
 
 .keyboard {
-    grid-area: keyboard;
-    align-self: flex-end;
-    justify-self: center;
+    align-self: center;
 }
 
 @media only screen and (max-width: 450px) {

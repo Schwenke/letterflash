@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { BoardState } from 'src/app/models/board-state.interface';
 import { Key, Keyboard } from 'src/app/models/keyboard.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { KeyboardService } from 'src/app/services/keyboard.service';
@@ -16,6 +17,7 @@ export class KeyboardComponent implements OnInit {
 
   //  models
   keyboard: Keyboard = {} as Keyboard;
+  boardState: BoardState = {} as BoardState;
 
   constructor(
     private keyboardService: KeyboardService,
@@ -26,10 +28,17 @@ export class KeyboardComponent implements OnInit {
     this.keyboardService.keyboard.subscribe(keyboard => {
       this.keyboard = keyboard;
     });
+
+    this.boardStateService.boardState.subscribe(boardState => {
+      this.boardState = boardState;
+    });
   }
 
   @HostListener('window:keyup', ['$event'])
   handleInput(event: KeyboardEvent): void {
+    //  Game is in a state of not running - don't accept further keyboard clicks
+    if (this.boardState.success || this.boardState.failure) return;
+
     if (event.key === this.enterKey) {
       this.boardStateService.guess();
     } else if (event.key === this.backspaceKey) {
@@ -40,6 +49,9 @@ export class KeyboardComponent implements OnInit {
   }
 
   keyClicked(key: Key): void {
+    //  Game is in a state of not running - don't accept further keyboard clicks
+    if (this.boardState.success || this.boardState.failure) return;
+    
     if (key.letter === "Ent") {
       this.boardStateService.guess();
     } else if (key.letter === "❌") {

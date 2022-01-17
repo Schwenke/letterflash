@@ -6,7 +6,6 @@ import { Keyboard, KeyboardRow } from '../models/keyboard.interface';
   providedIn: 'root'
 })
 export class KeyboardService {
-  // keyboard
   keyboard: BehaviorSubject<Keyboard> = new BehaviorSubject<Keyboard>({} as Keyboard);
 
   constructor(

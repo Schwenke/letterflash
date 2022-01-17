@@ -1,42 +1,32 @@
 .container {
     width: 250px;
     height: 300px;
-    display: grid;
-    justify-items: center;
-    grid-template-areas:
-        "header header"
-        "guesses guesses"
-        "copy copy"
-        "reset reset";
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
 
 
     .message-header {
-        grid-area: header;
-        font-size: x-large;
+        font-size: large;
         color: blue;
-        align-self: flex-start;
-        justify-content: center;
+        text-align: center;
     }
 
     .message-tries {
-        grid-area: guesses;
         font-size: large;
-        color: blue;        
+        color: blue;
+        text-align: center;  
     }
 
     .copy-button {
-        grid-area: copy;
         font-size: large;
         width: auto;
         height: 50px;
-        justify-self: center;
     }
 
     .reset-button {
-        grid-area: reset;
         font-size: large;
         width: auto;
         height: 50px;
-        justify-self: center;
     }
 }

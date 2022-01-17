@@ -1,5 +1,7 @@
 <section class="container">
-    <label class="message-header">Congratulations! You won in {{timeSpent}}</label>
+    <label class="message-header">Congratulations!</label>
+    <label class="message-header">You won in {{timeSpent}}</label>
+    <label class="message-header">Options: {{mode}}</label>
     <label class="message-tries">Guesses left: {{6-boardState.rowIndex}}</label>
     <button mat-raised-button class="copy-button" type="button" (click)="copyToClipboard()">Copy to clipboard</button>
     <button mat-raised-button class="reset-button" type="button" (click)="reset()">Play again!</button>

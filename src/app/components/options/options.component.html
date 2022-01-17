@@ -10,6 +10,12 @@
         </tr>
 
         <tr>
+            <mat-slide-toggle (change)="storeOptions()" title="Secret words pull from full dictionary of over 8,000+ words" class="masochistModeToggle" [(ngModel)]="options.masochistMode">Masochist Mode</mat-slide-toggle>
+            <label class="options-check" *ngIf="options.masochistMode">✔</label>
+        </tr>
+
+
+        <tr>
             <mat-button-toggle-group (change)="storeOptions()" class="button-group" [(ngModel)]="options.wordLength" [value]="options.wordLength">
                 <mat-button-toggle class="word-size-button" value=5>5</mat-button-toggle>
                 <mat-button-toggle class="word-size-button" value=6>6</mat-button-toggle>

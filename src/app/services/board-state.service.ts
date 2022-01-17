@@ -10,6 +10,11 @@ import { TimerService } from './timer.service';
 @Injectable({
   providedIn: 'root'
 })
+
+/**
+ * Ye old meat and potatoes
+ * Bulk of the game state processing happens here
+ */
 export class BoardStateService {
     boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({} as BoardState);
     options: Options = {} as Options;
@@ -79,6 +84,7 @@ export class BoardStateService {
 
     //  Next, look for partial matches - correct letter in the incorrect position
     //  The loops are done separately so we do not accidentally mark a word with multiples of the same correct clue twice - E.g. Secret word "HUMAN" and guess "AVIAN"
+    //  Specifically ignore letters marked as perfect so we do not overwrite perfect status - can happen e.g. in 7 word mode when secret is FEDERAL and guess is FELLOWS
     for (let i = 0; i < guess.length; i++) {
       let guessLetter = guess[i];
       let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
@@ -218,8 +224,6 @@ export class BoardStateService {
     if (!boardState.success && boardState.rowIndex >= this.maxGuesses) {
       boardState.failure = true;
       this.timerService.stop();
-      // todo
-      // this.openFailureDialog();
       this.boardState.next(boardState);
       return true;
     }
@@ -234,8 +238,6 @@ export class BoardStateService {
       boardState.success = true;
       this.timerService.stop();
       this.boardState.next(boardState);
-      // todo
-      // this.openVictoryDialog();
       return true;
     }
 

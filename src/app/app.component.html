@@ -4,7 +4,11 @@
 <mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
 
 <mat-sidenav-container *ngIf="initialized">
-    <mat-sidenav class="sidenav" #sidenav position="end">
+    <mat-sidenav class="faq-sidenav" #options>
+        <!-- <app-options></app-options> -->
+    </mat-sidenav>
+
+    <mat-sidenav class="options-sidenav" #options position="end">
         <app-options></app-options>
     </mat-sidenav>
 
@@ -12,9 +16,9 @@
         <div class="header">
             <!-- DEBUG -->
             <!-- Secret Word: {{boardState.secretWord}} -->
+            <button mat-stroked-button class="faq-toggle" type="button" #optionsToggle (keydown)="buttonKeyDown($event)">FAQ</button>
             <label class="game-title">Untitled Word Game</label>
-            <button mat-stroked-button class="options-toggle" type="button" #optionsToggle (click)="sidenav.toggle()" (keydown)="buttonKeyDown($event)">Options</button>
-            <mat-divider class="header-divider"></mat-divider>
+            <button mat-stroked-button class="options-toggle" type="button" #optionsToggle (click)="options.toggle()" (keydown)="buttonKeyDown($event)">Options</button>
         </div>
 
         <app-game-board class="gameboard"></app-game-board>

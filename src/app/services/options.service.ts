@@ -27,6 +27,7 @@ export class OptionsService {
   private getDefaultOptions(): Options {
     return {
       hardMode: false,
+      masochistMode: false,
       wordLength: "5"
     };
   }
