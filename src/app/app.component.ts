@@ -3,7 +3,7 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { BoardState } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
-import { OptionsService } from './services/options.service';
+import { SessionService } from './services/session.service';
 
 @Component({
   selector: 'app-root',
@@ -17,7 +17,7 @@ export class AppComponent {
 
   constructor(
     private dictionaryService: DictionaryService,
-    private optionsService: OptionsService,
+    private sessionService: SessionService,
     private boardStateService: BoardStateService
   ) {
 
@@ -27,8 +27,8 @@ export class AppComponent {
     this.dictionaryService.initialized.subscribe(dictionaryReady => {
       if (!dictionaryReady) return;
 
-      this.optionsService.options.subscribe(options => {
-        if (!options) return;
+      this.sessionService.session.subscribe(session => {
+        if (!session) return;
         if (this.initialized) return;
 
         this.initialized = true;

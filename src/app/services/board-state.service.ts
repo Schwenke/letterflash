@@ -4,7 +4,7 @@ import { BoardState, Letter, Word } from '../models/board-state.interface';
 import { Options } from '../models/options.interface';
 import { DictionaryService } from './dictionary.service';
 import { KeyboardService } from './keyboard.service';
-import { OptionsService } from './options.service';
+import { SessionService } from './session.service';
 import { TimerService } from './timer.service';
 
 @Injectable({
@@ -19,19 +19,18 @@ export class BoardStateService {
     boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({} as BoardState);
     options: Options = {} as Options;
     maxGuesses: number = 6;
-    previousGuesses: string[] = [];
 
   constructor(
     private dictionaryService: DictionaryService,
     private timerService: TimerService,
     private keyboardService: KeyboardService,
-    private optionsService: OptionsService
+    private sessionService: SessionService
   ) { 
 
-    this.optionsService.options.subscribe(options => {
-      if (!options) return;
+    this.sessionService.session.subscribe(session => {
+      if (!session) return;
       
-      this.options = options;
+      this.options = session.options;
     });
   }
 
@@ -45,10 +44,10 @@ export class BoardStateService {
     boardState.success = false;
     boardState.failure = false;
     boardState.error = "";
+    boardState.previousGuesses = [];
     boardState.secretWord = this.dictionaryService.generateWord(wordLength);
 
     this.generateDefaultBoardState();
-    this.previousGuesses = [];
 
     this.boardState.next(boardState);
   }
@@ -203,7 +202,7 @@ export class BoardStateService {
     if (this.checkVictory(word)) return;
     if (this.checkFailure()) return;
 
-    this.previousGuesses.push(word);
+    boardState.previousGuesses.push(word);
   }
 
   private processGuess(guess: string): void {
@@ -223,8 +222,7 @@ export class BoardStateService {
 
     if (!boardState.success && boardState.rowIndex >= this.maxGuesses) {
       boardState.failure = true;
-      this.timerService.stop();
-      this.boardState.next(boardState);
+      this.processGameEnd(boardState);
       return true;
     }
 
@@ -236,12 +234,18 @@ export class BoardStateService {
 
     if (guess === boardState.secretWord) {
       boardState.success = true;
-      this.timerService.stop();
-      this.boardState.next(boardState);
+      this.processGameEnd(boardState);
       return true;
     }
 
     return false;
+  }
+
+  private processGameEnd(boardState: BoardState): void {
+    this.timerService.stop();
+    this.sessionService.updateSession(boardState);
+    this.sessionService.saveSession();
+    this.boardState.next(boardState);
   }
 
   private validate(guess: string): string {
@@ -293,8 +297,10 @@ export class BoardStateService {
   }
 
   private guessedPreviously(guess: string): boolean {
-    for (let i = 0; i < this.previousGuesses.length; i++) {
-      let previousGuess = this.previousGuesses[i];
+    let boardState: BoardState = this.boardState.value;
+
+    for (let i = 0; i < boardState.previousGuesses.length; i++) {
+      let previousGuess = boardState.previousGuesses[i];
 
       if (guess === previousGuess) {
         return true

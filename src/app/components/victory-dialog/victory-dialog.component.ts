@@ -3,7 +3,7 @@ import { MatDialogRef} from '@angular/material/dialog';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
-import { OptionsService } from 'src/app/services/options.service';
+import { SessionService } from 'src/app/services/session.service';
 import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
@@ -27,7 +27,7 @@ export class VictoryDialogComponent implements OnInit {
   constructor(
     private timerService: TimerService,
     private boardStateService: BoardStateService,
-    private optionsService: OptionsService,
+    private sessionService: SessionService,
     public dialogRef: MatDialogRef<VictoryDialogComponent>
   ) {}
 
@@ -35,11 +35,11 @@ export class VictoryDialogComponent implements OnInit {
     this.boardStateService.boardState.subscribe(boardState => {
       if (!boardState) return;
 
-      this.optionsService.options.subscribe(options => {
-        if (!options) return;
+      this.sessionService.session.subscribe(session => {
+        if (!session) return;
 
         this.boardState = boardState;
-        this.options = options;
+        this.options = session.options;
         this.setModeMessage();
         this.timeSpent = this.timerService.getClockTime();
       });

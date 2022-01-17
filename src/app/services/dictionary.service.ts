@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, forkJoin } from 'rxjs';
-import { OptionsService } from './options.service';
 import { Options } from '../models/options.interface';
+import { SessionService } from './session.service';
 
 @Injectable({
   providedIn: 'root'
@@ -20,11 +20,11 @@ export class DictionaryService {
 
   constructor(
     private http: HttpClient,
-    private optionsService: OptionsService
+    private sessionService: SessionService
     ) { 
 
-    this.optionsService.options.subscribe(options => {
-      this.options = options;
+    this.sessionService.session.subscribe(session => {
+      this.options = session.options;
     });
 
     this.fetchDictionary();

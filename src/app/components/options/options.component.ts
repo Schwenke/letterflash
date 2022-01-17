@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
-import { OptionsService } from 'src/app/services/options.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TimerService } from 'src/app/services/timer.service';
 
@@ -17,17 +16,18 @@ export class OptionsComponent implements OnInit {
   clockTime: string = "";
 
   constructor(
-    private optionsService: OptionsService,
     private timerService: TimerService,
     private boardStateService: BoardStateService,
     private sessionService: SessionService
   ) { }
 
   ngOnInit(): void {
-    this.optionsService.options.subscribe(options => {
-      this.options = options;
+    this.sessionService.session.subscribe(session => {
+      if (!session) return;
+      
+      this.options = session.options;
 
-      this.sessionService.storeOptions(options);
+      this.sessionService.saveSession();
     });
 
     this.timerService.timeSpan.subscribe(time => {
@@ -40,7 +40,7 @@ export class OptionsComponent implements OnInit {
   }
 
   storeOptions(): void {
-    this.sessionService.storeOptions(this.options);
+    this.sessionService.saveSession();
   }
 
 }
