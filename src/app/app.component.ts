@@ -1,5 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
-import { MatSidenav } from '@angular/material/sidenav';
+import { Component } from '@angular/core';
 import { BoardState } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';

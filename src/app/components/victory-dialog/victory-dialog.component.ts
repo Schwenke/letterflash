@@ -74,7 +74,7 @@ export class VictoryDialogComponent implements OnInit {
 
     let modeOptions: string = this.getModeOptionString();
     
-    message += `${this.boardState.secretWord} (${this.boardState.rowIndex}/${6})${modeOptions}\n`;
+    message += `${this.boardState.secretWord} (${this.boardState.rowIndex}/${6}) ${modeOptions}\n`;
 
     for (let i = 0; i < this.boardState.rowIndex; i++) {
       let word = this.boardState.words[i];
@@ -95,9 +95,9 @@ export class VictoryDialogComponent implements OnInit {
   }
 
   private getModeOptionString(): string {
-    if (this.options.hardMode && this.options.masochistMode) return "***";
-    if (this.options.masochistMode) return "**";
-    if (this.options.hardMode) return "*";
+    if (this.options.hardMode && this.options.masochistMode) return "⁂";
+    if (this.options.masochistMode) return "⁑";
+    if (this.options.hardMode) return "⁕";
 
     return "";
   }

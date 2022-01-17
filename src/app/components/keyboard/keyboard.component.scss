@@ -1,21 +1,23 @@
-.keyboard {
-    border-spacing: 3px;
+.row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .key {
-    min-width: 60px;
-    height: 60px;
-    font-size: large;
+    min-width: 75px;
+    min-height: 85px;
+    font-size: x-large;
     user-select: none;
     border-radius: 10px;
     text-align: center;
     padding: 0 0 0 0;
+    margin: 2px;
 
     &--unused {
         @extend .key;
         background-color: grey;
         color: white;
-        font-weight: bold;
     }
 
     &--used {
@@ -36,23 +38,26 @@
     }
 }
 
-@media only screen and (max-width: 700px), screen and (max-height: 800px) {   
+@media only screen and (max-width: 800px) {   
     .key {
-        min-width: 50px;
-        height: 50px;
-        font-size: medium;
+        font-size: large;
+        min-width: 55px;
+        min-height: 65px;
     }
 }
 
-@media only screen and (max-width: 450px) {   
-    .keyboard {
-        border-spacing: 2px;
+@media only screen and (max-width: 600px) {   
+    .key {
+        font-size: medium;
+        min-width: 45px;
+        min-height: 55px;
     }
+}
 
+@media only screen and (max-width: 500px) {   
     .key {
         min-width: 30px;
-        width: 30px;
-        height: 35px;
+        min-height: 40px;
         font-size: small;
     }
 }

@@ -51,6 +51,7 @@ export class KeyboardComponent implements OnInit {
   keyClicked(key: Key): void {
     //  Game is in a state of not running - don't accept further keyboard clicks
     if (this.boardState.success || this.boardState.failure) return;
+    if (key.letter === " ") return;
     
     if (key.letter === "Ent") {
       this.boardStateService.guess();

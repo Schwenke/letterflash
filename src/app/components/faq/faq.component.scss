@@ -28,50 +28,39 @@
 
 .faq-text-item {
     font-size: large;
+    margin-top: 1rem;
 }
 
 .faq-link {
     font-size: large;
 }
 
-.list {
-    line-height: 2rem;
+.colored-text {
+    font-size: large;
+    border-radius: 10px;
+    padding: 2px;
+    color: white;
+    border: 1px solid black;
 }
 
 .green-text {
-    font-size: large;
+    @extend .colored-text;
     background-color: green;
-    color: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 2px;
 }
 
 .purple-text {
-    font-size: large;
+    @extend .colored-text;
     background-color: purple;
-    color: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 2px;
 }
 
 .black-text {
-    font-size: large;
+    @extend .colored-text;
     background-color: black;
-    color: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 2px;
 }
 
 .grey-text {
-    font-size: large;
+    @extend .colored-text;
     background-color: grey;
-    color: white;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 2px;
 }
 
 @media only screen and (max-width: 450px) {
@@ -82,7 +71,7 @@
 
     .faq-text {
         font-size: medium;
-        line-height: 2rem;
+        line-height: 1.5rem;
     }
     
     .faq-text-header {
@@ -95,6 +84,14 @@
     }
     
     .faq-link {
+        font-size: medium;
+    }
+
+    .list {
+        line-height: 1.5rem;
+    }
+
+    .colored-text {
         font-size: medium;
     }
 }

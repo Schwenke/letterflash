@@ -13,8 +13,8 @@
 }
 
 .letter {
-    width: 70px;
-    height: 70px;
+    width: 4rem;
+    height: 4rem;
     font-size: xx-large;
     text-align: center;
     border: 1px solid black;
@@ -48,9 +48,14 @@
 
 // MEDIA QUERIES
 @media only screen and (max-width: 450px) {
+
+    .game-board {
+        border-spacing: 5px;
+    }
+
     .letter {
-        max-width: 40px;
-        height: 40px;
+        width: 3rem;
+        height: 3rem;
         font-size: large;
         text-align: center;
         border: .5px solid black;

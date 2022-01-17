@@ -9,28 +9,27 @@
     font-size: large;
 }
 
-.options-toggle {
-
-}
-
 .spinner {
     height: 50vh;
     margin: 25vh auto;
 }
 
+.sidenav {
+    max-width: 40vh;
+}
+
 .options-sidenav {
-    width: 600px;
+    @extend .sidenav;
 }
 
 .faq-sidenav {
-    width: 600px;
+    @extend .sidenav;
 }
 
 .page-main {
     height: 100vh;
     margin: 0vh auto;
     max-width: 800px;
-    min-height: 490px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -53,7 +52,7 @@
 
 @media only screen and (max-width: 450px) {
     .page-main {
-        max-width: 350px;
+        max-width: fit-content;
     }
 
     .game-title {
@@ -65,14 +64,6 @@
     }
 
     .user-error {
-        font-size: large;
-    }
-
-    .options-sidenav {
-        width: 250px;
-    }
-    
-    .faq-sidenav {
-        width: 250px;
+        font-size: small;
     }
 }

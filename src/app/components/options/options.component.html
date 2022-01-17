@@ -1,38 +1,36 @@
-<div class="options-container">    
+<div class="options-container">
     <table class="options-table">
         <tr>
             <label class="options-label">Options</label>
             <mat-divider class="divider"></mat-divider>
         </tr>
-        <tr>
-            <mat-slide-toggle (change)="storeOptions()" title="Subsequent guesses must use all previous clues" class="hardModeToggle" [(ngModel)]="options.hardMode">Hard Mode</mat-slide-toggle>
+        <tr class="toggle-container">
+            <mat-slide-toggle (change)="storeOptions()" title="Subsequent guesses must use all previous clues"
+                class="hardModeToggle" [(ngModel)]="options.hardMode">Hard Mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.hardMode">✔</label>
         </tr>
 
-        <tr>
-            <mat-slide-toggle (change)="storeOptions()" title="Secret words pull from full dictionary of over 8,000+ words" class="masochistModeToggle" [(ngModel)]="options.masochistMode">Masochist Mode</mat-slide-toggle>
+        <tr class="toggle-container">
+            <mat-slide-toggle (change)="storeOptions()"
+                title="Secret words pull from full dictionary of over 8,000+ words" class="masochistModeToggle"
+                [(ngModel)]="options.masochistMode">Masochist Mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.masochistMode">✔</label>
         </tr>
 
-
         <tr>
-            <mat-button-toggle-group (change)="storeOptions()" class="button-group" [(ngModel)]="options.wordLength" [value]="options.wordLength">
-                <mat-button-toggle class="word-size-button" value=5>5</mat-button-toggle>
-                <mat-button-toggle class="word-size-button" value=6>6</mat-button-toggle>
-                <mat-button-toggle class="word-size-button" value=7>7</mat-button-toggle>
-            </mat-button-toggle-group>
-        </tr>
-
-        <tr>
-            <label class="word-button-label">Word Length: {{options.wordLength}}</label>
-        </tr>
-
-        <tr></tr>
-
-        <tr>
-            <label class="clock-label">Time Spent:</label>
-            <label class="clock">{{clockTime}}</label>
+            <label class="options-label">Word Length</label>
             <mat-divider class="divider"></mat-divider>
+            <mat-radio-group class="radio-group" [(ngModel)]="options.wordLength" (change)="storeOptions()" [value]="options.wordLength">
+                <mat-radio-button class="radio-button" value=5>5</mat-radio-button>
+                <mat-radio-button class="radio-button" value=6>6</mat-radio-button>
+                <mat-radio-button class="radio-button" value=7>7</mat-radio-button>
+            </mat-radio-group>
+        </tr>
+
+        <tr>
+            <label class="clock-label">Time Spent</label>
+            <mat-divider class="divider"></mat-divider>
+            <label class="clock">{{clockTime}}</label>
         </tr>
 
         <tr></tr>

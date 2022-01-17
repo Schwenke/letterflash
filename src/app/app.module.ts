@@ -10,7 +10,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
-import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatRadioModule } from '@angular/material/radio';
 import { VictoryDialogComponent } from './components/victory-dialog/victory-dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
@@ -41,7 +41,7 @@ import { FaqComponent } from './components/faq/faq.component';
     MatInputModule,
     MatButtonModule,
     MatDividerModule,
-    MatButtonToggleModule,
+    MatRadioModule,
     MatDialogModule,
     MatProgressSpinnerModule,
     HttpClientModule,

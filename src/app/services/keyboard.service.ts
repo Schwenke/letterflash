@@ -83,7 +83,7 @@ export class KeyboardService {
       { letter: "J", guessed: false, correct: false },
       { letter: "K", guessed: false, correct: false },
       { letter: "L", guessed: false, correct: false },
-      { letter: "Ent", guessed: false, correct: false }
+      { letter: "Enter", guessed: false, correct: false }
     ];
 
     keyBoard.rows[2].keys = [
