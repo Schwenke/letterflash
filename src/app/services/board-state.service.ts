@@ -84,7 +84,7 @@ export class BoardStateService {
       let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
       const index = secretWordLetters.indexOf(guessLetter);
 
-      if (index > -1) {
+      if (!boardStateLetter.perfect && index > -1) {
         correctlyGuessedLetters.push(guessLetter);
         boardStateLetter.partial = true;
         secretWordLetters.splice(index, 1);
