@@ -19,6 +19,7 @@ import { HttpClientModule } from "@angular/common/http";
 import { FailureDialogComponent } from './components/failure-dialog/failure-dialog.component';
 import { KeyboardComponent } from './components/keyboard/keyboard.component';
 import { OptionsComponent } from './components/options/options.component';
+import { FaqComponent } from './components/faq/faq.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { OptionsComponent } from './components/options/options.component';
     VictoryDialogComponent,
     FailureDialogComponent,
     KeyboardComponent,
-    OptionsComponent
+    OptionsComponent,
+    FaqComponent
   ],
   imports: [
     BrowserModule,
