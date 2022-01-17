@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, forkJoin } from 'rxjs';
+import { OptionsService } from './options.service';
+import { Options } from '../models/options.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -9,13 +11,22 @@ export class DictionaryService {
   public initialized: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private dictionary: string[] = [];
   cache: Map<number, string[]> = new Map<number, string[]>();
+  options: Options;
 
   private fullDictionaryURL = "assets/dictionary.json"
   private fiveLetterDictionaryURL = "assets/five-letter-words.json";
   private sixLetterDictionaryURL = "assets/six-letter-words.json";
   private sevenLetterDictionaryURL = "assets/seven-letter-words.json";
 
-  constructor(private http: HttpClient) { 
+  constructor(
+    private http: HttpClient,
+    private optionsService: OptionsService
+    ) { 
+
+    this.optionsService.options.subscribe(options => {
+      this.options = options;
+    });
+
     this.fetchDictionary();
   }
 
@@ -28,7 +39,13 @@ export class DictionaryService {
   }
 
   private getWords(length: number): string[] {
-    let words = this.cache.get(length);
+    let words;
+
+    if (this.options.masochistMode) {
+      words = this.dictionary.filter(word => word.length === length);
+    } else {
+      words = this.cache.get(length);
+    }
 
     return words ? words : [];
   }
