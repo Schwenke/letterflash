@@ -13,8 +13,8 @@
         <app-options></app-options>
     </mat-sidenav>
 
-    <mat-sidenav-content class="page-main">
-        <div class="header">
+    <mat-sidenav-content class="game">
+        <div class="game-header">
             <!-- DEBUG -->
             <!-- Secret Word: {{boardState.secretWord}} -->
             <button mat-stroked-button class="faq-toggle" type="button" #faqToggle (click)="faq.toggle()" (keydown)="buttonKeyDown($event)">FAQ</button>
@@ -22,11 +22,11 @@
             <button mat-stroked-button class="options-toggle" type="button" #optionsToggle (click)="options.toggle()" (keydown)="buttonKeyDown($event)">Options</button>
         </div>
 
-        <app-game-board class="gameboard"></app-game-board>
+        <app-game-board class="game-board"></app-game-board>
 
         <label #errorLabel class="user-error">{{boardState.error}}</label>
 
-        <app-keyboard class="keyboard"></app-keyboard>
+        <app-keyboard class="game-keyboard"></app-keyboard>
     </mat-sidenav-content>
 
   </mat-sidenav-container>
