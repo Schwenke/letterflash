@@ -10,7 +10,7 @@
     </mat-sidenav>
 
     <mat-sidenav class="options-sidenav" #options position="end">
-        <app-options></app-options>
+        <app-options (resetClicked)="options.toggle()"></app-options>
     </mat-sidenav>
 
     <mat-sidenav-content class="game">

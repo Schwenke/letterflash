@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { SessionService } from 'src/app/services/session.service';
@@ -10,6 +10,8 @@ import { TimerService } from 'src/app/services/timer.service';
   styleUrls: ['./options.component.scss']
 })
 export class OptionsComponent implements OnInit {
+
+  @Output() resetClicked = new EventEmitter<boolean>();
 
   options: Options = {} as Options;
 
@@ -37,6 +39,7 @@ export class OptionsComponent implements OnInit {
 
   reset(): void {
     this.boardStateService.reset();
+    this.resetClicked.emit(true);
   }
 
   storeOptions(): void {
