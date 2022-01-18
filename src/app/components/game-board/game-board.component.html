@@ -3,11 +3,10 @@
         <tr *ngFor="let word of boardState.words">
             <td 
                 [ngClass]="{
-                'letter--pending': !letter.committed, 
-                'letter--normal': letter.letter.length > 0, 
-                'letter--perfect': letter.perfect, 
-                'letter--partial': letter.partial, 
-                'letter--committed': letter.committed}" *ngFor="let letter of word.letters">
+                    'letter--pending': !letter.committed,
+                    'letter--perfect': letter.perfect, 
+                    'letter--partial': letter.partial, 
+                    'letter--committed': letter.committed}" *ngFor="let letter of word.letters">
                 {{letter.letter}}
             </td>
         </tr>
