@@ -10,7 +10,7 @@
     </mat-sidenav>
 
     <mat-sidenav class="options-sidenav" #options position="end">
-        <app-options (resetClicked)="options.toggle()"></app-options>
+        <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()"></app-options>
     </mat-sidenav>
 
     <mat-sidenav-content class="game">
@@ -22,11 +22,16 @@
             <button mat-stroked-button class="options-toggle" type="button" #optionsToggle (click)="options.toggle()" (keydown)="buttonKeyDown($event)">Options</button>
         </div>
 
-        <app-game-board class="game-board"></app-game-board>
+        <button [ngClass]="{'hidden': showGame}" class="return-button" mat-raised-button (click)="switchViews()">Return to game</button>
 
-        <label #errorLabel class="user-error">{{boardState.error}}</label>
+        <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 
-        <app-keyboard class="game-keyboard"></app-keyboard>
+        <app-game-board [ngClass]="{'hidden': !showGame}" class="game-board"></app-game-board>
+
+        <label [ngClass]="{'hidden': !showGame}" #errorLabel class="user-error">{{boardState.error}}</label>
+
+        <app-keyboard [ngClass]="{'hidden': !showGame}" class="game-keyboard"></app-keyboard>
+
     </mat-sidenav-content>
 
   </mat-sidenav-container>

@@ -1,5 +1,4 @@
 import { Options } from "./options.interface";
-import { TimeSpan } from "./watch.interface";
 
 export interface Session {
     previousGames: Game[];
@@ -12,4 +11,5 @@ export interface Game{
     guesses: string[];
     word: string;
     victory: boolean;
+    options: string[];
 }

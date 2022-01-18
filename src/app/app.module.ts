@@ -20,6 +20,7 @@ import { FailureDialogComponent } from './components/failure-dialog/failure-dial
 import { KeyboardComponent } from './components/keyboard/keyboard.component';
 import { OptionsComponent } from './components/options/options.component';
 import { FaqComponent } from './components/faq/faq.component';
+import { HistoryComponent } from './components/history/history.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { FaqComponent } from './components/faq/faq.component';
     FailureDialogComponent,
     KeyboardComponent,
     OptionsComponent,
-    FaqComponent
+    FaqComponent,
+    HistoryComponent
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,32 @@
+<table class="history-table">
+    <!-- Column Headers-->
+    <tr class="history-row">
+        <td class="history-header-cell">Date</td>
+        <td class="history-header-cell">Word</td>
+        <td class="history-header-cell">Options</td>
+        <td class="history-header-cell">Time Spent</td>
+        <td class="history-header-cell">Guesses</td>
+        <td class="history-header-cell">Victory</td>
+    </tr>
+
+    <tr class="history-row" *ngFor="let game of previousGames">
+        <td class="history-cell">
+            {{game.date}}
+        </td>
+        <td class="history-cell">
+            {{game.word}}
+        </td>
+        <td class="history-cell">
+            <p class="guess" *ngFor="let option of game.options">{{option}}</p>
+        </td>
+        <td class="history-cell">
+            {{game.timeSpent}}
+        </td>
+        <td class="history-cell">
+            <p class="guess" *ngFor="let guess of game.guesses">{{guess}}</p>
+        </td>
+        <td class="history-cell">
+            {{game.victory ? "Yes" : "No"}}
+        </td>
+    </tr>
+</table>

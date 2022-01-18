@@ -12,6 +12,7 @@ import { SessionService } from './services/session.service';
 export class AppComponent {
 
   initialized: boolean = false;
+  showGame: boolean = true;
   boardState: BoardState;
 
   constructor(
@@ -57,5 +58,9 @@ export class AppComponent {
   // Ensure the user doesn't accidentally toggle the side nav after clicking options and then hitting ENTER to submit a guess
   buttonKeyDown(event: KeyboardEvent) {
     event.preventDefault();
+  }
+
+  switchViews(): void {
+    this.showGame = !this.showGame;
   }
 }

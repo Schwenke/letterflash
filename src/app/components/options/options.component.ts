@@ -12,6 +12,7 @@ import { TimerService } from 'src/app/services/timer.service';
 export class OptionsComponent implements OnInit {
 
   @Output() resetClicked = new EventEmitter<boolean>();
+  @Output() viewHistoryClicked = new EventEmitter<boolean>();
 
   options: Options = {} as Options;
 
@@ -40,6 +41,10 @@ export class OptionsComponent implements OnInit {
   reset(): void {
     this.boardStateService.reset();
     this.resetClicked.emit(true);
+  }
+
+  viewHistory(): void {
+    this.viewHistoryClicked.emit(true);
   }
 
   storeOptions(): void {

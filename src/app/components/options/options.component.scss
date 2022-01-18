@@ -55,8 +55,18 @@
     font-size: x-large;
 }
 
-.reset-button {
+.button {
     font-size: x-large;
+}
+
+.reset-button {
+    @extend .button;
+    margin-top: 2rem;
+}
+
+.history-button {
+    @extend .button;
+    margin-top: 2rem;
 }
 
 @media only screen and (max-width: 450px) {
@@ -88,7 +98,7 @@
         font-size: small;
     }
 
-    .reset-button {
+    .button {
         font-size: medium;
         max-width: fit-content;
     }

@@ -16,6 +16,30 @@
     @extend .sidenav;
 }
 
+.return-button {
+    align-self: center;
+    font-size: x-large;
+    min-width: 200px;
+    min-height: 70px;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.history-board {
+    align-self: center;
+    overflow: auto;
+    margin-bottom: 2rem;
+    max-width: 90vw;
+
+    -ms-overflow-style: none; /* for Internet Explorer, Edge */
+    scrollbar-width: none; /* for Firefox */
+    overflow-y: scroll; 
+}
+
+.hidden {
+    display: none;
+}
+
 .game {
     height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
     height: calc(var(--vh, 1vh) * 100);
@@ -64,5 +88,11 @@
 
     .user-error {
         font-size: small;
+    }
+
+    .return-button {
+        font-size: medium;
+        min-width: 100px;
+        min-height: 35px;
     }
 }

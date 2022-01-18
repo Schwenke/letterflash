@@ -41,21 +41,41 @@ export class SessionService {
 
     let session = this.session.value;
 
-    session.previousGames.push(currentGame);
+    let length = session.previousGames.unshift(currentGame);
+
+    if (length > 100) {
+      //  arbitrary number of games to track
+      session.previousGames.pop();
+    }
 
     this.session.next(session);
   }
 
   private createGameFromBoardState(boardState: BoardState): Game {
+    let optionsList: string[] = this.getCurrentGameOptionsList();
+
     let game: Game = {
       timeSpent: this.timerService.getClockTime(),
       date: new Date().toLocaleDateString("en-US"),
       guesses: boardState.previousGuesses,
       word: boardState.secretWord,
-      victory: boardState.success
+      victory: boardState.success,
+      options: optionsList
     };
 
     return game;
+  }
+
+  private getCurrentGameOptionsList(): string[] {
+    let session = this.session.value;
+    let options = session.options;
+
+    let optionsList: string[] = [];
+
+    if (options.hardMode) optionsList.push("Hard mode");
+    if (options.masochistMode) optionsList.push("Masochist mode");
+
+    return optionsList;
   }
 
   private getExistingSession(): Session | null {
