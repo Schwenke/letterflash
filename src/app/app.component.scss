@@ -16,11 +16,13 @@
     @extend .sidenav;
 }
 
-.return-button {
+.body-button {
     align-self: center;
-    font-size: x-large;
-    min-width: 200px;
-    min-height: 70px;
+    font-size: large;
+}
+
+.reset-button {
+    @extend .body-button;
     margin-top: 2rem;
     margin-bottom: 2rem;
 }
@@ -90,9 +92,7 @@
         font-size: small;
     }
 
-    .return-button {
+    .body-button {
         font-size: medium;
-        min-width: 100px;
-        min-height: 35px;
     }
 }

@@ -22,7 +22,9 @@
             <button mat-stroked-button class="options-toggle" type="button" #optionsToggle (click)="options.toggle()" (keydown)="buttonKeyDown($event)">Options</button>
         </div>
 
-        <button [ngClass]="{'hidden': showGame}" class="return-button" mat-raised-button (click)="switchViews()">Return to game</button>
+        <button [ngClass]="{'hidden': showGame}" class="reset-button" mat-raised-button (click)="switchViews()">Return to game</button>
+
+        <button [ngClass]="{'hidden': !showGame || !(boardState.success || boardState.failure)}" class="body-button" mat-stroked-button #victoryToggle (click)="viewResults()" (keydown)="buttonKeyDown($event)">View Results</button>
 
         <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 

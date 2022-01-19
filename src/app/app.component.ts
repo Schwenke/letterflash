@@ -3,6 +3,9 @@ import { BoardState } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
 import { SessionService } from './services/session.service';
+import { MatDialog } from '@angular/material/dialog';
+import { VictoryDialogComponent } from '../app/components/victory-dialog/victory-dialog.component'
+import { FailureDialogComponent } from '../app/components/failure-dialog/failure-dialog.component';
 
 @Component({
   selector: 'app-root',
@@ -18,7 +21,8 @@ export class AppComponent {
   constructor(
     private dictionaryService: DictionaryService,
     private sessionService: SessionService,
-    private boardStateService: BoardStateService
+    private boardStateService: BoardStateService,
+    public dialog: MatDialog
   ) {
     //  Ripped from https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 
@@ -46,6 +50,14 @@ export class AppComponent {
       if (!boardState) return;
 
       this.boardState = boardState;
+
+      if (boardState.success) {
+        this.openVictoryDialog();
+      }
+
+      if (boardState.failure) {
+        this.openFailureDialog();
+      }
     })
   }
 
@@ -62,5 +74,31 @@ export class AppComponent {
 
   switchViews(): void {
     this.showGame = !this.showGame;
+  }
+
+  viewResults(): void {
+    if (this.boardState.success) {
+      this.openVictoryDialog();
+    } else {
+      this.openFailureDialog();
+    }
+  }
+
+  openFailureDialog(): void {
+    const dialogRef = this.dialog.open(FailureDialogComponent, {});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result && result === true) {
+        this.boardStateService.reset();
+      }
+    });
+  }
+  
+  openVictoryDialog(): void {
+    const dialogRef = this.dialog.open(VictoryDialogComponent, {});
+
+    dialogRef.afterClosed().subscribe(result => {
+      //  todo?
+    });
   }
 }
