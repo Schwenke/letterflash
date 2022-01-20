@@ -9,54 +9,56 @@
 
 .faq-label {
     font-weight: bold;
-    font-size: xx-large;
+    font-size: large;
 }
 
 .faq-text {
-    font-size: large;
-    line-height: 2rem;
+    font-size: medium;
+    line-height: 1.5rem
 }
 
 .faq-text-header {
-    font-size: x-large;
+    font-size: large;
     font-weight: bold;
 }
 
 .faq-text-item {
-    font-size: large;
-    margin-top: 1rem;
+    font-size: medium;
+    margin-top: .5rem;
 }
 
 .faq-link {
-    font-size: large;
+    font-size: medium;
 }
 
 .colored-text {
-    font-size: large;
-    border-radius: 10px;
-    padding: 2px;
-    color: white;
-    border: 1px solid black;
+    font-size: medium;
+    border-radius: 5px;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    padding-left: 4px;
+    padding-right: 4px;
+    font-weight: bold;
 }
 
 .green-text {
     @extend .colored-text;
-    background-color: green;
+    color: green;
 }
 
 .purple-text {
     @extend .colored-text;
-    background-color: purple;
+    color: purple;
 }
 
 .black-text {
     @extend .colored-text;
-    background-color: black;
+    color: black;
 }
 
 .grey-text {
     @extend .colored-text;
-    background-color: grey;
+    color: grey;
 }
 
 @media only screen and (max-width: 450px) {

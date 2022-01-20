@@ -5,11 +5,11 @@
 <mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
 
 <mat-sidenav-container *ngIf="initialized">
-    <mat-sidenav class="faq-sidenav" #faq>
+    <mat-sidenav role="dialog" class="faq-sidenav" autoFocus="false" #faq>
         <app-faq></app-faq>
     </mat-sidenav>
 
-    <mat-sidenav class="options-sidenav" #options position="end">
+    <mat-sidenav role="dialog" class="options-sidenav" #options position="end">
         <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()"></app-options>
     </mat-sidenav>
 
@@ -17,14 +17,14 @@
         <div class="game-header">
             <!-- DEBUG -->
             <!-- Secret Word: {{boardState.secretWord}} -->
-            <button mat-stroked-button class="faq-toggle" type="button" #faqToggle (click)="faq.toggle()" (keydown)="buttonKeyDown($event)">FAQ</button>
+            <fa-icon class="faq-icon" (click)="faq.toggle()" [icon]="questionIcon" size="lg"></fa-icon>
             <label class="game-title">Untitled Word Game</label>
-            <button mat-stroked-button class="options-toggle" type="button" #optionsToggle (click)="options.toggle()" (keydown)="buttonKeyDown($event)">Options</button>
+            <fa-icon class="options-icon" (click)="options.toggle()" [icon]="cogsIcon" size="lg"></fa-icon>
         </div>
 
-        <button [ngClass]="{'hidden': showGame}" class="reset-button" mat-raised-button (click)="switchViews()">Return to game</button>
+        <button role="button" [ngClass]="{'hidden': showGame}" class="reset-button" mat-raised-button (click)="switchViews()">Return to game</button>
 
-        <button [ngClass]="{'hidden': !showGame || !(boardState.success || boardState.failure)}" class="body-button" mat-stroked-button #victoryToggle (click)="viewResults()" (keydown)="buttonKeyDown($event)">View Results</button>
+        <button role="button" [ngClass]="{'hidden': !showGame || !(boardState.success || boardState.failure)}" class="body-button" mat-stroked-button #victoryToggle (click)="viewResults()" (keydown)="buttonKeyDown($event)">View Results</button>
 
         <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 

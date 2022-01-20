@@ -20,25 +20,25 @@
         <tr>
             <label class="options-label">Word Length</label>
             <mat-divider class="divider"></mat-divider>
-            <mat-radio-group class="radio-group" [(ngModel)]="options.wordLength" (change)="storeOptions()" [value]="options.wordLength">
-                <mat-radio-button class="radio-button" value=5>5</mat-radio-button>
-                <mat-radio-button class="radio-button" value=6>6</mat-radio-button>
-                <mat-radio-button class="radio-button" value=7>7</mat-radio-button>
+            <mat-radio-group role="radiogroup" class="radio-group" [(ngModel)]="options.wordLength" (change)="storeOptions()" [value]="options.wordLength">
+                <mat-radio-button role="radio" class="radio-button" value=5>5</mat-radio-button>
+                <mat-radio-button role="radio" class="radio-button" value=6>6</mat-radio-button>
+                <mat-radio-button role="radio" class="radio-button" value=7>7</mat-radio-button>
             </mat-radio-group>
         </tr>
 
         <tr>
             <label class="clock-label">Time Spent</label>
             <mat-divider class="divider"></mat-divider>
-            <label class="clock">{{clockTime}}</label>
+            <label role="timer" class="clock">{{clockTime}}</label>
         </tr>
 
         <tr>
-            <button class="reset-button" mat-raised-button type="button" (click)="reset()">Generate new word</button>
+            <button role="button" class="reset-button" mat-raised-button type="button" (click)="reset()">Generate new word</button>
         </tr>
 
         <tr>
-            <button class="history-button" mat-raised-button type="button" (click)="viewHistory()">View History</button>
+            <button role="button" class="history-button" mat-raised-button type="button" (click)="viewHistory()">View History</button>
         </tr>
     </table>
 </div>

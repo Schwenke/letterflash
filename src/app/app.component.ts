@@ -7,6 +7,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { VictoryDialogComponent } from '../app/components/victory-dialog/victory-dialog.component'
 import { FailureDialogComponent } from '../app/components/failure-dialog/failure-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,8 @@ export class AppComponent {
   initialized: boolean = false;
   showGame: boolean = true;
   boardState: BoardState;
+  questionIcon = faQuestionCircle;
+  cogsIcon = faCogs;
 
   constructor(
     private dictionaryService: DictionaryService,

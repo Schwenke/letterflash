@@ -22,6 +22,7 @@ import { OptionsComponent } from './components/options/options.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { HistoryComponent } from './components/history/history.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
     MatProgressSpinnerModule,
     HttpClientModule,
     MatSidenavModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    FontAwesomeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -16,30 +16,26 @@
     @extend .sidenav;
 }
 
-.body-button {
+.reset-button {
+    font-size: medium;
+    border-radius: 5px;
     align-self: center;
-    font-size: large;
+    margin-bottom: 1rem;
+    margin-top: 1rem;
 }
 
-.reset-button {
-    @extend .body-button;
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+.hidden {
+    display: none !important;
 }
 
 .history-board {
     align-self: center;
     overflow: auto;
-    margin-bottom: 2rem;
     max-width: 90vw;
 
     -ms-overflow-style: none; /* for Internet Explorer, Edge */
     scrollbar-width: none; /* for Firefox */
     overflow-y: scroll; 
-}
-
-.hidden {
-    display: none;
 }
 
 .game {
@@ -54,14 +50,23 @@
 }
 
 .game-header {
+    min-height: 2rem;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
     align-items: center;
+    justify-content: space-around;
 }
 
 .game-title {
     font-size: large;
+}
+
+.faq-icon {
+    cursor: pointer;
+}
+
+.options-icon {
+    cursor: pointer;
 }
 
 .game-board {
@@ -75,17 +80,5 @@
 @media only screen and (max-width: 450px) {
     .game-title {
         font-size: large;
-    }
-
-    .sidenav {
-        width: 250px;
-    }
-
-    .user-error {
-        font-size: small;
-    }
-
-    .body-button {
-        font-size: medium;
     }
 }
