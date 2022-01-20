@@ -1,5 +1,6 @@
 .options-container {
-
+    width: 100%;
+    height: 100%;
 }
 
 .divider {
@@ -8,22 +9,17 @@
 }
 
 .options-table {
-    border-spacing: 1rem;
+    border-spacing: 1.5rem;
     border-collapse: separate;
 }
 
-.clock-label {
+.header-label {
     font-weight: bold;
-    font-size: xx-large;
+    font-size: large;
 }
 
 .clock {
-    font-size: xx-large;
-}
-
-.options-label {
-    font-weight: bold;
-    font-size: xx-large;
+    font-size: medium;
 }
 
 .options-check {
@@ -48,38 +44,46 @@
 }
 
 .hardModeToggle {
-    font-size: x-large;
+    font-size: large;
 }
 
 .masochistModeToggle {
-    font-size: x-large;
+    font-size: large;
 }
 
 .button {
-    font-size: x-large;
+    font-size: large;
+    margin-top: 1rem;
+}
+
+.button-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .reset-button {
     @extend .button;
-    margin-top: 2rem;
 }
 
 .history-button {
     @extend .button;
-    margin-top: 2rem;
+}
+
+.results-button {
+    @extend .button;
 }
 
 @media only screen and (max-width: 450px) {
-    .clock-label {
-        font-weight: bold;
-        font-size: medium;
+    .options-table {
+        border-spacing: 1rem;
     }
 
     .clock {
         font-size: medium;
     }
 
-    .options-label {
+    .header-label {
         font-weight: bold;
         font-size: medium;
     }
@@ -99,7 +103,6 @@
     }
 
     .button {
-        font-size: medium;
-        max-width: fit-content;
+        font-size: small;
     }
 }

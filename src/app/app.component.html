@@ -10,7 +10,7 @@
     </mat-sidenav>
 
     <mat-sidenav role="dialog" class="options-sidenav" #options position="end">
-        <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()"></app-options>
+        <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()" (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 
     <mat-sidenav-content class="game">
@@ -22,9 +22,7 @@
             <fa-icon class="options-icon" (click)="options.toggle()" [icon]="cogsIcon" size="lg"></fa-icon>
         </div>
 
-        <button role="button" [ngClass]="{'hidden': showGame}" class="reset-button" mat-raised-button (click)="switchViews()">Return to game</button>
-
-        <button role="button" [ngClass]="{'hidden': !showGame || !(boardState.success || boardState.failure)}" class="body-button" mat-stroked-button #victoryToggle (click)="viewResults()" (keydown)="buttonKeyDown($event)">View Results</button>
+        <button role="button" [ngClass]="{'hidden': showGame}" class="reset-button" mat-stroked-button (click)="switchViews()">Return to game</button>
 
         <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 

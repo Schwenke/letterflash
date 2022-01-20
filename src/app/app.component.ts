@@ -1,4 +1,4 @@
-import { Component, HostListener } from '@angular/core';
+import { Component, HostListener, ViewChild } from '@angular/core';
 import { BoardState } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
@@ -8,6 +8,7 @@ import { VictoryDialogComponent } from '../app/components/victory-dialog/victory
 import { FailureDialogComponent } from '../app/components/failure-dialog/failure-dialog.component';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
+import { MatSidenav } from '@angular/material/sidenav';
 
 @Component({
   selector: 'app-root',
@@ -15,6 +16,8 @@ import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
+  @ViewChild('options') options: MatSidenav;
 
   initialized: boolean = false;
   showGame: boolean = true;
@@ -82,10 +85,16 @@ export class AppComponent {
   }
 
   switchViews(): void {
+    if (this.showGame) {
+      this.options.toggle();
+    }
+
     this.showGame = !this.showGame;
   }
 
   viewResults(): void {
+    this.options.toggle();
+    
     if (this.boardState.success) {
       this.openVictoryDialog();
     } else {

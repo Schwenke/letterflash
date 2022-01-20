@@ -13,8 +13,10 @@ export class OptionsComponent implements OnInit {
 
   @Output() resetClicked = new EventEmitter<boolean>();
   @Output() viewHistoryClicked = new EventEmitter<boolean>();
+  @Output() viewResultsClicked = new EventEmitter<boolean>();
 
   options: Options = {} as Options;
+  gamePaused: boolean = false;
 
   clockTime: string = "";
 
@@ -36,6 +38,10 @@ export class OptionsComponent implements OnInit {
     this.timerService.timeSpan.subscribe(time => {
       this.clockTime = this.timerService.getClockTime();
     });
+
+    this.boardStateService.boardState.subscribe(boardState => {
+      this.gamePaused = boardState.success || boardState.failure;
+    });
   }
 
   reset(): void {
@@ -45,6 +51,10 @@ export class OptionsComponent implements OnInit {
 
   viewHistory(): void {
     this.viewHistoryClicked.emit(true);
+  }
+
+  viewResults(): void {
+    this.viewResultsClicked.emit(true);
   }
 
   storeOptions(): void {

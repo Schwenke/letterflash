@@ -1,24 +1,28 @@
 <div class="options-container">
     <table class="options-table">
         <tr>
-            <label class="options-label">Options</label>
+            <label class="header-label">Options</label>
             <mat-divider class="divider"></mat-divider>
         </tr>
         <tr class="toggle-container">
             <mat-slide-toggle (change)="storeOptions()" title="Subsequent guesses must use all previous clues"
-                class="hardModeToggle" [(ngModel)]="options.hardMode">Hard Mode</mat-slide-toggle>
+                class="hardModeToggle" [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.hardMode">✔</label>
         </tr>
 
         <tr class="toggle-container">
             <mat-slide-toggle (change)="storeOptions()"
                 title="Secret words pull from full dictionary of over 8,000+ words" class="masochistModeToggle"
-                [(ngModel)]="options.masochistMode">Masochist Mode</mat-slide-toggle>
+                [(ngModel)]="options.masochistMode">Masochist mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.masochistMode">✔</label>
         </tr>
 
         <tr>
-            <label class="options-label">Word Length</label>
+            <button role="button" class="reset-button" mat-stroked-button type="button" (click)="reset()">New game</button>
+        </tr>
+
+        <tr>
+            <label class="header-label">Word length</label>
             <mat-divider class="divider"></mat-divider>
             <mat-radio-group role="radiogroup" class="radio-group" [(ngModel)]="options.wordLength" (change)="storeOptions()" [value]="options.wordLength">
                 <mat-radio-button role="radio" class="radio-button" value=5>5</mat-radio-button>
@@ -28,17 +32,19 @@
         </tr>
 
         <tr>
-            <label class="clock-label">Time Spent</label>
+            <label class="header-label">Time Spent</label>
             <mat-divider class="divider"></mat-divider>
             <label role="timer" class="clock">{{clockTime}}</label>
         </tr>
 
         <tr>
-            <button role="button" class="reset-button" mat-raised-button type="button" (click)="reset()">Generate new word</button>
-        </tr>
+            <label class="header-label">View</label>
+            <mat-divider class="divider"></mat-divider>
 
-        <tr>
-            <button role="button" class="history-button" mat-raised-button type="button" (click)="viewHistory()">View History</button>
+            <div class="button-container">
+                <button role="button" class="history-button" mat-stroked-button type="button" (click)="viewHistory()">History</button>
+                <button role="button" class="results-button" [disabled]="!gamePaused" mat-stroked-button (click)="viewResults()">Current game results</button>
+            </div>
         </tr>
     </table>
 </div>
