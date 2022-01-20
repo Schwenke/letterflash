@@ -1,18 +1,25 @@
 .row {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    width: 100%;
+    margin: 0 auto 5px;
+    touch-action: manipulation;
 }
 
 .key {
-    min-width: 75px;
-    min-height: 90px;
-    font-size: x-large;
     user-select: none;
-    border-radius: 10px;
-    text-align: center;
-    padding: 0 0 0 0;
-    margin: 2px;
+    border-radius: 5px;
+    border: 0;
+    padding: 0;
+    margin: 0 6px 0 0;
+    height: 60px;
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    align-items: center;
+    text-transform: uppercase;
+    flex: 1;
+    // Override material value
+    min-width: auto;
 
     &--unused {
         @extend .key;
@@ -35,37 +42,5 @@
     &--empty {
         @extend .key;
         background-color: gainsboro;
-    }
-}
-
-@media only screen and (max-width: 800px) {   
-    .key {
-        font-size: large;
-        min-width: 55px;
-        min-height: 70px;
-    }
-}
-
-@media only screen and (max-width: 600px) {   
-    .key {
-        font-size: medium;
-        min-width: 45px;
-        min-height: 60px;
-    }
-}
-
-@media only screen and (max-width: 500px) {   
-    .key {
-        min-width: 35px;
-        min-height: 50px;
-        font-size: medium;
-    }
-}
-
-@media only screen and (max-width: 400px) {   
-    .key {
-        min-width: 30px;
-        min-height: 45px;
-        font-size: small;
     }
 }

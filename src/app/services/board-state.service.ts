@@ -16,7 +16,7 @@ import { TimerService } from './timer.service';
  * Bulk of the game state processing happens here
  */
 export class BoardStateService {
-    boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({} as BoardState);
+    boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({ error: ""} as BoardState);
     options: Options = {} as Options;
     maxGuesses: number = 6;
 
@@ -98,6 +98,12 @@ export class BoardStateService {
 
     this.keyboardService.registerKeys(guess, correctlyGuessedLetters);
 
+    //  Move to the next row
+    ++boardState.rowIndex;
+
+    //  Reset column index
+    boardState.columnIndex = -1;
+
     this.boardState.next(boardState);
   }
 
@@ -112,6 +118,9 @@ export class BoardStateService {
     word.letters[boardState.columnIndex].letter = "";
 
     --boardState.columnIndex;
+
+    //  check to clear any errors, since we will be pushing the observable
+    boardState.error = "";
 
     this.boardState.next(boardState);
   }
@@ -132,6 +141,9 @@ export class BoardStateService {
       let word = this.getCurrentWord();
 
       word.letters[boardState.columnIndex].letter = key.toLocaleUpperCase();
+
+      //  check to clear any errors, since we will be pushing the observable
+      boardState.error = "";
 
       this.boardState.next(boardState);
     }
@@ -184,11 +196,22 @@ export class BoardStateService {
   }
 
   public guess(): void {
+    let timeOut: number = 100;
+
+    //  Give enough time for the pending animation to finish before attempting to commit, which can trigger another animation
+    //  If the animations collide, then the flip never plays and causes some weirdness to happen with the pending
+
+    setTimeout(() => {
+      this.processGuess();
+    }, timeOut);
+  }
+
+  private processGuess(): void {
     let boardState: BoardState = this.boardState.value;
 
-    let word = this.getUserGuess().toLocaleUpperCase();
+    let guess = this.getUserGuess().toLocaleUpperCase();
 
-    boardState.error = this.validate(word);;
+    boardState.error = this.validate(guess);
 
     this.boardState.next(boardState);
 
@@ -197,24 +220,12 @@ export class BoardStateService {
       return;
     }
 
-    this.processGuess(word);
+    this.updateBoardState(guess);
 
-    if (this.checkVictory(word)) return;
+    if (this.checkVictory(guess)) return;
     if (this.checkFailure()) return;
 
-    boardState.previousGuesses.push(word);
-  }
-
-  private processGuess(guess: string): void {
-    let boardState: BoardState = this.boardState.value;
-
-    this.updateBoardState(guess);
-    //  Move to the next row
-    ++boardState.rowIndex;
-    //  Reset column index
-    boardState.columnIndex = -1;
-
-    this.boardState.next(boardState);
+    boardState.previousGuesses.push(guess);
   }
 
   private checkFailure(): boolean {

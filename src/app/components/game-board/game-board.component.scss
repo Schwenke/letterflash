@@ -1,7 +1,22 @@
-.flip {
-    transition: transform .7s;
-    transform-style: preserve-3d;
-    transform: rotateX(360deg);
+@keyframes animatePending {
+    from {
+        transform: scale(1.4);
+        opacity: .4;
+    }
+    to {
+        transform: scale(1.0);
+        opacity: 1;
+    }
+}
+
+@keyframes animateCommit {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 .game-board {
@@ -13,37 +28,96 @@
     height: 4rem;
     font-size: xx-large;
     text-align: center;
-    border: 1px solid black;
+    background-color: #fafafa;
+    user-select: none;
+
+    &--empty {
+        @extend .letter;
+        border: 2px solid #d3d6da;
+    }
 
     &--pending {
         @extend .letter;
+        animation: animatePending .1s;
         background-color: white;
+        border: 2px solid grey;
     }
 
     &--committed {
         @extend .letter;
-        @extend .flip;
-        background-color: grey;
         color: white;
+        background-color: grey;
+        border: 2px solid grey;
+        transition: background-color 1s ease-in;
+        transition: border 1s ease-in;
     }
 
-      &--perfect {
+    &--perfect {
         @extend .letter;
-        @extend .flip;
-        background-color: green;
         color: white;
+        background-color: green;
+        border: 2px solid green;
+        transition: background-color 1s ease-in;
+        transition: border 1s ease-in;
     }
     
     &--partial {
         @extend .letter;
-        @extend .flip;
-        background-color: purple;
         color: white;
+        background-color: purple;
+        border: 2px solid purple;
+        transition: background-color 1s ease-in;
+        transition: border 1s ease-in;
+    }
+}
+
+.letter--committed:nth-child(1) {
+    animation: animateCommit .6s linear 0s;
+}
+
+.letter--committed:nth-child(2) {
+    animation: animateCommit .6s linear 0.1s;
+}
+
+.letter--committed:nth-child(3) {
+    animation: animateCommit .6s linear 0.2s;
+}
+
+.letter--committed:nth-child(4) {
+    animation: animateCommit .6s linear 0.3s;
+}
+
+.letter--committed:nth-child(5) {
+    animation: animateCommit .6s linear 0.4s;
+}
+
+.letter--committed:nth-child(6) {
+    animation: animateCommit .6s linear .5s;
+}
+
+.letter--committed:nth-child(7) {
+    animation: animateCommit .6s linear .6s;
+}
+
+@media only screen and (max-width: 700px) {
+
+    .game-board {
+        border-spacing: 5px;
+    }
+
+    .letter {
+        width: 3.5rem;
+        height: 3.5rem;
+        font-size: large;
+    }
+
+    .error {
+        font-size: large;
     }
 }
 
 // MEDIA QUERIES
-@media only screen and (max-width: 450px) {
+@media only screen and (max-width: 500px) {
 
     .game-board {
         border-spacing: 5px;
@@ -53,9 +127,6 @@
         width: 3rem;
         height: 3rem;
         font-size: large;
-        text-align: center;
-        border: .5px solid black;
-        padding: .5px;
     }
 
     .error {

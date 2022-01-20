@@ -6,6 +6,7 @@ import { SessionService } from './services/session.service';
 import { MatDialog } from '@angular/material/dialog';
 import { VictoryDialogComponent } from '../app/components/victory-dialog/victory-dialog.component'
 import { FailureDialogComponent } from '../app/components/failure-dialog/failure-dialog.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
@@ -22,7 +23,8 @@ export class AppComponent {
     private dictionaryService: DictionaryService,
     private sessionService: SessionService,
     private boardStateService: BoardStateService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private snackBar: MatSnackBar
   ) {
     //  Ripped from https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 
@@ -57,6 +59,10 @@ export class AppComponent {
 
       if (boardState.failure) {
         this.openFailureDialog();
+      }
+
+      if (boardState.error.length > 0) {
+        this.openErrorDialog();
       }
     })
   }
@@ -100,5 +106,11 @@ export class AppComponent {
     dialogRef.afterClosed().subscribe(result => {
       //  todo?
     });
+  }
+
+  openErrorDialog(): void {
+    let error: string = this.boardState.error;
+
+    this.snackBar.open(error, "OK", {verticalPosition: "top", horizontalPosition: "center", duration: 1500});
   }
 }

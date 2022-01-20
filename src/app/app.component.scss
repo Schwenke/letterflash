@@ -47,7 +47,7 @@
     height: calc(var(--vh, 1vh) * 100);
 
     margin: 0vh auto;
-    max-width: 800px;
+    max-width: 600px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -68,15 +68,8 @@
     align-self: center;
 }
 
-.user-error {
-    color: red;
-    font-size: large;
-    text-align: center;
-    height: 20px;
-}
-
 .game-keyboard {
-    align-self: center;
+    display: block;
 }
 
 @media only screen and (max-width: 450px) {

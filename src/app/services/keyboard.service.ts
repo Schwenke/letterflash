@@ -83,11 +83,10 @@ export class KeyboardService {
       { letter: "J", guessed: false, correct: false },
       { letter: "K", guessed: false, correct: false },
       { letter: "L", guessed: false, correct: false },
-      { letter: "Enter", guessed: false, correct: false }
+      { letter: "ENTER", guessed: false, correct: false }
     ];
 
     keyBoard.rows[2].keys = [
-      { letter: " ", guessed: false, correct: false },
       { letter: "Z", guessed: false, correct: false },
       { letter: "X", guessed: false, correct: false },
       { letter: "C", guessed: false, correct: false },
@@ -95,8 +94,7 @@ export class KeyboardService {
       { letter: "B", guessed: false, correct: false },
       { letter: "N", guessed: false, correct: false },
       { letter: "M", guessed: false, correct: false },
-      { letter: " ", guessed: false, correct: false },
-      { letter: "❌", guessed: false, correct: false }
+      { letter: "BACKSPACE", guessed: false, correct: false }
     ];
 
     this.keyboard.next(keyBoard);

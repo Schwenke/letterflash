@@ -30,8 +30,6 @@
 
         <app-game-board [ngClass]="{'hidden': !showGame}" class="game-board"></app-game-board>
 
-        <label [ngClass]="{'hidden': !showGame}" #errorLabel class="user-error">{{boardState.error}}</label>
-
         <app-keyboard [ngClass]="{'hidden': !showGame}" class="game-keyboard"></app-keyboard>
 
     </mat-sidenav-content>

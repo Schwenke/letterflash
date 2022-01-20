@@ -21,6 +21,7 @@ import { KeyboardComponent } from './components/keyboard/keyboard.component';
 import { OptionsComponent } from './components/options/options.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { HistoryComponent } from './components/history/history.component';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { HistoryComponent } from './components/history/history.component';
     MatDialogModule,
     MatProgressSpinnerModule,
     HttpClientModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatSnackBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
