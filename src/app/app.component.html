@@ -2,7 +2,7 @@
     
 <mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
 
-<mat-sidenav-container [hasBackdrop]="!darkMode" *ngIf="initialized">
+<mat-sidenav-container *ngIf="initialized">
     <mat-sidenav role="dialog" class="faq-sidenav" autoFocus="false" #faq>
         <app-faq></app-faq>
     </mat-sidenav>

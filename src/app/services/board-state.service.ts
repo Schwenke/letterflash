@@ -63,7 +63,8 @@ export class BoardStateService {
     let boardState: BoardState = this.boardState.value;
 
     let secretWordLetters = boardState.secretWord.split('');
-    let correctlyGuessedLetters: string[] = [];
+    let partialClues: string[] = [];
+    let perfectClues: string[] = [];
 
     //  First look for perfect matches - correct letter in the correct position
     for (let i = 0; i < guess.length; i++) {
@@ -76,7 +77,7 @@ export class BoardStateService {
 
       if (guessLetter === correctLetter) {
         boardStateLetter.perfect = true;
-        correctlyGuessedLetters.push(guessLetter);
+        perfectClues.push(guessLetter);
         secretWordLetters.splice(index, 1);
       }
     }
@@ -90,13 +91,13 @@ export class BoardStateService {
       const index = secretWordLetters.indexOf(guessLetter);
 
       if (!boardStateLetter.perfect && index > -1) {
-        correctlyGuessedLetters.push(guessLetter);
+        partialClues.push(guessLetter);
         boardStateLetter.partial = true;
         secretWordLetters.splice(index, 1);
       }
     }
 
-    this.keyboardService.registerKeys(guess, correctlyGuessedLetters);
+    this.keyboardService.registerKeys(guess, partialClues, perfectClues);
 
     //  Move to the next row
     ++boardState.rowIndex;

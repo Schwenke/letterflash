@@ -11,6 +11,10 @@
     @include mat.all-component-colors($dark-theme);
 }
 
+.darkMode .mat-drawer-backdrop.mat-drawer-shown {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
 
 html, body { 
     height: 100vh; 

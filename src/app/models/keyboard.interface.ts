@@ -10,5 +10,6 @@ export interface KeyboardRow {
 export interface Key {
     letter: string;
     guessed: boolean;
-    correct: boolean;
+    partial: boolean;
+    perfect: boolean;
 }

@@ -1,8 +1,10 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { BoardState } from 'src/app/models/board-state.interface';
 import { Key, Keyboard } from 'src/app/models/keyboard.interface';
+import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { KeyboardService } from 'src/app/services/keyboard.service';
+import { SessionService } from 'src/app/services/session.service';
 
 @Component({
   selector: 'app-keyboard',
@@ -18,19 +20,31 @@ export class KeyboardComponent implements OnInit {
   //  models
   keyboard: Keyboard = {} as Keyboard;
   boardState: BoardState = {} as BoardState;
+  options: Options;
 
   constructor(
     private keyboardService: KeyboardService,
-    private boardStateService: BoardStateService
+    private boardStateService: BoardStateService,
+    private sessionService: SessionService
   ) { }
 
   ngOnInit(): void {
     this.keyboardService.keyboard.subscribe(keyboard => {
+      if (!keyboard) return;
+      
       this.keyboard = keyboard;
     });
 
     this.boardStateService.boardState.subscribe(boardState => {
+      if (!boardState) return;
+
       this.boardState = boardState;
+    });
+
+    this.sessionService.session.subscribe(session => {
+      if (!session) return;
+
+      this.options = session.options;
     });
   }
 

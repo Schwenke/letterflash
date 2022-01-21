@@ -17,28 +17,37 @@
     height: 60px;
     display: flex;
     justify-content: center;
-    font-weight: bold;
     align-items: center;
     text-transform: uppercase;
     flex: 1;
-    // Override material value
+    // Override material button default value
     min-width: auto;
 
     &--unused {
         @extend .key;
         background-color: mat.get-color-from-palette($primary, 'default');
-        color: white;
+
+        &.darkMode {
+            background-color: #818384;
+        }
     }
 
     &--used {
         @extend .key;
         background-color: mat.get-color-from-palette($primary, 'darker');
-        color: white;
+
+        &.darkMode {
+            background-color: #4b4b4e;
+        }
     }
 
-    &--correct {
+    &--partial {
         @extend .key;
         background-color: mat.get-color-from-palette($partial, 'darker');
-        color: white;
+    }
+
+    &--perfect {
+        @extend .key;
+        background-color: mat.get-color-from-palette($perfect, 'darker');
     }
 }
