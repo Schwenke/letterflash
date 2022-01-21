@@ -4,21 +4,29 @@
             <label class="header-label">Options</label>
             <mat-divider class="divider"></mat-divider>
         </tr>
+
+        <tr class="toggle-container">
+            <mat-slide-toggle (change)="storeOptions()"
+                title="Dark mode" class="toggle"
+                [(ngModel)]="options.darkMode">Dark mode</mat-slide-toggle>
+            <label class="options-check" *ngIf="options.darkMode">✔</label>
+        </tr>
+
         <tr class="toggle-container">
             <mat-slide-toggle (change)="storeOptions()" title="Subsequent guesses must use all previous clues"
-                class="hardModeToggle" [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
+                class="toggle" [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.hardMode">✔</label>
         </tr>
 
         <tr class="toggle-container">
             <mat-slide-toggle (change)="storeOptions()"
-                title="Secret words pull from full dictionary of over 8,000+ words" class="masochistModeToggle"
+                title="Secret words pull from full dictionary of over 8,000+ words" class="toggle"
                 [(ngModel)]="options.masochistMode">Masochist mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.masochistMode">✔</label>
         </tr>
 
         <tr>
-            <button role="button" class="reset-button" mat-stroked-button type="button" (click)="reset()">New game</button>
+            <button role="button" class="reset-button" mat-raised-button type="button" (click)="reset()">New game</button>
         </tr>
 
         <tr>
@@ -42,8 +50,8 @@
             <mat-divider class="divider"></mat-divider>
 
             <div class="button-container">
-                <button role="button" class="history-button" mat-stroked-button type="button" (click)="viewHistory()">History</button>
-                <button role="button" class="results-button" [disabled]="!gamePaused" mat-stroked-button (click)="viewResults()">Current game results</button>
+                <button role="button" class="history-button" mat-raised-button type="button" (click)="viewHistory()">History</button>
+                <button role="button" class="results-button" [disabled]="!gamePaused" mat-raised-button (click)="viewResults()">Current game results</button>
             </div>
         </tr>
     </table>

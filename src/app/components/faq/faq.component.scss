@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
 .divider {
     margin-top: .5rem;
 }
@@ -34,27 +37,26 @@
 .colored-text {
     font-size: medium;
     font-weight: bold;
-    text-decoration: underline;
 }
 
-.green-text {
+.perfect-text {
     @extend .colored-text;
-    color: green;
+    color: mat.get-color-from-palette($perfect, 'darker');
 }
 
-.purple-text {
+.partial-text {
     @extend .colored-text;
-    color: purple;
+    color: mat.get-color-from-palette($partial, 'darker');
 }
 
-.black-text {
+.dark-text {
     @extend .colored-text;
-    color: black;
+    color: mat.get-color-from-palette($primary, 'darker');
 }
 
-.grey-text {
+.light-text {
     @extend .colored-text;
-    color: grey;
+    color: mat.get-color-from-palette($primary, 'default');
 }
 
 @media only screen and (max-width: 450px) {

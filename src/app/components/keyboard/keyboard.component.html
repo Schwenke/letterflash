@@ -1,5 +1,5 @@
 <div class="row" *ngFor="let row of keyboard.rows">
-    <button *ngFor="let key of row.keys" mat-stroked-button (click)="keyClicked(key)" [ngClass]="{'key--correct': key.correct, 'key--used': key.guessed, 'key--unused': !key.guessed, 'key--empty': key.letter === ' '}">
+    <button *ngFor="let key of row.keys" mat-stroked-button (click)="keyClicked(key)" [ngClass]="{'key--correct': key.correct, 'key--used': key.guessed, 'key--unused': !key.guessed}">
         {{key.letter}}
     </button>
 </div>

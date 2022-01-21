@@ -1,12 +1,49 @@
-/* You can add global styles to this file, and also import other style files */
+@use '@angular/material' as mat;
+
+@import "@angular/material/theming";
+
+@include mat.core();
+
+$primary: mat.define-palette(mat.$grey-palette);
+$perfect: mat.define-palette(mat.$green-palette);
+$partial: mat.define-palette(mat.$amber-palette);
+$accent: mat.define-palette(mat.$pink-palette);
+$warn: mat.define-palette(mat.$red-palette);
+
+$light-theme: mat.define-light-theme(
+    (
+        color: (
+            primary: $primary,
+            accent: $accent,
+            warn: $warn,
+        ),
+    )
+);
+
+$dark-theme: mat.define-dark-theme(
+  (
+    color: (
+        primary: $primary,
+        accent: $accent,
+        warn: $warn,
+    ),
+  )
+);
+
+@include mat.all-component-themes($light-theme);
+
+.darkMode {
+    @include mat.all-component-colors($dark-theme);
+}
+
 
 html, body { 
     height: 100vh; 
 }
 
 body { 
-    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; 
-    background-color: #fafafa;
+    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+    background-color: mat.get-color-from-palette($primary, 'lighter');
 }
 
 .app-root {

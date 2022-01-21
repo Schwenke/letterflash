@@ -27,12 +27,18 @@ export class SessionService {
   }
 
   // Saves the current session into local storage
-  saveSession(): void {
+  saveSession(push: boolean = false): void {
     let session = this.session.value;
 
     let jsonValue = JSON.stringify(session);
 
     localStorage.setItem(this.storageKey, jsonValue);
+  }
+
+  refreshOptions(): void {
+    let session = this.session.value;
+
+    this.session.next(session);
   }
 
   //  Updates the current session with data from the board state
@@ -101,6 +107,7 @@ export class SessionService {
     return {
       hardMode: false,
       masochistMode: false,
+      darkMode: false,
       wordLength: "5"
     };
   }

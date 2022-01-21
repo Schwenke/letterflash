@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
 .container {
     width: 250px;
     height: 300px;
@@ -8,13 +11,13 @@
 
     .message-header {
         font-size: large;
-        color: blue;
+        color: mat.get-color-from-palette($perfect, 'darker');
         text-align: center;
     }
 
     .message-tries {
         font-size: large;
-        color: blue;
+        color: mat.get-color-from-palette($perfect, 'darker');
         text-align: center;  
     }
 
@@ -22,11 +25,13 @@
         font-size: large;
         width: auto;
         height: 50px;
+        color: mat.get-color-from-palette($accent, 'default');
     }
 
     .reset-button {
         font-size: large;
         width: auto;
         height: 50px;
+        color: mat.get-color-from-palette($accent, 'default');
     }
 }

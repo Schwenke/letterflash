@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
 @keyframes animatePending {
     from {
         transform: scale(1.4);
@@ -20,34 +23,32 @@
 }
 
 .game-board {
-    border-spacing: 8px;
+    border-spacing: 5px;
 }
 
 .letter {
-    width: 4rem;
-    height: 4rem;
+    width: 3.5rem;
+    height: 3.5rem;
     font-size: xx-large;
     text-align: center;
-    background-color: #fafafa;
     user-select: none;
+    border: 2px solid mat.get-color-from-palette($primary, 'default');
 
     &--empty {
         @extend .letter;
-        border: 2px solid #d3d6da;
     }
 
     &--pending {
         @extend .letter;
         animation: animatePending .1s;
-        background-color: white;
-        border: 2px solid grey;
+        border: 2px solid mat.get-color-from-palette($primary, 'darker');
     }
 
     &--committed {
         @extend .letter;
         color: white;
-        background-color: grey;
-        border: 2px solid grey;
+        background-color: mat.get-color-from-palette($primary, 'darker');
+        border: 2px solid mat.get-color-from-palette($primary, 'darker');
         transition: background-color 1s ease-in;
         transition: border 1s ease-in;
     }
@@ -55,8 +56,8 @@
     &--perfect {
         @extend .letter;
         color: white;
-        background-color: green;
-        border: 2px solid green;
+        background-color: mat.get-color-from-palette($perfect, 'darker');
+        border: 2px solid mat.get-color-from-palette($perfect, 'darker');
         transition: background-color 1s ease-in;
         transition: border 1s ease-in;
     }
@@ -64,8 +65,8 @@
     &--partial {
         @extend .letter;
         color: white;
-        background-color: purple;
-        border: 2px solid purple;
+        background-color: mat.get-color-from-palette($partial, 'darker');
+        border: 2px solid mat.get-color-from-palette($partial, 'darker');
         transition: background-color 1s ease-in;
         transition: border 1s ease-in;
     }
@@ -97,39 +98,4 @@
 
 .letter--committed:nth-child(7) {
     animation: animateCommit .6s linear .6s;
-}
-
-@media only screen and (max-width: 700px) {
-
-    .game-board {
-        border-spacing: 5px;
-    }
-
-    .letter {
-        width: 3.5rem;
-        height: 3.5rem;
-        font-size: large;
-    }
-
-    .error {
-        font-size: large;
-    }
-}
-
-// MEDIA QUERIES
-@media only screen and (max-width: 500px) {
-
-    .game-board {
-        border-spacing: 5px;
-    }
-
-    .letter {
-        width: 3rem;
-        height: 3rem;
-        font-size: large;
-    }
-
-    .error {
-        font-size: large;
-    }
 }

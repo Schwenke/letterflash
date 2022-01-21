@@ -15,9 +15,9 @@ import { TimerService } from 'src/app/services/timer.service';
 export class VictoryDialogComponent implements OnInit {
 
   //  emojis :eyes:
-  private greenBlock = "🟩";
+  private perfectBlock = "🟩";
   private greyBlock = "⬜";
-  private purpleBlock = "🟪";
+  private partialBlock = "🟨";
 
   boardState: BoardState = {} as BoardState;
   options: Options = {} as Options;
@@ -113,9 +113,9 @@ export class VictoryDialogComponent implements OnInit {
 
   private getBlock(letter: Letter): string {
     if (letter.perfect) {
-      return this.greenBlock;
+      return this.perfectBlock;
     } else if (letter.partial) {
-      return this.purpleBlock;
+      return this.partialBlock;
     } else {
       return this.greyBlock;
     }

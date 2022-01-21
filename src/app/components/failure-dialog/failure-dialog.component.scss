@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
 .container {
     width: 250px;
     height: 200px;
@@ -11,7 +14,7 @@
         grid-row-start: 1;
         grid-row-end: 1;
         font-size: large;
-        color: red;
+        color: mat.get-color-from-palette($accent, 'default');
         align-self: flex-start;
         justify-content: center;
     }
@@ -30,5 +33,6 @@
         font-size: large;
         width: auto;
         height: 50px;
+        color: mat.get-color-from-palette($accent, 'default');
     }
 }

@@ -1,4 +1,4 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import { Component, HostBinding, HostListener, ViewChild } from '@angular/core';
 import { BoardState } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
@@ -16,11 +16,12 @@ import { MatSidenav } from '@angular/material/sidenav';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-
+  @HostBinding('class') className = '';
   @ViewChild('options') options: MatSidenav;
 
   initialized: boolean = false;
   showGame: boolean = true;
+  darkModeClass: string = "darkMode";
   boardState: BoardState;
   questionIcon = faQuestionCircle;
   cogsIcon = faCogs;
@@ -46,6 +47,9 @@ export class AppComponent {
 
       this.sessionService.session.subscribe(session => {
         if (!session) return;
+        
+        this.className = session.options.darkMode ? this.darkModeClass : "";
+
         if (this.initialized) return;
 
         this.initialized = true;

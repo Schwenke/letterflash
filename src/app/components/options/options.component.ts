@@ -31,8 +31,6 @@ export class OptionsComponent implements OnInit {
       if (!session) return;
       
       this.options = session.options;
-
-      this.sessionService.saveSession();
     });
 
     this.timerService.timeSpan.subscribe(time => {
@@ -59,6 +57,6 @@ export class OptionsComponent implements OnInit {
 
   storeOptions(): void {
     this.sessionService.saveSession();
+    this.sessionService.refreshOptions();
   }
-
 }

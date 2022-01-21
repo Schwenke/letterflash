@@ -1,7 +1,10 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
 .row {
     display: flex;
     width: 100%;
-    margin: 0 auto 5px;
+    margin: 0 auto 8px;
     touch-action: manipulation;
 }
 
@@ -23,24 +26,19 @@
 
     &--unused {
         @extend .key;
-        background-color: grey;
+        background-color: mat.get-color-from-palette($primary, 'default');
         color: white;
     }
 
     &--used {
         @extend .key;
-        background-color: black;
+        background-color: mat.get-color-from-palette($primary, 'darker');
         color: white;
     }
 
     &--correct {
         @extend .key;
-        background-color: green;
+        background-color: mat.get-color-from-palette($partial, 'darker');
         color: white;
-    }
-
-    &--empty {
-        @extend .key;
-        background-color: gainsboro;
     }
 }

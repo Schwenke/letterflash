@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import '../../../styles.scss';
+
 .options-container {
     width: 100%;
     height: 100%;
@@ -25,7 +28,7 @@
 .options-check {
     font-size: x-large;
     margin-left: .5rem;
-    color: green;
+    color: mat.get-color-from-palette($perfect, 'darker');
 }
 
 .radio-group {
@@ -43,17 +46,18 @@
     max-width: fit-content;
 }
 
-.hardModeToggle {
+.toggle {
     font-size: large;
 }
 
-.masochistModeToggle {
+.toggle {
     font-size: large;
 }
 
 .button {
     font-size: large;
     margin-top: 1rem;
+    color: mat.get-color-from-palette($accent, 'default');
 }
 
 .button-container {
@@ -91,15 +95,13 @@
 
     .options-check {
         font-size: small;
-        margin-left: .5rem;
-        color: green;
     }
 
-    .hardModeToggle {
+    .toggle {
         font-size: small;
     }
 
-    .masochistModeToggle {
+    .toggle {
         font-size: small;
     }
 
