@@ -2,12 +2,12 @@
     
 <mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
 
-<mat-sidenav-container *ngIf="initialized">
+<mat-sidenav-container [hasBackdrop]="!darkMode" *ngIf="initialized">
     <mat-sidenav role="dialog" class="faq-sidenav" autoFocus="false" #faq>
         <app-faq></app-faq>
     </mat-sidenav>
 
-    <mat-sidenav role="dialog" class="options-sidenav" #options position="end">
+    <mat-sidenav role="dialog" class="options-sidenav" autoFocus="false" #options position="end">
         <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()" (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 

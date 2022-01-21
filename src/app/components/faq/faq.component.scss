@@ -32,6 +32,7 @@
 
 .faq-link {
     font-size: medium;
+    color: mat.get-color-from-palette($accent, 'default');
 }
 
 .colored-text {

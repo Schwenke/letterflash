@@ -25,6 +25,7 @@ export class AppComponent {
   boardState: BoardState;
   questionIcon = faQuestionCircle;
   cogsIcon = faCogs;
+  darkMode: boolean = false;
 
   constructor(
     private dictionaryService: DictionaryService,
@@ -47,8 +48,10 @@ export class AppComponent {
 
       this.sessionService.session.subscribe(session => {
         if (!session) return;
+
+        this.darkMode = session.options.darkMode;
         
-        this.className = session.options.darkMode ? this.darkModeClass : "";
+        this.className = this.darkMode ? this.darkModeClass : "";
 
         if (this.initialized) return;
 

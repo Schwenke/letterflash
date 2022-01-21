@@ -3,6 +3,7 @@
         <tr *ngFor="let word of boardState.words">
             <td 
                 [ngClass]="{
+                    'darkMode': options.darkMode,
                     'letter--empty': !letter.committed && letter.letter.length === 0,
                     'letter--pending': !letter.committed && letter.letter.length > 0,
                     'letter--perfect': letter.perfect, 

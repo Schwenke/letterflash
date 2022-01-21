@@ -32,16 +32,24 @@
     font-size: xx-large;
     text-align: center;
     user-select: none;
-    border: 2px solid mat.get-color-from-palette($primary, 'default');
 
     &--empty {
         @extend .letter;
+        border: 2px solid #d3d6da;
+
+        &.darkMode {
+            border: 2px solid mat.get-color-from-palette($primary, 'darker');
+        }
     }
 
     &--pending {
         @extend .letter;
         animation: animatePending .1s;
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
+
+        &.darkMode {
+            border: 2px solid mat.get-color-from-palette($primary, 'default');
+        }
     }
 
     &--committed {
