@@ -39,14 +39,21 @@
 }
 
 .game {
-    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 100);
-
-    margin: 0vh auto;
-    max-width: 600px;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    width: 100%;
+    max-width: 600px;
+    margin: 0 auto;
+    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
+    height: calc(var(--vh, 1vh) * 100);
+}
+
+.game-board {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    overflow: hidden;
 }
 
 .game-header {
@@ -67,10 +74,6 @@
 
 .options-icon {
     cursor: pointer;
-}
-
-.game-board {
-    align-self: center;
 }
 
 .game-keyboard {

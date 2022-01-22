@@ -1,16 +1,18 @@
-<div class="container">     
-    <table class="game-board">
-        <tr *ngFor="let word of boardState.words">
-            <td 
-                [ngClass]="{
+<div class="container">
+    <div class="game-board">
+        <div class="board-row" *ngFor="let word of boardState.words">
+            <div class="word-row">
+                <div [ngClass]="{
                     'darkMode': options.darkMode,
                     'letter--empty': !letter.committed && letter.letter.length === 0,
                     'letter--pending': !letter.committed && letter.letter.length > 0,
+                    'letter--miss': letter.committed && !(letter.partial || letter.perfect),
                     'letter--perfect': letter.perfect, 
-                    'letter--partial': letter.partial, 
-                    'letter--committed': letter.committed}" *ngFor="let letter of word.letters">
-                {{letter.letter}}
-            </td>
-        </tr>
-    </table>
+                    'letter--partial': letter.partial
+                }" *ngFor="let letter of word.letters">
+                        {{letter.letter}}
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

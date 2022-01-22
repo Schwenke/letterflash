@@ -15,24 +15,59 @@
 @keyframes animateCommit {
     from {
         opacity: 0;
+        filter: brightness(40%);
     }
 
     to {
         opacity: 1;
+        filter: brightness(90%);
     }
 }
 
+.container {
+    width: 600px;
+}
+
 .game-board {
-    border-spacing: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+}
+
+.board-row {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.word-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    gap: 5px;
+}
+
+.letter-committed {
+    transition: background-color 1s ease-in;
+    transition: border 1s ease-in;
+    color: mat.get-color-from-palette($primary, 'lighter');
 }
 
 .letter {
-    width: 3.5rem;
-    height: 3.5rem;
     font-size: xx-large;
-    text-align: center;
     user-select: none;
-
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    height: 4rem;
+    max-width: 4rem;
+    
     &--empty {
         @extend .letter;
         border: 2px solid #d3d6da;
@@ -52,58 +87,80 @@
         }
     }
 
-    &--committed {
+    &--miss {
         @extend .letter;
-        color: white;
+        @extend .letter-committed;
         background-color: mat.get-color-from-palette($primary, 'darker');
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
-        transition: background-color 1s ease-in;
-        transition: border 1s ease-in;
+
+        &.darkMode {
+            background-color: #4b4b4e;
+            border: 2px solid #4b4b4e;
+        }
     }
 
     &--perfect {
         @extend .letter;
-        color: white;
+        @extend .letter-committed;
         background-color: mat.get-color-from-palette($perfect, 'darker');
         border: 2px solid mat.get-color-from-palette($perfect, 'darker');
-        transition: background-color 1s ease-in;
-        transition: border 1s ease-in;
     }
     
     &--partial {
         @extend .letter;
-        color: white;
+        @extend .letter-committed;
         background-color: mat.get-color-from-palette($partial, 'darker');
         border: 2px solid mat.get-color-from-palette($partial, 'darker');
-        transition: background-color 1s ease-in;
-        transition: border 1s ease-in;
     }
 }
 
-.letter--committed:nth-child(1) {
+.letter-committed:nth-child(1) {
     animation: animateCommit .6s linear 0s;
 }
 
-.letter--committed:nth-child(2) {
+.letter-committed:nth-child(2) {
     animation: animateCommit .6s linear 0.1s;
 }
 
-.letter--committed:nth-child(3) {
+.letter-committed:nth-child(3) {
     animation: animateCommit .6s linear 0.2s;
 }
 
-.letter--committed:nth-child(4) {
+.letter-committed:nth-child(4) {
     animation: animateCommit .6s linear 0.3s;
 }
 
-.letter--committed:nth-child(5) {
+.letter-committed:nth-child(5) {
     animation: animateCommit .6s linear 0.4s;
 }
 
-.letter--committed:nth-child(6) {
+.letter-committed:nth-child(6) {
     animation: animateCommit .6s linear .5s;
 }
 
-.letter--committed:nth-child(7) {
+.letter-committed:nth-child(7) {
     animation: animateCommit .6s linear .6s;
+}
+
+@media only screen and (max-width: 500px) {
+    .letter {
+        height: 3rem;
+        max-width: 3rem;
+    }
+}
+
+@media only screen and (max-height: 700px) {
+    .letter {
+        height: 3rem;
+        max-width: 3rem;
+        font-size: x-large;
+    }
+}
+
+@media only screen and (max-height: 600px) {
+    .letter {
+        height: 2.5rem;
+        max-width: 2.5rem;
+        font-size: large;
+    }
 }
