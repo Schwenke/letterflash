@@ -51,6 +51,14 @@ export class DictionaryService {
   }
 
   public hasWord(word: string): boolean {
+    let curatedList: string[] = this.getWords(word.length);
+
+    //  Check the curated list first since its smaller
+    if (curatedList.includes(word.toLocaleLowerCase())) {
+      return true;
+    }
+
+    //  check the full dictionary
     return this.dictionary.includes(word.toLocaleLowerCase());
   }
 
