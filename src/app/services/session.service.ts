@@ -79,7 +79,7 @@ export class SessionService {
     let optionsList: string[] = [];
 
     if (options.hardMode) optionsList.push("Hard mode");
-    if (options.masochistMode) optionsList.push("Masochist mode");
+    if (options.extremeMode) optionsList.push("Extreme mode");
 
     return optionsList;
   }
@@ -88,6 +88,9 @@ export class SessionService {
     let sessionJSON = localStorage.getItem(this.storageKey);
 
     if (sessionJSON) {
+      //  backwards compat fix
+      sessionJSON = sessionJSON.replace('masochistMode', 'extremeMode');
+
       return JSON.parse(sessionJSON);
     }
 
@@ -106,7 +109,7 @@ export class SessionService {
   private getDefaultOptions(): Options {
     return {
       hardMode: false,
-      masochistMode: false,
+      extremeMode: false,
       darkMode: false,
       wordLength: "5"
     };

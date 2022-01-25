@@ -1,6 +1,6 @@
 .spinner {
-    height: 50vh;
-    margin: 25vh auto;
+    height: 50%;
+    margin: 25% auto;
 }
 
 .app-container {
@@ -21,7 +21,7 @@
 }
 
 .reset-button {
-    font-size: medium;
+    font-size: large;
     border-radius: 5px;
     align-self: center;
     margin-bottom: 1rem;
@@ -36,10 +36,6 @@
     align-self: center;
     overflow: auto;
     max-width: 90vw;
-
-    -ms-overflow-style: none; /* for Internet Explorer, Edge */
-    scrollbar-width: none; /* for Firefox */
-    overflow-y: scroll; 
 }
 
 .game {
@@ -48,9 +44,9 @@
     justify-content: space-between;
     width: 100%;
     max-width: 600px;
-    margin: 0 auto;
-
     gap: 1rem;
+    /* needed to center content */
+    margin: 0 auto;
 }
 
 .game-board {
@@ -59,8 +55,7 @@
     align-self: center;
     width: 70%;
     max-height: 500px;
-
-    /* allow animation to display out of bounds */
+    /* allow letter commit animation to display out of bounds */
     overflow: visible;
 }
 

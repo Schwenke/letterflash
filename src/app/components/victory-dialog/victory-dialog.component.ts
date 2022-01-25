@@ -47,12 +47,12 @@ export class VictoryDialogComponent implements OnInit {
   }
 
   private setModeMessage(): void {
-    if (this.options.hardMode && this.options.masochistMode) {
-      this.mode = "Hard mode, Masochist mode";
+    if (this.options.hardMode && this.options.extremeMode) {
+      this.mode = "Hard mode, Extreme mode";
     } else if (this.options.hardMode) {
       this.mode = "Hard mode";
-    } else if (this.options.masochistMode) {
-      this.mode = "Masochist mode";
+    } else if (this.options.extremeMode) {
+      this.mode = "Extreme mode";
     } else {
       this.mode = "Default";
     }
@@ -95,8 +95,8 @@ export class VictoryDialogComponent implements OnInit {
   }
 
   private getModeOptionString(): string {
-    if (this.options.hardMode && this.options.masochistMode) return "⁂";
-    if (this.options.masochistMode) return "⁑";
+    if (this.options.hardMode && this.options.extremeMode) return "⁂";
+    if (this.options.extremeMode) return "⁑";
     if (this.options.hardMode) return "⁕";
 
     return "";

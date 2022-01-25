@@ -1,6 +1,6 @@
 export interface Options {
     hardMode: boolean;
-    masochistMode: boolean;
+    extremeMode: boolean;
     darkMode: boolean;
     wordLength: string;
 }

@@ -12,6 +12,7 @@
 
 .faq-label {
     font-size: large;
+    color: mat.get-color-from-palette($accent, 'default');
 }
 
 .faq-text {
@@ -21,12 +22,12 @@
 
 .faq-text-header {
     font-size: large;
-    text-decoration: underline;
+    font-style: italic;
 }
 
 .faq-text-item {
     font-size: medium;
-    margin-top: .5rem;
+    margin-top: .75rem;
 }
 
 .faq-link {
@@ -57,35 +58,4 @@
 .light-text {
     @extend .colored-text;
     color: mat.get-color-from-palette($primary, 'default');
-}
-
-@media only screen and (max-width: 450px) {
-    .faq-label {
-        font-size: large;
-    }
-
-    .faq-text {
-        font-size: medium;
-        line-height: 1.5rem;
-    }
-    
-    .faq-text-header {
-        font-size: large;
-    }
-
-    .faq-text-item {
-        font-size: medium;
-    }
-    
-    .faq-link {
-        font-size: medium;
-    }
-
-    .list {
-        line-height: 1.5rem;
-    }
-
-    .colored-text {
-        font-size: medium;
-    }
 }

@@ -41,7 +41,7 @@ export class DictionaryService {
   private getWords(length: number): string[] {
     let words;
 
-    if (this.options.masochistMode) {
+    if (this.options.extremeMode) {
       words = this.dictionary.filter(word => word.length === length);
     } else {
       words = this.cache.get(length);

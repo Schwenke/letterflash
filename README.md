@@ -4,7 +4,7 @@ This is a fan-appreciation open source clone I made mostly to work on my front e
 
 The key point of divergence between this game and Wordle is that this game is not one-word-a-day, and instead has infinite replayability.
 
-I also took the time to add some features I thought would be neat, like support for six and seven letter words, as well as a masochist mode.
+I also took the time to add some features I thought would be neat, like support for six and seven letter words, as well as an extreme mode.
 
 If you enjoy the base wordle game as much as I do, then you might also enjoy this version.
 
