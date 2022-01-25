@@ -2,15 +2,19 @@
     
 <mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
 
-<mat-sidenav-container *ngIf="initialized">
+<mat-sidenav-container class="app-container" *ngIf="initialized">
+
+    <!-- FAQ left side nav -->
     <mat-sidenav role="dialog" class="faq-sidenav" autoFocus="false" #faq>
         <app-faq></app-faq>
     </mat-sidenav>
 
+    <!-- Options right side nav -->
     <mat-sidenav role="dialog" class="options-sidenav" autoFocus="false" #options position="end">
         <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()" (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 
+    <!-- Main body -->
     <mat-sidenav-content class="game">
         <div class="game-header">
             <!-- DEBUG -->

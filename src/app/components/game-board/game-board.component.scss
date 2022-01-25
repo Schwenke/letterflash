@@ -24,52 +24,38 @@
     }
 }
 
-.container {
-    width: 600px;
-}
-
-.game-board {
+.column-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
     gap: 5px;
-}
 
-.board-row {
-    display: block;
     width: 100%;
     height: 100%;
 }
 
-.word-row {
+.row-container {
     display: flex;
     flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    height: 100%;
+    flex: 1;
     gap: 5px;
 }
 
-.letter-committed {
+.cell-committed {
     transition: background-color 1s ease-in;
     transition: border 1s ease-in;
     color: mat.get-color-from-palette($primary, 'lighter');
 }
 
-.letter {
+.cell {
     font-size: xx-large;
     user-select: none;
     display: flex;
     flex: 1;
     justify-content: center;
     align-items: center;
-    height: 4rem;
-    max-width: 4rem;
     
     &--empty {
-        @extend .letter;
+        @extend .cell;
         border: 2px solid #d3d6da;
 
         &.darkMode {
@@ -78,7 +64,7 @@
     }
 
     &--pending {
-        @extend .letter;
+        @extend .cell;
         animation: animatePending .1s;
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
 
@@ -88,8 +74,8 @@
     }
 
     &--miss {
-        @extend .letter;
-        @extend .letter-committed;
+        @extend .cell;
+        @extend .cell-committed;
         background-color: mat.get-color-from-palette($primary, 'darker');
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
 
@@ -100,67 +86,44 @@
     }
 
     &--perfect {
-        @extend .letter;
-        @extend .letter-committed;
+        @extend .cell;
+        @extend .cell-committed;
         background-color: mat.get-color-from-palette($perfect, 'darker');
         border: 2px solid mat.get-color-from-palette($perfect, 'darker');
     }
     
     &--partial {
-        @extend .letter;
-        @extend .letter-committed;
+        @extend .cell;
+        @extend .cell-committed;
         background-color: mat.get-color-from-palette($partial, 'darker');
         border: 2px solid mat.get-color-from-palette($partial, 'darker');
     }
 }
 
-.letter-committed:nth-child(1) {
+.cell-committed:nth-child(1) {
     animation: animateCommit .6s linear 0s;
 }
 
-.letter-committed:nth-child(2) {
+.cell-committed:nth-child(2) {
     animation: animateCommit .6s linear 0.1s;
 }
 
-.letter-committed:nth-child(3) {
+.cell-committed:nth-child(3) {
     animation: animateCommit .6s linear 0.2s;
 }
 
-.letter-committed:nth-child(4) {
+.cell-committed:nth-child(4) {
     animation: animateCommit .6s linear 0.3s;
 }
 
-.letter-committed:nth-child(5) {
+.cell-committed:nth-child(5) {
     animation: animateCommit .6s linear 0.4s;
 }
 
-.letter-committed:nth-child(6) {
+.cell-committed:nth-child(6) {
     animation: animateCommit .6s linear .5s;
 }
 
-.letter-committed:nth-child(7) {
+.cell-committed:nth-child(7) {
     animation: animateCommit .6s linear .6s;
-}
-
-@media only screen and (max-width: 500px) {
-    .letter {
-        height: 3rem;
-        max-width: 3rem;
-    }
-}
-
-@media only screen and (max-height: 700px) {
-    .letter {
-        height: 3rem;
-        max-width: 3rem;
-        font-size: x-large;
-    }
-}
-
-@media only screen and (max-height: 600px) {
-    .letter {
-        height: 2.5rem;
-        max-width: 2.5rem;
-        font-size: large;
-    }
 }

@@ -3,6 +3,10 @@
     margin: 25vh auto;
 }
 
+.app-container {
+    height: 100%;
+}
+
 .sidenav {
     max-width: 40vh;
     min-width: 33vh;
@@ -41,26 +45,30 @@
 .game {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 100%;
     max-width: 600px;
     margin: 0 auto;
-    height: 100vh; /* Use vh as a fallback for browsers that do not support Custom Properties */
-    height: calc(var(--vh, 1vh) * 100);
+
+    gap: 1rem;
 }
 
 .game-board {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    overflow: hidden;
+    flex: 1;
+    align-self: center;
+    width: 70%;
+    max-height: 500px;
+
+    /* allow animation to display out of bounds */
+    overflow: visible;
 }
 
 .game-header {
     min-height: 2rem;
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: flex-end;
     justify-content: space-around;
 }
 
@@ -82,7 +90,7 @@
 }
 
 @media only screen and (max-width: 450px) {
-    .game-title {
-        font-size: large;
+    .game-board {
+        width: 90%;
     }
 }
