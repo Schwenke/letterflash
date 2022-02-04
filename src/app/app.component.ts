@@ -1,4 +1,4 @@
-import { Component, HostBinding, HostListener, ViewChild } from '@angular/core';
+import { Component, HostBinding, ViewChild } from '@angular/core';
 import { BoardState } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
@@ -75,17 +75,6 @@ export class AppComponent {
     })
   }
 
-  @HostListener('window:resize', ['$event'])
-  updateViewPortHeight(event: any): void {
-    let vh = window.innerHeight * 0.01;
-    document.documentElement.style.setProperty('--vh', `${vh}px`);
-  }
-
-  // Ensure the user doesn't accidentally toggle the side nav after clicking options and then hitting ENTER to submit a guess
-  buttonKeyDown(event: KeyboardEvent) {
-    event.preventDefault();
-  }
-
   switchViews(): void {
     if (this.showGame) {
       this.options.toggle();
@@ -118,7 +107,7 @@ export class AppComponent {
     const dialogRef = this.dialog.open(VictoryDialogComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
-      //  todo?
+
     });
   }
 
