@@ -223,22 +223,22 @@ export class BoardStateService {
 
     this.updateBoardState(guess);
 
-    if (this.checkVictory(guess)) return;
-    if (this.checkFailure()) return;
-
     boardState.previousGuesses.push(guess);
+
+    if (this.checkVictory(guess)) {
+      return;
+    }
+
+    this.checkFailure();
   }
 
-  private checkFailure(): boolean {
+  private checkFailure(): void {
     let boardState: BoardState = this.boardState.value;
 
     if (!boardState.success && boardState.rowIndex >= this.maxGuesses) {
       boardState.failure = true;
       this.processGameEnd(boardState);
-      return true;
     }
-
-    return false;
   }
 
   private checkVictory(guess: string): boolean {
