@@ -9,6 +9,7 @@ import { FailureDialogComponent } from '../app/components/failure-dialog/failure
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
 import { MatSidenav } from '@angular/material/sidenav';
+import { Session } from './models/session.interface';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +27,8 @@ export class AppComponent {
   questionIcon = faQuestionCircle;
   cogsIcon = faCogs;
   darkMode: boolean = false;
+  showError: boolean = false;
+  session: Session;
 
   constructor(
     private dictionaryService: DictionaryService,
@@ -43,6 +46,8 @@ export class AppComponent {
 
       this.sessionService.session.subscribe(session => {
         if (!session) return;
+
+        this.session = session;
 
         this.darkMode = session.options.darkMode;
         
@@ -112,8 +117,22 @@ export class AppComponent {
   }
 
   openErrorDialog(): void {
+    //  Already showing it
+    if (this.showError) return;
+
+    this.showError = true;
+
     let error: string = this.boardState.error;
 
-    this.snackBar.open(error, "OK", {verticalPosition: "top", horizontalPosition: "center", duration: 2000});
+    let snackbarBodyClass: string = this.darkMode ? "error-snackbar-body--dark" : "error-snackbar-body";
+    let snackbarTextClass: string = "error-snackbar-text";
+    let panelClasses: string[] = [snackbarBodyClass, snackbarTextClass];
+
+    this.snackBar.open(error, "OK", {panelClass: panelClasses, verticalPosition: "top", horizontalPosition: "center", duration: 2000});
+    
+    //  Give animation time to play and finish
+    setTimeout(() => {
+      this.showError = false;
+    }, 1000);
   }
 }

@@ -18,7 +18,7 @@
     <mat-sidenav-content class="game">
         <div class="game-header">
             <!-- DEBUG -->
-            <!-- Secret Word: {{boardState.secretWord}} -->
+            <!-- Secret Word: {{session.secret}} -->
             <fa-icon class="faq-icon" (click)="faq.toggle()" [icon]="questionIcon" size="lg"></fa-icon>
             <label class="game-title">Letter Flash</label>
             <fa-icon class="options-icon" (click)="options.toggle()" [icon]="cogsIcon" size="lg"></fa-icon>
@@ -28,7 +28,7 @@
 
         <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 
-        <app-game-board [ngClass]="{'hidden': !showGame}" class="game-board"></app-game-board>
+        <app-game-board [ngClass]="{'hidden': !showGame, 'shake': showError}" class="game-board"></app-game-board>
 
         <app-keyboard [ngClass]="{'hidden': !showGame}" class="game-keyboard"></app-keyboard>
 
