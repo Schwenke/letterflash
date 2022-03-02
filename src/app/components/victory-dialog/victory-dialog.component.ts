@@ -1,7 +1,9 @@
-import {Component, OnInit, Inject} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { MatDialogRef} from '@angular/material/dialog';
+import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock } from 'src/app/constants';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
+import { Session } from 'src/app/models/session.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TimerService } from 'src/app/services/timer.service';
@@ -14,13 +16,8 @@ import { TimerService } from 'src/app/services/timer.service';
 
 export class VictoryDialogComponent implements OnInit {
 
-  //  emojis :eyes:
-  private perfectBlock = "🟩";
-  private greyBlock = "⬜";
-  private partialBlock = "🟨";
-
-  boardState: BoardState = {} as BoardState;
-  options: Options = {} as Options;
+  boardState: BoardState;
+  session: Session;
   timeSpent: string = "";
   mode: string = "Default";
 
@@ -39,7 +36,7 @@ export class VictoryDialogComponent implements OnInit {
         if (!session) return;
 
         this.boardState = boardState;
-        this.options = session.options;
+        this.session = session;
         this.setModeMessage();
         this.timeSpent = this.timerService.getClockTime();
       });
@@ -47,11 +44,13 @@ export class VictoryDialogComponent implements OnInit {
   }
 
   private setModeMessage(): void {
-    if (this.options.hardMode && this.options.extremeMode) {
+    let options: Options = this.session.options;
+
+    if (options.hardMode && options.extremeMode) {
       this.mode = "Hard mode, Extreme mode";
-    } else if (this.options.hardMode) {
+    } else if (options.hardMode) {
       this.mode = "Hard mode";
-    } else if (this.options.extremeMode) {
+    } else if (options.extremeMode) {
       this.mode = "Extreme mode";
     } else {
       this.mode = "Default";
@@ -64,17 +63,18 @@ export class VictoryDialogComponent implements OnInit {
   }
 
   public reset(): void {
-    this.boardStateService.reset();
+    this.boardStateService.startNewGame();
     this.dialogRef.close();
   }
 
   // best function ever
   private generateEmojis(): string {
     let message: string = "";
+    let secret: string = this.session.secret;
 
     let modeOptions: string = this.getModeOptionString();
     
-    message += `${this.boardState.secretWord} (${this.boardState.rowIndex}/${6}) ${modeOptions}\n`;
+    message += `${secret} (${this.boardState.rowIndex}/${6}) ${modeOptions}\n`;
 
     for (let i = 0; i < this.boardState.rowIndex; i++) {
       let word = this.boardState.words[i];
@@ -95,29 +95,26 @@ export class VictoryDialogComponent implements OnInit {
   }
 
   private getModeOptionString(): string {
-    if (this.options.hardMode && this.options.extremeMode) return "⁂";
-    if (this.options.extremeMode) return "⁑";
-    if (this.options.hardMode) return "⁕";
+    let options: Options = this.session.options;
+
+    if (options.hardMode && options.extremeMode) return ThreeStarSymbol;
+    if (options.extremeMode) return TwoStarSymbol;
+    if (options.hardMode) return OneStarSymbol;
 
     return "";
   }
 
   private writeToClipboard(text: string) {
-    navigator.clipboard.writeText(text).then(function () {
-
-    }, function () {
-
-    });
+    navigator.clipboard.writeText(text);
   }
-
 
   private getBlock(letter: Letter): string {
     if (letter.perfect) {
-      return this.perfectBlock;
+      return GreenBlock;
     } else if (letter.partial) {
-      return this.partialBlock;
+      return YellowBlock;
     } else {
-      return this.greyBlock;
+      return GreyBlock;
     }
   }
 

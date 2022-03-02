@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { MaxGuesses } from '../constants';
 import { BoardState, Letter, Word } from '../models/board-state.interface';
-import { Options } from '../models/options.interface';
+import { Session } from '../models/session.interface';
 import { DictionaryService } from './dictionary.service';
 import { KeyboardService } from './keyboard.service';
 import { SessionService } from './session.service';
@@ -17,8 +18,9 @@ import { TimerService } from './timer.service';
  */
 export class BoardStateService {
     boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({ error: ""} as BoardState);
-    options: Options = {} as Options;
-    maxGuesses: number = 6;
+    session: Session;
+    //  Needed so we don't save the game into session again if page is refreshed when game state is on victory or failure dialog
+    loadingSession: boolean = false;
 
   constructor(
     private dictionaryService: DictionaryService,
@@ -30,82 +32,108 @@ export class BoardStateService {
     this.sessionService.session.subscribe(session => {
       if (!session) return;
       
-      this.options = session.options;
+      this.session = session;
     });
   }
 
-  private initialize(): void {
-    let boardState = this.boardState.value;
+  public initialize(): void {
+    if (this.shouldLoadPreviousSession()) {
+      this.loadExistingSession();
+    } else {
+      this.reset();
+    }
+  }
 
+  public startNewGame(): void {
+    this.reset();
+
+    //  If a user starts a new game, clear out existing session secret and guesses
+    this.updateSession();
+  }
+
+  private reset(): void {
     let wordLength = this.getWordLength();
+
+    this.startSession();
+
+    this.resetBoard(wordLength);
+
+    this.resetTimer();
+  }
+
+  private resetBoard(wordLength: number): void {
+    let boardState = this.getDefaultBoardState(wordLength);
+
+    this.keyboardService.initialize();
+
+    this.boardState.next(boardState);
+  }
+
+  private resetTimer(): void {
+    this.timerService.reset();
+    this.timerService.start();
+  }
+
+  /**
+   * Generates a new secret word and places it into the session
+   * Also reinitializes the session guess list
+   */
+  private startSession(): void {
+    let wordLength = this.getWordLength();
+    
+    this.session.secret = this.dictionaryService.generateWord(wordLength);
+
+    this.session.guesses = [];
+  }
+
+  private getDefaultBoardState(wordLength: number): BoardState {
+    let boardState: BoardState = {} as BoardState;
 
     boardState.rowIndex = 0;
     boardState.columnIndex = -1;
     boardState.success = false;
     boardState.failure = false;
     boardState.error = "";
-    boardState.previousGuesses = [];
-    boardState.secretWord = this.dictionaryService.generateWord(wordLength);
+    boardState.words = [];
 
-    this.generateDefaultBoardState();
+    for (let i = 0; i < MaxGuesses; i++) {
+      let word = {} as Word;
+      word.letters = [];
 
-    this.boardState.next(boardState);
-  }
+      boardState.words.push(word);
 
-  public reset(): void {
-    this.timerService.reset();
-    this.initialize();
-    this.keyboardService.reset();
-    this.timerService.start();
-  }
-
-  private updateBoardState(guess: string): void {
-    let boardState: BoardState = this.boardState.value;
-
-    let secretWordLetters = boardState.secretWord.split('');
-    let partialClues: string[] = [];
-    let perfectClues: string[] = [];
-
-    //  First look for perfect matches - correct letter in the correct position
-    for (let i = 0; i < guess.length; i++) {
-      let guessLetter = guess[i];
-      let correctLetter = boardState.secretWord[i];
-      let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
-      const index = secretWordLetters.indexOf(guessLetter);
-
-      boardStateLetter.committed = true;
-
-      if (guessLetter === correctLetter) {
-        boardStateLetter.perfect = true;
-        perfectClues.push(guessLetter);
-        secretWordLetters.splice(index, 1);
+      for (let j = 0; j < wordLength; j++) {
+        let letter = { letter: "", perfect: false, partial: false, committed: false } as Letter;
+        boardState.words[i].letters.push(letter);
       }
     }
 
-    //  Next, look for partial matches - correct letter in the incorrect position
-    //  The loops are done separately so we do not accidentally mark a word with multiples of the same correct clue twice - E.g. Secret word "HUMAN" and guess "AVIAN"
-    //  Specifically ignore letters marked as perfect so we do not overwrite perfect status - can happen e.g. in 7 word mode when secret is FEDERAL and guess is FELLOWS
-    for (let i = 0; i < guess.length; i++) {
-      let guessLetter = guess[i];
-      let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
-      const index = secretWordLetters.indexOf(guessLetter);
+    return boardState;
+  }
 
-      if (!boardStateLetter.perfect && index > -1) {
-        partialClues.push(guessLetter);
-        boardStateLetter.partial = true;
-        secretWordLetters.splice(index, 1);
-      }
+  private loadExistingSession(): void {
+    this.loadingSession = true;
+
+    let wordLength: number = this.session.guesses[0].length;
+
+    this.resetBoard(wordLength);
+
+    for (let i = 0; i < this.session.guesses.length; i++) {
+      let previousGuess: string = this.session.guesses[i];
+
+      this.updateBoardState(previousGuess);
+
+      //  Previous game may have ended in failure or success - need to make sure we replay the dialog
+      this.checkForGameEnd(previousGuess);
     }
 
-    this.keyboardService.registerKeys(guess, partialClues, perfectClues);
+    this.resetTimer();
 
-    //  Move to the next row
-    ++boardState.rowIndex;
+    this.loadingSession = false;
+  }
 
-    //  Reset column index
-    boardState.columnIndex = -1;
-
-    this.boardState.next(boardState);
+  private shouldLoadPreviousSession(): boolean {
+    return this.session.guesses && this.session.guesses.length > 0;
   }
 
   public removeInput(): void {
@@ -129,7 +157,7 @@ export class BoardStateService {
   public appendInput(key: string): void {
     let boardState: BoardState = this.boardState.value;
 
-    let wordLength = this.getWordLength() -1;
+    let wordLength = this.getWordLength() - 1;
 
     //  Can't append any more characters - word is at max length
     if (boardState.columnIndex === wordLength) return;
@@ -150,28 +178,6 @@ export class BoardStateService {
     }
   }
 
-  private generateDefaultBoardState(): void {
-    let boardState: BoardState = this.boardState.value;
-
-    let wordLength = this.getWordLength();
-
-    boardState.words = [];
-
-    for (let i = 0; i < this.maxGuesses; i++) {
-      let word = {} as Word;
-      word.letters = [];
-
-      boardState.words.push(word);
-
-      for (let j = 0; j < wordLength; j++) {
-        let letter = { letter: "", perfect: false, partial: false, committed: false } as Letter;
-        boardState.words[i].letters.push(letter);
-      }
-    }
-
-    this.boardState.next(boardState);
-  }
-
   public getCurrentWord(): Word {
     let boardState: BoardState = this.boardState.value;
 
@@ -179,7 +185,7 @@ export class BoardStateService {
   }
 
   public getWordLength(): number {
-    return +this.options.wordLength;
+    return +this.session.options.wordLength;
   }
 
   getUserGuess(): string {
@@ -223,8 +229,14 @@ export class BoardStateService {
 
     this.updateBoardState(guess);
 
-    boardState.previousGuesses.push(guess);
+    this.session.guesses.push(guess);
 
+    this.updateSession();
+
+    this.checkForGameEnd(guess);
+  }
+
+  private checkForGameEnd(guess: string): void {
     if (this.checkVictory(guess)) {
       return;
     }
@@ -232,10 +244,61 @@ export class BoardStateService {
     this.checkFailure();
   }
 
+  private updateBoardState(guess: string): void {
+    let boardState: BoardState = this.boardState.value;
+    let secret: string = this.session.secret;
+
+    let secretWordLetters = secret.split('');
+    let partialClues: string[] = [];
+    let perfectClues: string[] = [];
+
+    //  First look for perfect matches - correct letter in the correct position
+    for (let i = 0; i < guess.length; i++) {
+      let guessLetter = guess[i];
+      let correctLetter = secret[i];
+      let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
+      const index = secretWordLetters.indexOf(guessLetter);
+
+      boardStateLetter.committed = true;
+      boardStateLetter.letter = guessLetter;
+
+      if (guessLetter === correctLetter) {
+        boardStateLetter.perfect = true;
+        perfectClues.push(guessLetter);
+        secretWordLetters.splice(index, 1);
+      }
+    }
+
+    //  Next, look for partial matches - correct letter in the incorrect position
+    //  The loops are done separately so we do not accidentally mark a word with multiples of the same correct clue twice - E.g. Secret word "HUMAN" and guess "AVIAN"
+    //  Specifically ignore letters marked as perfect so we do not overwrite perfect status - can happen e.g. in 7 word mode when secret is FEDERAL and guess is FELLOWS
+    for (let i = 0; i < guess.length; i++) {
+      let guessLetter = guess[i];
+      let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
+      const index = secretWordLetters.indexOf(guessLetter);
+
+      if (!boardStateLetter.perfect && index > -1) {
+        partialClues.push(guessLetter);
+        boardStateLetter.partial = true;
+        secretWordLetters.splice(index, 1);
+      }
+    }
+
+    this.keyboardService.registerKeys(guess, partialClues, perfectClues);
+
+    //  Move to the next row
+    ++boardState.rowIndex;
+
+    //  Reset column index
+    boardState.columnIndex = -1;
+
+    this.boardState.next(boardState);
+  }
+
   private checkFailure(): void {
     let boardState: BoardState = this.boardState.value;
 
-    if (!boardState.success && boardState.rowIndex >= this.maxGuesses) {
+    if (!boardState.success && boardState.rowIndex >= MaxGuesses) {
       boardState.failure = true;
       this.processGameEnd(boardState);
     }
@@ -244,7 +307,7 @@ export class BoardStateService {
   private checkVictory(guess: string): boolean {
     let boardState: BoardState = this.boardState.value;
 
-    if (guess === boardState.secretWord) {
+    if (guess === this.session.secret) {
       boardState.success = true;
       this.processGameEnd(boardState);
       return true;
@@ -253,10 +316,18 @@ export class BoardStateService {
     return false;
   }
 
+  private updateSession(): void {
+    if (this.loadingSession) return;
+
+    let boardState: BoardState = this.boardState.value;
+    
+    this.sessionService.update(boardState);
+    this.sessionService.save();
+  }
+
   private processGameEnd(boardState: BoardState): void {
     this.timerService.stop();
-    this.sessionService.updateSession(boardState);
-    this.sessionService.saveSession();
+    this.updateSession();
     this.boardState.next(boardState);
   }
 
@@ -288,7 +359,7 @@ export class BoardStateService {
 
   private validateHardMode(guess: string): boolean {
     //  not enabled
-    if (!this.options.hardMode) return true;
+    if (!this.session.options.hardMode) return true;
 
     let correctlyGuessedLetters = this.getCorrectlyGuessedLetters();
 
@@ -309,10 +380,10 @@ export class BoardStateService {
   }
 
   private guessedPreviously(guess: string): boolean {
-    let boardState: BoardState = this.boardState.value;
+    let previousGuesses: string[] = this.session.guesses;
 
-    for (let i = 0; i < boardState.previousGuesses.length; i++) {
-      let previousGuess = boardState.previousGuesses[i];
+    for (let i = 0; i < previousGuesses.length; i++) {
+      let previousGuess = previousGuesses[i];
 
       if (guess === previousGuess) {
         return true

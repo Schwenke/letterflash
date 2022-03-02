@@ -8,55 +8,11 @@ import { Key, Keyboard, KeyboardRow } from '../models/keyboard.interface';
 export class KeyboardService {
   keyboard: BehaviorSubject<Keyboard> = new BehaviorSubject<Keyboard>({} as Keyboard);
 
-  constructor(
-
-  ) { 
-    this.initializeKeyBoard();
+  constructor() { 
+    this.initialize();
   }
 
-  public reset(): void {
-    this.initializeKeyBoard();
-  }
-
-  public registerKeys(guess: string, partialClues: string[], perfectClues: string[]): void {
-    let keyBoard = this.keyboard.value;
-
-    for (let i = 0; i < guess.length; i++) {
-      let letter = guess[i];
-      let partial = partialClues.indexOf(letter) > -1;
-      let perfect = perfectClues.indexOf(letter) > -1;
-
-      let key = this.getKey(keyBoard, letter);
-
-      if (key) {
-        key.perfect = perfect;
-        key.partial = partial;
-        key.guessed = true;
-      }
-    }
-
-    this.keyboard.next(keyBoard);
-  }
-
-  public validateInput(key: string): boolean {
-    return /^[a-zA-Z]$/.test(key);
-  }
-
-  private getKey(keyBoard: Keyboard, letter: string): Key | null {   
-    for (let i = 0; i < keyBoard.rows.length; i++) {
-      let row = keyBoard.rows[i];
-
-      let keyBoardKey = row.keys.find(key => key.letter === letter);
-
-      if (keyBoardKey) {
-        return keyBoardKey;
-      }
-    }
-
-    return null;
-  }
-
-  private initializeKeyBoard(): void {
+  public initialize(): void {
     let keyBoard = this.keyboard.value;
 
     keyBoard.rows = [];
@@ -107,4 +63,43 @@ export class KeyboardService {
 
     this.keyboard.next(keyBoard);
   }
+
+  public registerKeys(guess: string, partialClues: string[], perfectClues: string[]): void {
+    let keyBoard = this.keyboard.value;
+
+    for (let i = 0; i < guess.length; i++) {
+      let letter = guess[i];
+      let partial = partialClues.indexOf(letter) > -1;
+      let perfect = perfectClues.indexOf(letter) > -1;
+
+      let key = this.getKey(keyBoard, letter);
+
+      if (key) {
+        key.perfect = perfect;
+        key.partial = partial;
+        key.guessed = true;
+      }
+    }
+
+    this.keyboard.next(keyBoard);
+  }
+
+  public validateInput(key: string): boolean {
+    return /^[a-zA-Z]$/.test(key);
+  }
+
+  private getKey(keyBoard: Keyboard, letter: string): Key | null {   
+    for (let i = 0; i < keyBoard.rows.length; i++) {
+      let row = keyBoard.rows[i];
+
+      let keyBoardKey = row.keys.find(key => key.letter === letter);
+
+      if (keyBoardKey) {
+        return keyBoardKey;
+      }
+    }
+
+    return null;
+  }
+
 }

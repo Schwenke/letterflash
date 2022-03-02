@@ -1,7 +1,6 @@
 import {Component, OnInit, Inject} from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
-import { TimeSpan } from 'src/app/models/watch.interface';
-import { BoardStateService } from 'src/app/services/board-state.service';
+import { SessionService } from 'src/app/services/session.service';
 import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
@@ -17,15 +16,15 @@ export class FailureDialogComponent implements OnInit {
   constructor(
     private timerService: TimerService,
     public dialogRef: MatDialogRef<FailureDialogComponent>,
-    private boardStateService: BoardStateService
+    private sessionService: SessionService
   ) {}
 
   ngOnInit(): void {
-    this.boardStateService.boardState.subscribe(boardState => {
-      if (!boardState) return;
+    this.sessionService.session.subscribe(session => {
+      if (!session) return;
 
       this.timeSpent = this.timerService.getClockTime();
-      this.secretWord = boardState.secretWord;
+      this.secretWord = session.secret;
     });
   }
 

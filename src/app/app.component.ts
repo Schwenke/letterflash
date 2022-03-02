@@ -52,7 +52,7 @@ export class AppComponent {
 
         this.initialized = true;
 
-        this.boardStateService.reset();
+        this.boardStateService.initialize();
       })
     });
 
@@ -98,7 +98,7 @@ export class AppComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result && result === true) {
-        this.boardStateService.reset();
+        this.boardStateService.startNewGame();
       }
     });
   }
@@ -114,6 +114,6 @@ export class AppComponent {
   openErrorDialog(): void {
     let error: string = this.boardState.error;
 
-    this.snackBar.open(error, "OK", {verticalPosition: "top", horizontalPosition: "center", duration: 1500});
+    this.snackBar.open(error, "OK", {verticalPosition: "top", horizontalPosition: "center", duration: 2000});
   }
 }

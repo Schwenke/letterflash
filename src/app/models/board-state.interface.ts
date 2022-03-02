@@ -6,8 +6,6 @@ export interface BoardState {
     columnIndex: number;
 
     //  Game State
-    secretWord: string;
-    previousGuesses: string[];
     success: boolean;
     failure: boolean;
     error: string;

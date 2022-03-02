@@ -45,7 +45,7 @@ export class OptionsComponent implements OnInit {
   }
 
   reset(): void {
-    this.boardStateService.reset();
+    this.boardStateService.startNewGame();
     this.resetClicked.emit(true);
   }
 
@@ -58,7 +58,7 @@ export class OptionsComponent implements OnInit {
   }
 
   storeOptions(): void {
-    this.sessionService.saveSession();
-    this.sessionService.refreshOptions();
+    this.sessionService.save();
+    this.sessionService.refresh();
   }
 }

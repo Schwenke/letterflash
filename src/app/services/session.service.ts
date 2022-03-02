@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { DefaultWordLength, SessionKey } from '../constants';
 import { BoardState } from '../models/board-state.interface';
 import { Options } from '../models/options.interface';
 import { Game, Session } from '../models/session.interface';
@@ -11,8 +12,6 @@ import { TimerService } from './timer.service';
 export class SessionService {
 
   session: BehaviorSubject<Session>;
-
-  private storageKey = "uwg-session";
 
   constructor(
     private timerService: TimerService
@@ -27,44 +26,48 @@ export class SessionService {
   }
 
   // Saves the current session into local storage
-  saveSession(push: boolean = false): void {
+  save(): void {
     let session = this.session.value;
 
     let jsonValue = JSON.stringify(session);
 
-    localStorage.setItem(this.storageKey, jsonValue);
+    localStorage.setItem(SessionKey, jsonValue);
   }
 
-  refreshOptions(): void {
+  //  Gets the current observable value and pushes it back, triggering an update in components that listen
+  refresh(): void {
     let session = this.session.value;
 
     this.session.next(session);
   }
 
   //  Updates the current session with data from the board state
-  updateSession(boardState: BoardState): void {
-    let currentGame = this.createGameFromBoardState(boardState);
-
+  update(boardState: BoardState): void {
     let session = this.session.value;
 
-    let length = session.previousGames.unshift(currentGame);
+    if (boardState.failure || boardState.success) {
+      let currentGame = this.createGameFromBoardState(boardState);
 
-    if (length > 100) {
-      //  arbitrary number of games to track
-      session.previousGames.pop();
+      let length = session.previousGames.unshift(currentGame);
+
+      if (length > 100) {
+        //  arbitrary number of games to track
+        session.previousGames.pop();
+      }
     }
 
     this.session.next(session);
   }
 
   private createGameFromBoardState(boardState: BoardState): Game {
+    let session = this.session.value;
     let optionsList: string[] = this.getCurrentGameOptionsList();
 
     let game: Game = {
       timeSpent: this.timerService.getClockTime(),
       date: new Date().toLocaleDateString("en-US"),
-      guesses: boardState.previousGuesses,
-      word: boardState.secretWord,
+      guesses: session.guesses,
+      word: session.secret,
       victory: boardState.success,
       options: optionsList
     };
@@ -85,7 +88,7 @@ export class SessionService {
   }
 
   private getExistingSession(): Session | null {
-    let sessionJSON = localStorage.getItem(this.storageKey);
+    let sessionJSON = localStorage.getItem(SessionKey);
 
     if (sessionJSON) {
       //  backwards compat fix
@@ -99,19 +102,23 @@ export class SessionService {
 
   private createSession(): void {
     let session: Session = {
-      options: this.getDefaultOptions(),
-      previousGames: []
+      secret: "",
+      guesses: [],
+      previousGames: [],
+      options: this.getDefaultOptions()
     };
 
     this.session = new BehaviorSubject<Session>(session);
   }
 
   private getDefaultOptions(): Options {
+    let defaultWordLength: string = `${DefaultWordLength}`;
+
     return {
       hardMode: false,
       extremeMode: false,
       darkMode: false,
-      wordLength: "5"
+      wordLength: defaultWordLength
     };
   }
 }

@@ -1,6 +1,8 @@
 import { Options } from "./options.interface";
 
 export interface Session {
+    guesses: string[];
+    secret: string;
     previousGames: Game[];
     options: Options;
 }
