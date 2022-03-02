@@ -97,7 +97,9 @@ export class AppComponent {
     const dialogRef = this.dialog.open(ResultsDialogComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
-
+      if (result) {
+        this.boardStateService.startNewGame();
+      }
     });
   }
 

@@ -30,6 +30,8 @@ export class ResultsDialogComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.timeSpent = this.timerService.getClockTime();
+
     this.boardStateService.boardState.subscribe(boardState => {
       if (!boardState) return;
 
@@ -39,7 +41,6 @@ export class ResultsDialogComponent implements OnInit {
         this.boardState = boardState;
         this.session = session;
         this.setMessage();
-        this.timeSpent = this.timerService.getClockTime();
       });
     })
   }
@@ -58,8 +59,7 @@ export class ResultsDialogComponent implements OnInit {
   }
 
   public reset(): void {
-    this.boardStateService.startNewGame();
-    this.dialogRef.close();
+    this.dialogRef.close(true);
   }
 
   // best function ever
