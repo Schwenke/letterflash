@@ -9,15 +9,16 @@ import { SessionService } from 'src/app/services/session.service';
 import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
-  selector: 'app-victory-dialog',
-  templateUrl: './victory-dialog.component.html',
-  styleUrls: ['./victory-dialog.component.scss']
+  selector: 'app-results-dialog',
+  templateUrl: './results-dialog.component.html',
+  styleUrls: ['./results-dialog.component.scss']
 })
 
-export class VictoryDialogComponent implements OnInit {
+export class ResultsDialogComponent implements OnInit {
 
   boardState: BoardState;
   session: Session;
+  message: string = "";
   timeSpent: string = "";
   mode: string = "Default";
 
@@ -25,7 +26,7 @@ export class VictoryDialogComponent implements OnInit {
     private timerService: TimerService,
     private boardStateService: BoardStateService,
     private sessionService: SessionService,
-    public dialogRef: MatDialogRef<VictoryDialogComponent>
+    public dialogRef: MatDialogRef<ResultsDialogComponent>
   ) {}
 
   ngOnInit(): void {
@@ -37,23 +38,17 @@ export class VictoryDialogComponent implements OnInit {
 
         this.boardState = boardState;
         this.session = session;
-        this.setModeMessage();
+        this.setMessage();
         this.timeSpent = this.timerService.getClockTime();
       });
     })
   }
 
-  private setModeMessage(): void {
-    let options: Options = this.session.options;
-
-    if (options.hardMode && options.extremeMode) {
-      this.mode = "Hard mode, Extreme mode";
-    } else if (options.hardMode) {
-      this.mode = "Hard mode";
-    } else if (options.extremeMode) {
-      this.mode = "Extreme mode";
+  private setMessage(): void {
+    if (this.boardState.success) {
+      this.message = `Congratulations! You guessed the secret word ${this.session.secret}`;
     } else {
-      this.mode = "Default";
+      this.message = `Too bad! You failed to guess the secret word ${this.session.secret}`;
     }
   }
 
@@ -73,8 +68,10 @@ export class VictoryDialogComponent implements OnInit {
     let secret: string = this.session.secret;
 
     let modeOptions: string = this.getModeOptionString();
+    let guessesMade: string = this.boardState.success ? `${this.boardState.rowIndex}` : "X";
     
-    message += `${secret} (${this.boardState.rowIndex}/${6}) ${modeOptions}\n`;
+    message += "--Letter Flash--\n";
+    message += `${secret} (${guessesMade}/${6}) ${modeOptions}\n`;
 
     for (let i = 0; i < this.boardState.rowIndex; i++) {
       let word = this.boardState.words[i];
@@ -87,9 +84,6 @@ export class VictoryDialogComponent implements OnInit {
 
       message += "\n";
     }
-
-    // trim end
-    message = message.trim();
 
     return message;
   }

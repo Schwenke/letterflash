@@ -11,12 +11,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
-import { VictoryDialogComponent } from './components/victory-dialog/victory-dialog.component';
+import { ResultsDialogComponent } from './components/results-dialog/results-dialog.component';
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { HttpClientModule } from "@angular/common/http";
-import { FailureDialogComponent } from './components/failure-dialog/failure-dialog.component';
 import { KeyboardComponent } from './components/keyboard/keyboard.component';
 import { OptionsComponent } from './components/options/options.component';
 import { FaqComponent } from './components/faq/faq.component';
@@ -28,8 +27,7 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   declarations: [
     AppComponent,
     GameBoardComponent,
-    VictoryDialogComponent,
-    FailureDialogComponent,
+    ResultsDialogComponent,
     KeyboardComponent,
     OptionsComponent,
     FaqComponent,

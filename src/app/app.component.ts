@@ -4,8 +4,7 @@ import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
 import { SessionService } from './services/session.service';
 import { MatDialog } from '@angular/material/dialog';
-import { VictoryDialogComponent } from '../app/components/victory-dialog/victory-dialog.component'
-import { FailureDialogComponent } from '../app/components/failure-dialog/failure-dialog.component';
+import { ResultsDialogComponent } from './components/results-dialog/results-dialog.component'
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
 import { MatSidenav } from '@angular/material/sidenav';
@@ -67,11 +66,11 @@ export class AppComponent {
       this.boardState = boardState;
 
       if (boardState.success) {
-        this.openVictoryDialog();
+        this.openResultsDialog();
       }
 
       if (boardState.failure) {
-        this.openFailureDialog();
+        this.openResultsDialog();
       }
 
       if (boardState.error.length > 0) {
@@ -91,25 +90,11 @@ export class AppComponent {
   viewResults(): void {
     this.options.toggle();
     
-    if (this.boardState.success) {
-      this.openVictoryDialog();
-    } else {
-      this.openFailureDialog();
-    }
-  }
-
-  openFailureDialog(): void {
-    const dialogRef = this.dialog.open(FailureDialogComponent, {});
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (result && result === true) {
-        this.boardStateService.startNewGame();
-      }
-    });
+    this.openResultsDialog();
   }
   
-  openVictoryDialog(): void {
-    const dialogRef = this.dialog.open(VictoryDialogComponent, {});
+  openResultsDialog(): void {
+    const dialogRef = this.dialog.open(ResultsDialogComponent, {});
 
     dialogRef.afterClosed().subscribe(result => {
 
