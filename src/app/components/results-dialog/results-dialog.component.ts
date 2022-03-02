@@ -85,6 +85,9 @@ export class ResultsDialogComponent implements OnInit {
       message += "\n";
     }
 
+    // trim end
+    message = message.trim();
+
     return message;
   }
 
