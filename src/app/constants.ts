@@ -13,3 +13,6 @@ export const GreyBlock = "⬜";
 export const YellowBlock = "🟨";
 
 export const SessionKey = "uwg-session";
+
+//  Misc
+export const BaseURL = "https://www.letterflash.com/"

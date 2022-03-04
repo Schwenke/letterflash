@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialogRef} from '@angular/material/dialog';
-import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock } from 'src/app/constants';
+import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL } from 'src/app/constants';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
 import { Session } from 'src/app/models/session.interface';
@@ -21,6 +21,12 @@ export class ResultsDialogComponent implements OnInit {
   message: string = "";
   timeSpent: string = "";
   mode: string = "Default";
+
+  //  button state
+  shareResultsText: string = "Share results";
+  sharePuzzleText: string = "Share a link to this puzzle";
+  shareResultsClicked: boolean = false;
+  sharePuzzleClicked: boolean = false;
 
   constructor(
     private timerService: TimerService,
@@ -53,13 +59,27 @@ export class ResultsDialogComponent implements OnInit {
     }
   }
 
-  public copyToClipboard(): void {
+  public shareResults(): void {
     let text: string = this.generateEmojis();
     this.writeToClipboard(text);
+
+    this.shareResultsText = "Results copied to clipboard!"
+    this.shareResultsClicked = true;
   }
 
   public reset(): void {
     this.dialogRef.close(true);
+  }
+
+  public sharePuzzle(): void {
+    let secret: string = this.session.secret;
+    let encodedSecret: string = btoa(secret);
+    let shareLink: string = `${BaseURL}?share=${encodedSecret}`;
+
+    this.writeToClipboard(shareLink);
+
+    this.sharePuzzleText = "Share link copied to clipboard!"
+    this.sharePuzzleClicked = true;
   }
 
   // best function ever

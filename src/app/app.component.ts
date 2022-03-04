@@ -9,6 +9,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Session } from './models/session.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -34,7 +35,8 @@ export class AppComponent {
     private sessionService: SessionService,
     private boardStateService: BoardStateService,
     public dialog: MatDialog,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private activatedRoute: ActivatedRoute
   ) {
 
   }
@@ -56,7 +58,16 @@ export class AppComponent {
 
         this.initialized = true;
 
-        this.boardStateService.initialize();
+        this.activatedRoute.queryParamMap.subscribe(params => {
+          let shareLink = params.get('share');
+        
+          if (shareLink && shareLink.length > 0) {
+            let secret: string = atob(shareLink);
+            this.boardStateService.startCustomGame(secret);
+          } else {
+            this.boardStateService.initialize();
+          }
+        });
       })
     });
 

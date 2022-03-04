@@ -7,29 +7,26 @@
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+}
 
+.message-header {
+    font-size: large;
+    text-align: center;
+}
 
-    .message-header {
-        font-size: large;
-        text-align: center;
-    }
+.message-tries {
+    font-size: large;
+    text-align: center;  
+}
 
-    .message-tries {
-        font-size: large;
-        text-align: center;  
-    }
+.dialog-button {
+    font-size: medium;
+    width: auto;
+    height: 50px;
+    color: mat.get-color-from-palette($accent, 'default');
 
-    .copy-button {
-        font-size: large;
-        width: auto;
-        height: 50px;
-        color: mat.get-color-from-palette($accent, 'default');
-    }
-
-    .reset-button {
-        font-size: large;
-        width: auto;
-        height: 50px;
-        color: mat.get-color-from-palette($accent, 'default');
+    &--pressed {
+        color: mat.get-color-from-palette($primary, 'default');
+        opacity: 90%;
     }
 }

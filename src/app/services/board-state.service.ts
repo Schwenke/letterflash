@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { MaxGuesses } from '../constants';
+import { DefaultWordLength, MaxGuesses } from '../constants';
 import { BoardState, Letter, Word } from '../models/board-state.interface';
 import { Session } from '../models/session.interface';
 import { DictionaryService } from './dictionary.service';
@@ -17,21 +17,22 @@ import { TimerService } from './timer.service';
  * Bulk of the game state processing happens here
  */
 export class BoardStateService {
-    boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({ error: ""} as BoardState);
-    session: Session;
-    //  Needed so we don't save the game into session again if page is refreshed when game state is on victory or failure dialog
-    loadingSession: boolean = false;
+  boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({ error: "" } as BoardState);
+  session: Session;
+  //  Needed so we don't save the game into session again if page is refreshed when game state is on victory or failure dialog
+  loadingSession: boolean = false;
+  wordLength: number = DefaultWordLength;
 
   constructor(
     private dictionaryService: DictionaryService,
     private timerService: TimerService,
     private keyboardService: KeyboardService,
     private sessionService: SessionService
-  ) { 
+  ) {
 
     this.sessionService.session.subscribe(session => {
       if (!session) return;
-      
+
       this.session = session;
     });
   }
@@ -51,18 +52,38 @@ export class BoardStateService {
     this.updateSession();
   }
 
-  private reset(): void {
-    let wordLength = this.getWordLength();
+  public startCustomGame(sharedSecret: string): void {
+    this.wordLength = sharedSecret.length;
 
-    this.startSession();
+    this.session.secret = sharedSecret;
 
-    this.resetBoard(wordLength);
+    this.session.guesses = [];
+
+    this.resetBoard();
+
+    //  Obliterate old session
+    this.updateSession();
+
+    //  Clear the URL parameter
+    window.history.pushState({}, document.title, "/");
 
     this.resetTimer();
   }
 
-  private resetBoard(wordLength: number): void {
-    let boardState = this.getDefaultBoardState(wordLength);
+  private reset(): void {
+    this.wordLength = +this.session.options.wordLength;
+
+    this.session.secret = this.dictionaryService.generateWord(this.wordLength);
+
+    this.session.guesses = [];
+
+    this.resetBoard();
+
+    this.resetTimer();
+  }
+
+  private resetBoard(): void {
+    let boardState = this.getDefaultBoardState();
 
     this.keyboardService.initialize();
 
@@ -74,19 +95,7 @@ export class BoardStateService {
     this.timerService.start();
   }
 
-  /**
-   * Generates a new secret word and places it into the session
-   * Also reinitializes the session guess list
-   */
-  private startSession(): void {
-    let wordLength = this.getWordLength();
-    
-    this.session.secret = this.dictionaryService.generateWord(wordLength);
-
-    this.session.guesses = [];
-  }
-
-  private getDefaultBoardState(wordLength: number): BoardState {
+  private getDefaultBoardState(): BoardState {
     let boardState: BoardState = {} as BoardState;
 
     boardState.rowIndex = 0;
@@ -102,7 +111,7 @@ export class BoardStateService {
 
       boardState.words.push(word);
 
-      for (let j = 0; j < wordLength; j++) {
+      for (let j = 0; j < this.wordLength; j++) {
         let letter = { letter: "", perfect: false, partial: false, committed: false } as Letter;
         boardState.words[i].letters.push(letter);
       }
@@ -112,11 +121,13 @@ export class BoardStateService {
   }
 
   private loadExistingSession(): void {
+    let isGameOver: boolean = false;
+
     this.loadingSession = true;
 
-    let wordLength: number = this.session.guesses[0].length;
+    this.wordLength = this.session.guesses[0].length;
 
-    this.resetBoard(wordLength);
+    this.resetBoard();
 
     for (let i = 0; i < this.session.guesses.length; i++) {
       let previousGuess: string = this.session.guesses[i];
@@ -124,10 +135,13 @@ export class BoardStateService {
       this.updateBoardState(previousGuess);
 
       //  Previous game may have ended in failure or success - need to make sure we replay the dialog
-      this.checkForGameEnd(previousGuess);
+      isGameOver = this.checkForGameEnd(previousGuess);
     }
 
-    this.resetTimer();
+    if (!isGameOver) {
+      //  Game is on-going - start the timer for this current session
+      this.resetTimer();
+    }
 
     this.loadingSession = false;
   }
@@ -141,7 +155,7 @@ export class BoardStateService {
 
     //  Cannot remove input - already at the first column
     if (boardState.columnIndex === -1) return;
-    
+
     let word = this.getCurrentWord();
 
     word.letters[boardState.columnIndex].letter = "";
@@ -157,7 +171,7 @@ export class BoardStateService {
   public appendInput(key: string): void {
     let boardState: BoardState = this.boardState.value;
 
-    let wordLength = this.getWordLength() - 1;
+    let wordLength = this.wordLength - 1;
 
     //  Can't append any more characters - word is at max length
     if (boardState.columnIndex === wordLength) return;
@@ -182,10 +196,6 @@ export class BoardStateService {
     let boardState: BoardState = this.boardState.value;
 
     return boardState.words[boardState.rowIndex];
-  }
-
-  public getWordLength(): number {
-    return +this.session.options.wordLength;
   }
 
   getUserGuess(): string {
@@ -236,12 +246,11 @@ export class BoardStateService {
     this.checkForGameEnd(guess);
   }
 
-  private checkForGameEnd(guess: string): void {
-    if (this.checkVictory(guess)) {
-      return;
-    }
+  private checkForGameEnd(guess: string): boolean {
+    if (this.checkVictory(guess)) return true;
+    if (this.checkFailure()) return true;
 
-    this.checkFailure();
+    return false;
   }
 
   private updateBoardState(guess: string): void {
@@ -295,13 +304,16 @@ export class BoardStateService {
     this.boardState.next(boardState);
   }
 
-  private checkFailure(): void {
+  private checkFailure(): boolean {
     let boardState: BoardState = this.boardState.value;
 
     if (!boardState.success && boardState.rowIndex >= MaxGuesses) {
       boardState.failure = true;
       this.processGameEnd(boardState);
+      return true;
     }
+
+    return false;
   }
 
   private checkVictory(guess: string): boolean {
@@ -320,7 +332,7 @@ export class BoardStateService {
     if (this.loadingSession) return;
 
     let boardState: BoardState = this.boardState.value;
-    
+
     this.sessionService.update(boardState);
     this.sessionService.save();
   }
@@ -336,7 +348,7 @@ export class BoardStateService {
       return "You cannot enter empty words!";
     }
 
-    let wordLength = this.getWordLength();
+    let wordLength = this.wordLength;
 
     if (guess.length !== wordLength) {
       return `Words must be ${wordLength} letters long!`;
