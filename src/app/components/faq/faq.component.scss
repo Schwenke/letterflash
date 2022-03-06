@@ -11,18 +11,18 @@
 }
 
 .faq-label {
-    font-size: large;
-    color: mat.get-color-from-palette($accent, 'default');
+    font-size: x-large;
 }
 
 .faq-text {
     font-size: medium;
-    line-height: 1.5rem
 }
 
 .faq-text-header {
     font-size: large;
     font-style: italic;
+    font-weight: 500;
+    color: mat.get-color-from-palette($accent, 'default');
 }
 
 .faq-text-item {
@@ -31,23 +31,25 @@
 }
 
 .faq-link {
-    font-size: medium;
+    font-size: large;
+    font-weight: 500;
     color: mat.get-color-from-palette($accent, 'default');
 }
 
 .colored-text {
     font-size: medium;
-    font-weight: bold;
+    font-style: normal;
+    font-weight: 500;
 }
 
 .perfect-text {
     @extend .colored-text;
-    color: mat.get-color-from-palette($perfect, 'darker');
+    color: mat.get-color-from-palette($perfect, 'default');
 }
 
 .partial-text {
     @extend .colored-text;
-    color: mat.get-color-from-palette($partial, 'darker');
+    color: mat.get-color-from-palette($partial, 'default');
 }
 
 .dark-text {

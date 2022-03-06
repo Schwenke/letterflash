@@ -12,15 +12,9 @@ import { TimerService } from './timer.service';
   providedIn: 'root'
 })
 
-/**
- * Ye old meat and potatoes
- * Bulk of the game state processing happens here
- */
 export class BoardStateService {
   boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({ error: "" } as BoardState);
   session: Session;
-  //  Needed so we don't save the game into session again if page is refreshed when game state is on victory or failure dialog
-  loadingSession: boolean = false;
   wordLength: number = DefaultWordLength;
 
   constructor(
@@ -37,6 +31,8 @@ export class BoardStateService {
     });
   }
 
+  /** GAME START METHODS */
+
   public initialize(): void {
     if (this.shouldLoadPreviousSession()) {
       this.loadExistingSession();
@@ -52,10 +48,10 @@ export class BoardStateService {
     this.updateSession();
   }
 
-  public startCustomGame(sharedSecret: string): void {
-    this.wordLength = sharedSecret.length;
+  public startCustomGame(secret: string): void {
+    this.wordLength = secret.length;
 
-    this.session.secret = sharedSecret;
+    this.session.secret = secret;
 
     this.session.guesses = [];
 
@@ -90,11 +86,6 @@ export class BoardStateService {
     this.boardState.next(boardState);
   }
 
-  private resetTimer(): void {
-    this.timerService.reset();
-    this.timerService.start();
-  }
-
   private getDefaultBoardState(): BoardState {
     let boardState: BoardState = {} as BoardState;
 
@@ -121,34 +112,81 @@ export class BoardStateService {
   }
 
   private loadExistingSession(): void {
-    let isGameOver: boolean = false;
-
-    this.loadingSession = true;
+    let previousGuess: string = "";
 
     this.wordLength = this.session.guesses[0].length;
 
     this.resetBoard();
 
     for (let i = 0; i < this.session.guesses.length; i++) {
-      let previousGuess: string = this.session.guesses[i];
+      previousGuess = this.session.guesses[i];
 
       this.updateBoardState(previousGuess);
-
-      //  Previous game may have ended in failure or success - need to make sure we replay the dialog
-      isGameOver = this.checkForGameEnd(previousGuess);
     }
 
-    if (!isGameOver) {
-      //  Game is on-going - start the timer for this current session
+    let isGameOver = this.isGameOver(previousGuess);
+
+    if (isGameOver) {
+      this.endCurrentGame();
+    } else {
       this.resetTimer();
     }
-
-    this.loadingSession = false;
   }
 
   private shouldLoadPreviousSession(): boolean {
     return this.session.guesses && this.session.guesses.length > 0;
   }
+
+  /** GAME END METHODS **/
+
+  private isGameOver(guess: string): boolean {
+    let boardState: BoardState = this.boardState.value;
+
+    if (this.secretGuessed(guess)) {
+      boardState.success = true;
+
+      return true;
+    }
+
+    if (this.exceededMaxGuesses()) {
+      boardState.failure = true;
+      return true;
+    }
+
+    return false;
+  }
+
+  private secretGuessed(guess: string): boolean {
+    if (guess === this.session.secret) {
+      return true;
+    }
+
+    return false;
+  }
+
+  private exceededMaxGuesses(): boolean {
+    let boardState: BoardState = this.boardState.value;
+
+    if (!boardState.success && boardState.rowIndex >= MaxGuesses) {
+      return true;
+    }
+
+    return false;
+  }
+
+  /**
+   * Stops the timer and pushes board state so obs listeners can pick up current victory/failure state
+   * @param boardState 
+   */
+  private endCurrentGame(): void {
+    let boardState: BoardState = this.boardState.value;
+
+    this.timerService.stop();
+
+    this.boardState.next(boardState);
+  }
+
+  /** USER INPUT METHODS */
 
   public removeInput(): void {
     let boardState: BoardState = this.boardState.value;
@@ -243,14 +281,12 @@ export class BoardStateService {
 
     this.updateSession();
 
-    this.checkForGameEnd(guess);
-  }
+    let isGameOver: boolean = this.isGameOver(guess);
 
-  private checkForGameEnd(guess: string): boolean {
-    if (this.checkVictory(guess)) return true;
-    if (this.checkFailure()) return true;
-
-    return false;
+    if (isGameOver) {
+      this.endCurrentGame();
+      this.updateSession();
+    }
   }
 
   private updateBoardState(guess: string): void {
@@ -301,45 +337,6 @@ export class BoardStateService {
     //  Reset column index
     boardState.columnIndex = -1;
 
-    this.boardState.next(boardState);
-  }
-
-  private checkFailure(): boolean {
-    let boardState: BoardState = this.boardState.value;
-
-    if (!boardState.success && boardState.rowIndex >= MaxGuesses) {
-      boardState.failure = true;
-      this.processGameEnd(boardState);
-      return true;
-    }
-
-    return false;
-  }
-
-  private checkVictory(guess: string): boolean {
-    let boardState: BoardState = this.boardState.value;
-
-    if (guess === this.session.secret) {
-      boardState.success = true;
-      this.processGameEnd(boardState);
-      return true;
-    }
-
-    return false;
-  }
-
-  private updateSession(): void {
-    if (this.loadingSession) return;
-
-    let boardState: BoardState = this.boardState.value;
-
-    this.sessionService.update(boardState);
-    this.sessionService.save();
-  }
-
-  private processGameEnd(boardState: BoardState): void {
-    this.timerService.stop();
-    this.updateSession();
     this.boardState.next(boardState);
   }
 
@@ -423,6 +420,20 @@ export class BoardStateService {
     }
 
     return correctGuesses;
+  }
+
+  /** MISC */
+
+  private updateSession(): void {
+    let boardState: BoardState = this.boardState.value;
+
+    this.sessionService.update(boardState);
+    this.sessionService.save();
+  }
+
+  private resetTimer(): void {
+    this.timerService.reset();
+    this.timerService.start();
   }
 
 
