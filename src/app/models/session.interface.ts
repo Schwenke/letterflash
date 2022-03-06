@@ -5,6 +5,7 @@ export interface Session {
     secret: string;
     previousGames: Game[];
     options: Options;
+    customGame: boolean;
 }
 
 export interface Game{

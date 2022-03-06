@@ -55,6 +55,9 @@ export class BoardStateService {
 
     this.session.guesses = [];
 
+    //  Session needs to be aware it is a custom game, as some behaviors change
+    this.session.customGame = true;
+
     this.resetBoard();
 
     //  Obliterate old session
@@ -72,6 +75,8 @@ export class BoardStateService {
     this.session.secret = this.dictionaryService.generateWord(this.wordLength);
 
     this.session.guesses = [];
+
+    this.session.customGame = false;
 
     this.resetBoard();
 

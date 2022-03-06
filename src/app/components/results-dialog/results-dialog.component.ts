@@ -60,7 +60,7 @@ export class ResultsDialogComponent implements OnInit {
   }
 
   public shareResults(): void {
-    let text: string = this.generateEmojis();
+    let text: string = this.getResultsText();
     this.writeToClipboard(text);
 
     this.shareResultsText = "Results copied to clipboard!"
@@ -72,9 +72,7 @@ export class ResultsDialogComponent implements OnInit {
   }
 
   public sharePuzzle(): void {
-    let secret: string = this.session.secret;
-    let encodedSecret: string = btoa(secret);
-    let shareLink: string = `${BaseURL}?share=${encodedSecret}`;
+    let shareLink: string = this.getShareLink();
 
     this.writeToClipboard(shareLink);
 
@@ -82,17 +80,18 @@ export class ResultsDialogComponent implements OnInit {
     this.sharePuzzleClicked = true;
   }
 
-  // best function ever
-  private generateEmojis(): string {
-    let message: string = "";
+  private getShareLink(): string {
     let secret: string = this.session.secret;
+    let encodedSecret: string = btoa(secret);
+    let shareLink: string = `${BaseURL}?share=${encodedSecret}`;
 
-    let modeOptions: string = this.getModeOptionString();
-    let guessesMade: string = this.boardState.success ? `${this.boardState.rowIndex}` : "X";
-    
-    message += "--Letter Flash--\n";
-    message += `${secret} (${guessesMade}/${6}) ${modeOptions}\n`;
+    return shareLink;
+  }
 
+  private getResultsText(): string {
+    let message: string = this.getResultsHeader();
+
+    //  Generate the board of emojis
     for (let i = 0; i < this.boardState.rowIndex; i++) {
       let word = this.boardState.words[i];
 
@@ -109,6 +108,26 @@ export class ResultsDialogComponent implements OnInit {
     message = message.trim();
 
     return message;
+  }
+
+  private getResultsHeader(): string {
+    let secret: string = this.session.secret;
+    let modeOptions: string = this.getModeOptionString();
+    let guessesMade: string = this.boardState.success ? `${this.boardState.rowIndex}` : "X";
+    let customGame: boolean = this.session.customGame;
+    let messageHeader: string = "";
+
+    if (customGame) {
+      let shareLink: string = this.getShareLink();
+      let questionMarks: string = "".padEnd(secret.length, "?");
+      messageHeader += `${shareLink}\n`;
+      messageHeader += `${questionMarks} (${guessesMade}/${6}) ${modeOptions}\n`;
+    } else {
+      messageHeader += `${BaseURL}\n`;
+      messageHeader += `${secret} (${guessesMade}/${6}) ${modeOptions}\n`;
+    }
+
+    return messageHeader;
   }
 
   private getModeOptionString(): string {

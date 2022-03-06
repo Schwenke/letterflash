@@ -105,7 +105,8 @@ export class SessionService {
       secret: "",
       guesses: [],
       previousGames: [],
-      options: this.getDefaultOptions()
+      options: this.getDefaultOptions(),
+      customGame: false
     };
 
     this.session = new BehaviorSubject<Session>(session);
