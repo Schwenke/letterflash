@@ -61,3 +61,8 @@
     @extend .colored-text;
     color: mat.get-color-from-palette($primary, 'default');
 }
+
+.bold-text {
+    font-style: normal;
+    font-weight: 500;
+}

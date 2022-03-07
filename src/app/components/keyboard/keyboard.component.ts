@@ -77,18 +77,22 @@ export class KeyboardComponent implements OnInit {
   }
 
   getTitle(key: Key): string {
-    if (key.letter === "ENTER" || key.letter === "BACKSPACE") {
-      return key.letter;
+    if (key.letter === "ENTER") {
+      return "Submits your guess";
+    }
+
+    if (key.letter === "BACKSPACE") {
+      return "Deletes the most recent letter from the current guess";
     }
     
     if (key.perfect) {
-      return `${key.letter} perfect`;
+      return "Perfect clue - this letter is in the secret word and in the correct position";
     } else if (key.partial) {
-      return `${key.letter} partial`;
+      return "Partial clue - this letter is in the secret word, but not in the correct position";
     } else if (key.guessed) {
-      return `${key.letter} used`;
+      return "This letter has been used and is not in the secret word";
     } else {
-      return `${key.letter} unused`;
+      return "This letter has not been used yet";
     }
   }
 

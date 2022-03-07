@@ -5,32 +5,32 @@
 <mat-sidenav-container class="app-container" *ngIf="initialized">
 
     <!-- FAQ left side nav -->
-    <mat-sidenav role="dialog" class="faq-sidenav" autoFocus="false" #faq>
+    <mat-sidenav role="region" class="faq-sidenav" autoFocus="false" #faq>
         <app-faq></app-faq>
     </mat-sidenav>
 
     <!-- Options right side nav -->
-    <mat-sidenav role="dialog" class="options-sidenav" #options position="end">
+    <mat-sidenav role="region" class="options-sidenav" #options position="end">
         <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()" (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 
     <!-- Main body -->
-    <mat-sidenav-content class="game">
-        <div class="game-header">
+    <mat-sidenav-content class="game" role="main">
+        <div class="game-header" role="banner">
             <!-- DEBUG -->
             <!-- Secret: {{session.secret}} -->
-            <button mat-icon-button (click)="faq.toggle()" class="faq-button" aria-label="Information" title="Information">
+            <button mat-icon-button (click)="faq.toggle()" class="faq-button" aria-label="Information" title="Opens the information and FAQ slideout">
                 <fa-icon aria-hidden="true" [icon]="questionIcon" size="lg"></fa-icon>
             </button>
 
-            <label aria-label="Letter Flash" title="Letter Flash" class="game-title">Letter Flash</label>
+            <label aria-label="Letter Flash" class="game-title">Letter Flash</label>
 
-            <button mat-icon-button (click)="options.toggle()" class="options-button" aria-label="Options" title="Options">
+            <button mat-icon-button (click)="options.toggle()" class="options-button" aria-label="Options" title="Opens the options slideout">
                 <fa-icon aria-hidden="true" [icon]="cogsIcon" size="lg"></fa-icon>
             </button>
         </div>
 
-        <button aria-label="Return to game" title="Return to game" role="button" [ngClass]="{'hidden': showGame}" class="reset-button" mat-stroked-button (click)="switchViews()">Return to game</button>
+        <button aria-label="Return to game" title="Leave the history view and return back to the game" role="button" [ngClass]="{'hidden': showGame}" class="reset-button" mat-stroked-button (click)="switchViews()">Return to game</button>
 
         <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 

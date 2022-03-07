@@ -37,11 +37,13 @@ export class GameBoardComponent implements OnInit {
 
   getTitle(letter: Letter): string {
     if (letter.perfect) {
-      return `${letter.letter} perfect`;
+      return `Perfect - this letter is in the secret word and in the correct position`;
     } else if (letter.partial) {
-      return `${letter.letter} partial`;
+      return `Partial - this letter is in the secret word, but not in the correct position`;
+    } else if (letter.committed) {
+      return `Unused - this letter is not part of the secret word`;
     } else {
-      return `${letter.letter}`;
+      return "";
     }
   }
 }
