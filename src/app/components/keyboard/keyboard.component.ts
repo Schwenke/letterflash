@@ -76,4 +76,20 @@ export class KeyboardComponent implements OnInit {
     }
   }
 
+  getTitle(key: Key): string {
+    if (key.letter === "ENTER" || key.letter === "BACKSPACE") {
+      return key.letter;
+    }
+    
+    if (key.perfect) {
+      return `${key.letter} perfect`;
+    } else if (key.partial) {
+      return `${key.letter} partial`;
+    } else if (key.guessed) {
+      return `${key.letter} used`;
+    } else {
+      return `${key.letter} unused`;
+    }
+  }
+
 }

@@ -1,6 +1,6 @@
 <div class="column-container">
     <div class="row-container" *ngFor="let word of boardState.words">
-        <div [ngClass]="{
+        <div title="{{getTitle(letter)}}" [ngClass]="{
             'darkMode': options.darkMode,
             'cell--empty': !letter.committed && letter.letter.length === 0,
             'cell--pending': !letter.committed && letter.letter.length > 0,

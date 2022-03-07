@@ -10,7 +10,7 @@
     </mat-sidenav>
 
     <!-- Options right side nav -->
-    <mat-sidenav role="dialog" class="options-sidenav" autoFocus="false" #options position="end">
+    <mat-sidenav role="dialog" class="options-sidenav" #options position="end">
         <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()" (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 
@@ -18,13 +18,19 @@
     <mat-sidenav-content class="game">
         <div class="game-header">
             <!-- DEBUG -->
-            <!-- Secret Word: {{session.secret}} -->
-            <fa-icon class="faq-icon" (click)="faq.toggle()" [icon]="questionIcon" size="lg"></fa-icon>
-            <label class="game-title">Letter Flash</label>
-            <fa-icon class="options-icon" (click)="options.toggle()" [icon]="cogsIcon" size="lg"></fa-icon>
+            <!-- Secret: {{session.secret}} -->
+            <button mat-icon-button (click)="faq.toggle()" class="faq-button" aria-label="Information" title="Information">
+                <fa-icon aria-hidden="true" [icon]="questionIcon" size="lg"></fa-icon>
+            </button>
+
+            <label aria-label="Letter Flash" title="Letter Flash" class="game-title">Letter Flash</label>
+
+            <button mat-icon-button (click)="options.toggle()" class="options-button" aria-label="Options" title="Options">
+                <fa-icon aria-hidden="true" [icon]="cogsIcon" size="lg"></fa-icon>
+            </button>
         </div>
 
-        <button role="button" [ngClass]="{'hidden': showGame}" class="reset-button" mat-stroked-button (click)="switchViews()">Return to game</button>
+        <button aria-label="Return to game" title="Return to game" role="button" [ngClass]="{'hidden': showGame}" class="reset-button" mat-stroked-button (click)="switchViews()">Return to game</button>
 
         <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 

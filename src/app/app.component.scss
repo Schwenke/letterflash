@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import "../themeVariables";
+
 @keyframes shake {
     0%, 100% {transform: translateX(0);} 
     10%, 30%, 50%, 70%, 90% {transform: translateX(-6px);} 
@@ -75,7 +78,7 @@
     min-height: 2rem;
     display: flex;
     flex-direction: row;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-around;
 }
 
@@ -83,11 +86,24 @@
     font-size: large;
 }
 
-.faq-icon {
+.header-button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-button:focus {
+    border: 2px solid;
+    border-color: mat.get-color-from-palette($accent, 'default');
+}
+
+.faq-button {
+    @extend .header-button;
     cursor: pointer;
 }
 
-.options-icon {
+.options-button {
+    @extend .header-button;
     cursor: pointer;
 }
 

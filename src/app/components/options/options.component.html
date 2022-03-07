@@ -7,42 +7,50 @@
 
         <tr class="toggle-container">
             <mat-slide-toggle (change)="storeOptions()"
-                title="Dark mode" class="toggle"
+                title="Dark mode" 
+                class="toggle"
+                aria-label="Dark mode"
                 [(ngModel)]="options.darkMode">Dark mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.darkMode">✔</label>
         </tr>
 
         <tr class="toggle-container">
-            <mat-slide-toggle (change)="storeOptions()" title="Subsequent guesses must use all previous clues"
-                class="toggle" [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
+            <mat-slide-toggle (change)="storeOptions()" 
+            title="Subsequent guesses must use all previous clues"
+            class="toggle"
+            aria-label="Hard mode"
+            [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.hardMode">✔</label>
         </tr>
 
         <tr class="toggle-container">
-            <mat-slide-toggle (change)="storeOptions()"
-                title="Secret words pull from full dictionary of over 8,000+ words" class="toggle"
-                [(ngModel)]="options.extremeMode">Extreme mode</mat-slide-toggle>
+            <mat-slide-toggle 
+            (change)="storeOptions()"
+            title="Secret words pull from full dictionary of over 8,000+ words" 
+            class="toggle"
+            aria-label="Extreme mode"
+            [(ngModel)]="options.extremeMode">Extreme mode</mat-slide-toggle>
             <label class="options-check" *ngIf="options.extremeMode">✔</label>
         </tr>
 
         <tr>
-            <button role="button" class="reset-button" mat-raised-button type="button" onclick="this.blur()" (click)="reset()">New game</button>
+            <button aria-label="New game" title="New game" role="button" class="reset-button" mat-raised-button type="button" onclick="this.blur()" (click)="reset()">New game</button>
         </tr>
 
         <tr>
             <label class="header-label">Word length</label>
             <mat-divider class="divider"></mat-divider>
             <mat-radio-group role="radiogroup" class="radio-group" [(ngModel)]="options.wordLength" (change)="storeOptions()" [value]="options.wordLength">
-                <mat-radio-button role="radio" class="radio-button" value=5>5</mat-radio-button>
-                <mat-radio-button role="radio" class="radio-button" value=6>6</mat-radio-button>
-                <mat-radio-button role="radio" class="radio-button" value=7>7</mat-radio-button>
+                <mat-radio-button aria-label="Word length 5" title="Word length 5" role="radio" class="radio-button" value=5>5</mat-radio-button>
+                <mat-radio-button aria-label="Word length 6" title="Word length 6" role="radio" class="radio-button" value=6>6</mat-radio-button>
+                <mat-radio-button aria-label="Word length 7" title="Word length 7" role="radio" class="radio-button" value=7>7</mat-radio-button>
             </mat-radio-group>
         </tr>
 
         <tr>
             <label class="header-label">Time Spent</label>
             <mat-divider class="divider"></mat-divider>
-            <fa-icon class="faq-icon" [icon]="clockIcon" size="lg"></fa-icon>
+            <fa-icon aria-hidden="true" class="faq-icon" [icon]="clockIcon" size="lg"></fa-icon>
             <label role="timer" class="clock">{{clockTime}}</label>
         </tr>
 
@@ -51,8 +59,8 @@
             <mat-divider class="divider"></mat-divider>
 
             <div class="button-container">
-                <button role="button" class="history-button" mat-raised-button type="button" (click)="viewHistory()">History</button>
-                <button role="button" class="results-button" [disabled]="!gamePaused" mat-raised-button (click)="viewResults()">Current game results</button>
+                <button aria-label="History" title="History" role="button" class="history-button" mat-raised-button type="button" (click)="viewHistory()">History</button>
+                <button aria-label="Current game results" title="Current game results" role="button" class="results-button" [disabled]="!gamePaused" mat-raised-button (click)="viewResults()">Current game results</button>
             </div>
         </tr>
     </table>

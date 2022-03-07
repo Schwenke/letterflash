@@ -1,5 +1,5 @@
 <div class="row" *ngFor="let row of keyboard.rows">
-    <button *ngFor="let key of row.keys" mat-stroked-button (click)="keyClicked(key)" [ngClass]="
+    <button *ngFor="let key of row.keys" mat-stroked-button (click)="keyClicked(key)" title="{{getTitle(key)}}" [ngClass]="
     {
         'darkMode': options.darkMode, 
         'key--used': key.guessed && !(key.perfect || key.partial),
