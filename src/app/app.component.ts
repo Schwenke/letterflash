@@ -10,6 +10,8 @@ import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Session } from './models/session.interface';
 import { ActivatedRoute } from '@angular/router';
+import { Meta, Title } from '@angular/platform-browser';
+import { BaseURL, ShareParameter, SiteName } from './constants';
 
 @Component({
   selector: 'app-root',
@@ -36,9 +38,11 @@ export class AppComponent {
     private boardStateService: BoardStateService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private metaService: Meta,
+    private titleService: Title
   ) {
-
+    this.setSiteTags();
   }
 
   ngOnInit(): void {
@@ -51,7 +55,7 @@ export class AppComponent {
         this.session = session;
 
         this.darkMode = session.options.darkMode;
-        
+
         this.className = this.darkMode ? this.darkModeClass : "";
 
         if (this.initialized) return;
@@ -59,8 +63,8 @@ export class AppComponent {
         this.initialized = true;
 
         this.activatedRoute.queryParamMap.subscribe(params => {
-          let shareLink = params.get('share');
-        
+          let shareLink = params.get(ShareParameter);
+
           if (shareLink && shareLink.length > 0) {
             let secret: string = atob(shareLink);
             this.boardStateService.startCustomGame(secret);
@@ -90,6 +94,27 @@ export class AppComponent {
     })
   }
 
+  private setSiteTags(): void {
+    //  Title
+    this.titleService.setTitle(SiteName);
+
+    //  Charset
+    this.metaService.addTag({ charset: "utf-8" });
+
+    //  Misc
+    this.metaService.addTag({ name: "viewport", content: "webswidth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0ite" });
+    this.metaService.addTag({ name: "keywords", content: "game, wordle, word, words, letterflash, letter, flash" });
+    this.metaService.addTag({ name: "author", content: "Ben Schwenke" });
+    this.metaService.addTag({ name: "twitter:card", content: "summary_large_image" });
+
+    //  OpenGraph
+    this.metaService.addTag({ property: "og:type", content: "website" });
+    this.metaService.addTag({ property: "og:title", content: SiteName });
+    this.metaService.addTag({ property: "og:description", content: "An open source, replayable word game you can share with friends" });
+    this.metaService.addTag({ property: "og:url", content: BaseURL });
+    this.metaService.addTag({ property: "og:image", content: "https://i.imgur.com/P5hzOI8.png" });
+  }
+
   switchViews(): void {
     if (this.showGame) {
       this.options.toggle();
@@ -100,10 +125,10 @@ export class AppComponent {
 
   viewResults(): void {
     this.options.toggle();
-    
+
     this.openResultsDialog();
   }
-  
+
   openResultsDialog(): void {
     const dialogRef = this.dialog.open(ResultsDialogComponent, {});
 
@@ -126,8 +151,8 @@ export class AppComponent {
     let snackbarTextClass: string = "error-snackbar-text";
     let panelClasses: string[] = [snackbarBodyClass, snackbarTextClass];
 
-    this.snackBar.open(error, "OK", {panelClass: panelClasses, verticalPosition: "top", horizontalPosition: "center", duration: 2000});
-    
+    this.snackBar.open(error, "OK", { panelClass: panelClasses, verticalPosition: "top", horizontalPosition: "center", duration: 2000 });
+
     //  Give animation time to play and finish
     setTimeout(() => {
       this.showError = false;

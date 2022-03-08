@@ -6,13 +6,12 @@ export const DefaultWordLength = 5;
 export const OneStarSymbol = "⁕";
 export const TwoStarSymbol = "⁑";
 export const ThreeStarSymbol = "⁂";
-
-//  Dialog Emojis
 export const GreenBlock = "🟩";
 export const GreyBlock = "⬜";
 export const YellowBlock = "🟨";
 
-export const SessionKey = "uwg-session";
-
 //  Misc
+export const SessionKey = "uwg-session";
 export const BaseURL = "https://www.letterflash.com/"
+export const SiteName = "Letter Flash";
+export const ShareParameter = "share";

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialogRef} from '@angular/material/dialog';
-import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL } from 'src/app/constants';
+import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL, ShareParameter, MaxGuesses, SiteName } from 'src/app/constants';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
 import { Session } from 'src/app/models/session.interface';
@@ -83,7 +83,7 @@ export class ResultsDialogComponent implements OnInit {
   private getShareLink(): string {
     let secret: string = this.session.secret;
     let encodedSecret: string = btoa(secret);
-    let shareLink: string = `${BaseURL}?share=${encodedSecret}`;
+    let shareLink: string = `${BaseURL}?${ShareParameter}=${encodedSecret}`;
 
     return shareLink;
   }
@@ -121,10 +121,10 @@ export class ResultsDialogComponent implements OnInit {
       let shareLink: string = this.getShareLink();
       let questionMarks: string = "".padEnd(secret.length, "?");
       messageHeader += `${shareLink}\n`;
-      messageHeader += `${questionMarks} (${guessesMade}/${6}) ${modeOptions}\n`;
+      messageHeader += `${questionMarks} (${guessesMade}/${MaxGuesses}) ${modeOptions}\n`;
     } else {
       messageHeader += `${BaseURL}\n`;
-      messageHeader += `${secret} (${guessesMade}/${6}) ${modeOptions}\n`;
+      messageHeader += `${secret} (${guessesMade}/${MaxGuesses}) ${modeOptions}\n`;
     }
 
     return messageHeader;
