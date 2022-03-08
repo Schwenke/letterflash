@@ -19,13 +19,13 @@
         <div class="game-header" role="banner">
             <!-- DEBUG -->
             <!-- Secret: {{session.secret}} -->
-            <button mat-icon-button (click)="faq.toggle()" class="faq-button" aria-label="Information" title="Opens the information and FAQ slideout">
+            <button mat-icon-button (click)="faq.toggle()" class="faq-button" aria-label="Information" matTooltip="Opens the information and FAQ window">
                 <fa-icon aria-hidden="true" [icon]="questionIcon" size="lg"></fa-icon>
             </button>
 
             <label aria-label="Letter Flash" class="game-title">Letter Flash</label>
 
-            <button mat-icon-button (click)="options.toggle()" class="options-button" aria-label="Options" title="Opens the options slideout">
+            <button mat-icon-button (click)="options.toggle()" class="options-button" aria-label="Options" matTooltip="Opens the options window">
                 <fa-icon aria-hidden="true" [icon]="cogsIcon" size="lg"></fa-icon>
             </button>
         </div>

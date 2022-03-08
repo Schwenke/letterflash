@@ -22,7 +22,6 @@
     font-size: large;
     font-style: italic;
     font-weight: 500;
-    color: mat.get-color-from-palette($accent, 'default');
 }
 
 .faq-text-item {
@@ -32,8 +31,8 @@
 
 .faq-link {
     font-size: large;
-    font-weight: 500;
-    color: mat.get-color-from-palette($accent, 'default');
+    font-weight: 400;
+    color: rgb(204, 151, 18);
 }
 
 .colored-text {
@@ -49,17 +48,7 @@
 
 .partial-text {
     @extend .colored-text;
-    color: mat.get-color-from-palette($partial, 'default');
-}
-
-.dark-text {
-    @extend .colored-text;
-    color: mat.get-color-from-palette($primary, 'darker');
-}
-
-.light-text {
-    @extend .colored-text;
-    color: mat.get-color-from-palette($primary, 'default');
+    color: mat.get-color-from-palette($partial, 'darker');
 }
 
 .bold-text {

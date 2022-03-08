@@ -1,7 +1,7 @@
 <div role="dialog" class="container">
     <label class="message-header">{{message}}</label>
     <label class="message-header">Time spent: {{timeSpent}}</label>
-    <button mat-stroked-button class="dialog-button" [ngClass]="{'dialog-button--pressed': shareResultsClicked}" type="button" (click)="shareResults()">{{shareResultsText}}</button>
-    <button mat-stroked-button class="dialog-button" [ngClass]="{'dialog-button--pressed': sharePuzzleClicked}" type="button" (click)="sharePuzzle()">{{sharePuzzleText}}</button>
-    <button mat-stroked-button class="dialog-button" type="button" (click)="reset()">Play again!</button>
+    <button mat-raised-button [color]="shareResultsClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="shareResults()">{{shareResultsText}}</button>
+    <button mat-raised-button [color]="sharePuzzleClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="sharePuzzle()">{{sharePuzzleText}}</button>
+    <button mat-raised-button color="accent" class="dialog-button" type="button" (click)="reset()">Play again!</button>
 </div>

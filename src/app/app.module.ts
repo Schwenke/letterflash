@@ -22,6 +22,7 @@ import { FaqComponent } from './components/faq/faq.component';
 import { HistoryComponent } from './components/history/history.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { MatTooltipModule } from '@angular/material/tooltip'; 
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     HttpClientModule,
     MatSidenavModule,
     MatSnackBarModule,
-    FontAwesomeModule
+    FontAwesomeModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

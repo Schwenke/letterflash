@@ -86,9 +86,9 @@ export class KeyboardComponent implements OnInit {
     }
     
     if (key.perfect) {
-      return "Perfect clue - this letter is in the secret word and in the correct position";
+      return "This letter is in the secret word and was used in the correct position";
     } else if (key.partial) {
-      return "Partial clue - this letter is in the secret word, but not in the correct position";
+      return "This letter is in the secret word, but not in the correct position";
     } else if (key.guessed) {
       return "This letter has been used and is not in the secret word";
     } else {
