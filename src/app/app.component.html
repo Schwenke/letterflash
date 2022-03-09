@@ -6,12 +6,12 @@
 
     <!-- FAQ left side nav -->
     <mat-sidenav role="region" class="faq-sidenav" autoFocus="false" #faq>
-        <app-faq></app-faq>
+        <app-faq (closeButtonClicked)="faq.toggle()"></app-faq>
     </mat-sidenav>
 
     <!-- Options right side nav -->
     <mat-sidenav role="region" class="options-sidenav" #options position="end">
-        <app-options (resetClicked)="options.toggle()" (viewHistoryClicked)="switchViews()"
+        <app-options (newGameClicked)="startNewGame()" (viewHistoryClicked)="switchViews()" (closeButtonClicked)="options.toggle()"
             (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 

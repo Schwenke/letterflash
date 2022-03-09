@@ -20,7 +20,7 @@ import { BaseURL, ShareParameter, SiteName } from './constants';
 })
 export class AppComponent {
   @HostBinding('class') className = '';
-  @ViewChild('options') options: MatSidenav;
+  @ViewChild('options') optionSideNav: MatSidenav;
 
   initialized: boolean = false;
   showGame: boolean = true;
@@ -117,15 +117,19 @@ export class AppComponent {
 
   switchViews(): void {
     if (this.showGame) {
-      this.options.toggle();
+      this.optionSideNav.toggle();
     }
 
     this.showGame = !this.showGame;
   }
 
-  viewResults(): void {
-    this.options.toggle();
+  startNewGame(): void {
+    this.optionSideNav.toggle();
+    this.boardStateService.startNewGame();
+  }
 
+  viewResults(): void {
+    this.optionSideNav.toggle();
     this.openResultsDialog();
   }
 

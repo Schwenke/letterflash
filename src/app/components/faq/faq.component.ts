@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-faq',
@@ -7,10 +7,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FaqComponent implements OnInit {
 
+  @Output() closeButtonClicked = new EventEmitter<boolean>();
+  
   constructor() { }
 
   ngOnInit(): void {
 
+  }
+
+  closePanel(): void {
+    this.closeButtonClicked.emit(true);
   }
 
 }

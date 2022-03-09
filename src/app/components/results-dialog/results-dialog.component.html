@@ -1,7 +1,13 @@
-<div role="dialog" class="container">
-    <label class="message-header">{{message}}</label>
-    <label class="message-header">Time spent: {{timeSpent}}</label>
-    <button mat-raised-button [color]="shareResultsClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="shareResults()">{{shareResultsText}}</button>
-    <button mat-raised-button [color]="sharePuzzleClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="sharePuzzle()">{{sharePuzzleText}}</button>
-    <button mat-raised-button color="accent" class="dialog-button" type="button" (click)="reset()">Play again!</button>
+<div role="dialog">
+    <div class="header">
+        <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button" (click)="dialogRef.close()">X</button>
+    </div>
+    
+    <div class="content">
+        <label class="message-header">{{message}}</label>
+        <label class="message-header">Time spent: {{timeSpent}}</label>
+        <button mat-raised-button [color]="shareResultsClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="shareResults()">{{shareResultsText}}</button>
+        <button mat-raised-button [color]="sharePuzzleClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="sharePuzzle()">{{sharePuzzleText}}</button>
+        <button mat-raised-button color="accent" class="dialog-button" type="button" (click)="reset()">Play again!</button>
+    </div>
 </div>

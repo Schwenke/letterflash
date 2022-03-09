@@ -12,9 +12,10 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 })
 export class OptionsComponent implements OnInit {
 
-  @Output() resetClicked = new EventEmitter<boolean>();
+  @Output() newGameClicked = new EventEmitter<boolean>();
   @Output() viewHistoryClicked = new EventEmitter<boolean>();
   @Output() viewResultsClicked = new EventEmitter<boolean>();
+  @Output() closeButtonClicked = new EventEmitter<boolean>();
 
   options: Options = {} as Options;
   gamePaused: boolean = false;
@@ -44,9 +45,12 @@ export class OptionsComponent implements OnInit {
     });
   }
 
-  reset(): void {
-    this.boardStateService.startNewGame();
-    this.resetClicked.emit(true);
+  closePanel(): void {
+    this.closeButtonClicked.emit(true);
+  }
+
+  startNewGame(): void {
+    this.newGameClicked.emit(true);
   }
 
   viewHistory(): void {

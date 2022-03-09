@@ -1,21 +1,30 @@
 .options-container {
     display: flex;
     flex-direction: column;
+    padding-left: 1em;
+}
+
+.options-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 96%;
+    height: 50px;
+}
+
+.close-button {
+    min-width: 50px;
 }
 
 .options-row {
     display: flex;
     flex-direction: row;
-    padding: 1.5em 0 0 1em;
-}
-
-.options-row-header {
-    padding-top: 2em;
-    padding-left: 1em;
+    padding: .75em 0 .75em .75em;
 }
 
 .divider {
-    margin-top: .5rem;
+    width: 95%;
 }
 
 .header-label {
@@ -31,6 +40,10 @@
     font-size: x-large;
     margin-left: .5rem;
     color: green;
+}
+
+.field-set {
+    width: 150px;
 }
 
 .radio-group {
@@ -49,7 +62,7 @@
 
 .button {
     font-size: large;
-    margin-bottom: 1rem;
+    margin-bottom: .75em;
 }
 
 .button-container {
@@ -71,8 +84,17 @@
 }
 
 @media only screen and (max-width: 450px) {
+    .options-header {
+        height: 45px;
+    }
+
     .options-row {
-        padding: 1em 0 0 1em;
+        padding: .5em 0 .5em .5em;
+    }
+
+    .close-button {
+        min-width: 30px;
+        font-size: small;
     }
 
     .clock {
@@ -89,6 +111,10 @@
 
     .toggle {
         font-size: small;
+    }
+
+    .field-set {
+        width: 100px;
     }
 
     .button {

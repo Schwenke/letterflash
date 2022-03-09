@@ -1,6 +1,11 @@
-<div class="options-container">
+<div class="options-container" aria-labelledby="pageTitle">
+    <div class="options-header">
+        <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button"
+            (click)="closePanel()">X</button>
+    </div>
+
     <div class="options-row">
-        <label class="header-label">Options</label>
+        <label class="header-label" id="pageTitle">Options</label>
     </div>
 
     <mat-divider class="divider"></mat-divider>
@@ -14,22 +19,23 @@
 
     <div class="options-row">
         <mat-slide-toggle matTooltipPosition="right" (change)="storeOptions()"
-            matTooltip="Subsequent guesses must use all previous clues" class="toggle" aria-label="Hard mode"
+            matTooltip="Guesses must include all previous clues" class="toggle" aria-label="Hard mode"
             [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
         <label class="options-check" *ngIf="options.hardMode">✔</label>
     </div>
 
     <div class="options-row">
         <mat-slide-toggle matTooltipPosition="right" (change)="storeOptions()"
-            matTooltip="Secret word pulls from full dictionary" class="toggle" aria-label="Extreme mode"
+            matTooltip="Secret can be any word in dictionary" class="toggle" aria-label="Extreme mode"
             [(ngModel)]="options.extremeMode">Extreme mode</mat-slide-toggle>
         <label class="options-check" *ngIf="options.extremeMode">✔</label>
     </div>
 
     <div class="options-row">
-        <fieldset>
+        <fieldset class="field-set">
             <legend class="header-label">Word length</legend>
             <mat-divider class="divider"></mat-divider>
+            
             <mat-radio-group role="radiogroup" class="radio-group" [(ngModel)]="options.wordLength"
                 (change)="storeOptions()" [value]="options.wordLength">
                 <mat-radio-button matTooltip="New puzzles will generate 5 letter words" matTooltipPosition="right"
@@ -42,9 +48,10 @@
         </fieldset>
     </div>
 
-    <div class="options-row-header">
+    <div class="options-row">
         <label class="header-label">Time Spent</label>
     </div>
+
     <mat-divider class="divider"></mat-divider>
 
     <div class="options-row">
@@ -52,9 +59,10 @@
         <label role="timer" class="clock">{{clockTime}}</label>
     </div>
 
-    <div class="options-row-header">
+    <div class="options-row">
         <label class="header-label">Game</label>
     </div>
+
     <mat-divider class="divider"></mat-divider>
 
     <div class="options-row">
@@ -65,7 +73,7 @@
 
             <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
                 role="button" class="reset-button" color="accent" type="button" onclick="this.blur()"
-                (click)="reset()">Start new game</button>
+                (click)="startNewGame()">Start new game</button>
 
             <button mat-raised-button matTooltipPosition="right" aria-label="Current game results"
                 matTooltip="Re-opens the end of game result dialog" role="button" class="results-button" color="accent"

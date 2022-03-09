@@ -1,21 +1,34 @@
 @use '@angular/material' as mat;
 @import "../../../themeVariables";
 
+.container {
+    display: flex;
+    flex-direction: column;
+    padding-right: 1em;
+}
+
+.faq-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    height: 50px;
+}
+
+.close-button {
+    min-width: 50px;
+}
+
+.faq-row {
+    padding: .75em 0 .75em .75em;
+}
+
 .divider {
     margin-top: .5rem;
 }
 
-.faq-table {
-    border-spacing: 1.5rem;
-    border-collapse: separate;
-}
-
 .faq-label {
     font-size: x-large;
-}
-
-.faq-text {
-    font-size: medium;
 }
 
 .faq-text-header {
@@ -26,7 +39,7 @@
 
 .faq-text-item {
     font-size: medium;
-    margin-top: .75rem;
+    padding-top: .75em;
 }
 
 .faq-link {
@@ -54,4 +67,36 @@
 .bold-text {
     font-style: normal;
     font-weight: 500;
+}
+
+@media only screen and (max-width: 450px) {
+    .close-button {
+        min-width: 30px;
+        font-size: small;
+    }
+
+    .faq-row {
+        padding: .5em 0 0 .5em;
+    }
+
+    .faq-label {
+        font-size: large;
+    }
+
+    .faq-text-header {
+        font-size: medium;
+    }
+
+    .colored-text {
+        font-size: small;
+    }
+
+    .faq-text-item {
+        font-size: small;
+        padding-top: .5em;
+    }
+
+    .faq-link {
+        font-size: medium;
+    }
 }

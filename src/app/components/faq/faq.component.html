@@ -1,64 +1,75 @@
-<div class="container">    
-    <table class="faq-table" role="presentation">
-        <tr>
-            <label class="faq-label">Goal</label>
-            <mat-divider class="divider"></mat-divider>
-        </tr>
+<div class="container">
+    <div class="faq-header">
+        <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button"
+            (click)="closePanel()">X</button>
+    </div>
 
-        <tr>
-            <p class="faq-text">You get six chances to guess a secret word. Make a guess by typing in a valid word and pressing enter.</p>
+    <div class="faq-row">
+        <label class="faq-label">Goal</label>
+        <mat-divider class="divider"></mat-divider>
+    </div>
 
-            <p class="faq-text-item">
-                <em class="perfect-text">Perfect</em> clues are in the secret word and in the correct position.
-            </p>
+    <div class="faq-row">
+        <p class="faq-text-item">You get six chances to guess a secret word. Make a guess by typing in a valid word and
+            pressing enter.</p>
 
-            <p class="faq-text-item">
-                <em class="partial-text">Partial</em> clues are in the secret word but in the wrong position.
-            </p>
-        </tr>
+        <p class="faq-text-item">
+            <em class="perfect-text">Perfect</em> clues are in the secret word and in the correct position.
+        </p>
 
-        <tr>
-            <label class="faq-label">FAQ</label>
-            <mat-divider class="divider"></mat-divider>
-        </tr>
+        <p class="faq-text-item">
+            <em class="partial-text">Partial</em> clues are in the secret word but in the wrong position.
+        </p>
+    </div>
 
-        <tr>
-            <label class="faq-text-header">What is hard mode?</label>
-            <p class="faq-text-item">When enabled, subsequent guesses must include all previously discovered clues.</p>
-        </tr>
+    <div class="faq-row">
+        <label class="faq-label">FAQ</label>
+        <mat-divider class="divider"></mat-divider>
+    </div>
 
-        <tr>
-            <label class="faq-text-header">What is extreme mode?</label>
-            <p class="faq-text-item">When enabled, the secret word will pull from the entire dictionary instead of a curated list. Incredibly difficult!</p>
-        </tr>
+    <div class="faq-row">
+        <label class="faq-text-header">What is hard mode?</label>
+        <p class="faq-text-item">When enabled, subsequent guesses must include all previously discovered clues.</p>
+    </div>
 
-        <tr>
-            <label class="faq-text-header">How do I share a puzzle?</label>
-            <p class="faq-text-item">When you finish a game, click the <em class="bold-text">"Share a link to this puzzle"</em> button to copy a link to your clipboard.</p>
-            <p class="faq-text-item">Then, share the link with your friends. They will be given the secret word you just solved as their current puzzle!</p>
-        </tr>
+    <div class="faq-row">
+        <label class="faq-text-header">What is extreme mode?</label>
+        <p class="faq-text-item">When enabled, the secret word will pull from the entire dictionary instead of a curated
+            list. Incredibly difficult!</p>
+    </div>
 
-        <tr>
-            <label class="faq-text-header">How do I report bugs or submit feature requests?</label>
-            <p class="faq-text-item">Please use one of the contact links below.</p>
-        </tr>
+    <div class="faq-row">
+        <label class="faq-text-header">How do I share a puzzle?</label>
+        <p class="faq-text-item">When you finish a game, click the <em class="bold-text">"Share a link to this
+                puzzle"</em> button to copy a link to your clipboard.</p>
+        <p class="faq-text-item">Then, share the link with your friends. They will be given the secret word you just
+            solved as their current puzzle!</p>
+    </div>
 
-        <tr>
-            <label class="faq-label">Contact</label>
-            <mat-divider class="divider"></mat-divider>
+    <div class="faq-row">
+        <label class="faq-text-header">How do I report bugs or submit feature requests?</label>
+        <p class="faq-text-item">Please use one of the contact links below.</p>
+    </div>
 
-            <ul>
-                <li>
-                    <a role="link" class="faq-link" target="_blank" rel="noopener noreferrer" href="https://twitter.com/BenSchwenke">Twitter</a>
-                </li>
-                <li>
-                    <a role="link" class="faq-link" target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/ben-schwenke/">LinkedIn</a>
-                </li>
-                <li>
-                    <a role="link" class="faq-link" target="_blank" rel="noopener noreferrer" href="https://github.com/Schwenke/untitled-word-game">GitHub</a>
-                </li>
-            </ul>
-        </tr>
+    <div class="faq-row">
+        <label class="faq-label">Contact</label>
+        <mat-divider class="divider"></mat-divider>
+    </div>
 
-    </table>
+    <div class="faq-row">
+        <ul>
+            <li>
+                <a role="link" class="faq-link" target="_blank" rel="noopener noreferrer"
+                    href="https://twitter.com/BenSchwenke">Twitter</a>
+            </li>
+            <li>
+                <a role="link" class="faq-link" target="_blank" rel="noopener noreferrer"
+                    href="https://www.linkedin.com/in/ben-schwenke/">LinkedIn</a>
+            </li>
+            <li>
+                <a role="link" class="faq-link" target="_blank" rel="noopener noreferrer"
+                    href="https://github.com/Schwenke/untitled-word-game">GitHub</a>
+            </li>
+        </ul>
+    </div>
 </div>
