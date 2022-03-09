@@ -20,11 +20,11 @@
         <div class="game-header" role="banner">
             <!-- DEBUG -->
             <!-- Secret: {{session.secret}} -->
-            <fa-icon (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon" size="lg"></fa-icon>
+            <fa-icon class="icon-button" (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon" size="lg"></fa-icon>
 
             <label aria-label="Letter Flash" class="game-title">Letter Flash</label>
 
-            <fa-icon (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg"></fa-icon>
+            <fa-icon class="icon-button" (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg"></fa-icon>
         </div>
 
         <button mat-raised-button color="accent" aria-label="Return to game"
