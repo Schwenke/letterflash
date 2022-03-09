@@ -72,7 +72,7 @@
 }
 
 .game-header {
-    min-height: 2rem;
+    min-height: 50px;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -80,8 +80,7 @@
 }
 
 .game-title {
-    font-size: large;
-    user-select: none;
+    font-size: x-large;
 }
 
 .header-button {

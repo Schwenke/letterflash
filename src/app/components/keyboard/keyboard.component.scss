@@ -11,7 +11,6 @@
 .key {
     user-select: none;
     border-radius: 5px;
-    outline: 2x hidden;
     padding: 0;
     margin: 0 6px 0 0;
     height: 60px;
@@ -50,8 +49,4 @@
         @extend .key;
         background-color: mat.get-color-from-palette($perfect, 'darker');
     }
-}
-
-.key:focus {
-    outline: 2px solid;
 }

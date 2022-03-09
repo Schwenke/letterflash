@@ -10,7 +10,7 @@
     </mat-sidenav>
 
     <!-- Options right side nav -->
-    <mat-sidenav role="region" class="options-sidenav" #options position="end">
+    <mat-sidenav role="region" class="options-sidenav" autoFocus="false" #options position="end">
         <app-options (newGameClicked)="startNewGame()" (viewHistoryClicked)="switchViews()" (closeButtonClicked)="options.toggle()"
             (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
@@ -20,17 +20,11 @@
         <div class="game-header" role="banner">
             <!-- DEBUG -->
             <!-- Secret: {{session.secret}} -->
-            <button mat-icon-button (click)="faq.toggle()" class="faq-button" aria-label="Information"
-                matTooltip="Opens the information and FAQ window">
-                <fa-icon aria-hidden="true" [icon]="questionIcon" size="lg"></fa-icon>
-            </button>
+            <fa-icon (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon" size="lg"></fa-icon>
 
             <label aria-label="Letter Flash" class="game-title">Letter Flash</label>
 
-            <button mat-icon-button (click)="options.toggle()" class="options-button" aria-label="Options"
-                matTooltip="Opens the options window">
-                <fa-icon aria-hidden="true" [icon]="cogsIcon" size="lg"></fa-icon>
-            </button>
+            <fa-icon (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg"></fa-icon>
         </div>
 
         <button mat-raised-button color="accent" aria-label="Return to game"
