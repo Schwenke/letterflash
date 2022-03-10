@@ -47,6 +47,6 @@
 
     &--perfect {
         @extend .key;
-        background-color: mat.get-color-from-palette($perfect, 'darker');
+        background-color: mat.get-color-from-palette($perfect, 'default');
     }
 }
