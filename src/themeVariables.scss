@@ -3,15 +3,14 @@
 $primary: mat.define-palette(mat.$grey-palette);
 $perfect: mat.define-palette(mat.$green-palette);
 $partial: mat.define-palette(mat.$amber-palette);
-$accentDark: mat.define-palette(mat.$deep-purple-palette, A100);
-$accentLight: mat.define-palette(mat.$deep-purple-palette);
+$accent: mat.define-palette(mat.$light-blue-palette, A700);
 $warn: mat.define-palette(mat.$red-palette);
 
 $light-theme: mat.define-light-theme(
     (
         color: (
             primary: $primary,
-            accent: $accentLight,
+            accent: $accent,
             warn: $warn,
         ),
     )
@@ -21,7 +20,7 @@ $dark-theme: mat.define-dark-theme(
   (
     color: (
         primary: $primary,
-        accent: $accentDark,
+        accent: $accent,
         warn: $warn,
     ),
   )
