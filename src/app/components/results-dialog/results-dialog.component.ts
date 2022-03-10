@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import { MatDialogRef} from '@angular/material/dialog';
-import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL, ShareParameter, MaxGuesses, SiteName } from 'src/app/constants';
+import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL, ShareParameter, MaxGuesses } from 'src/app/constants';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
 import { Session } from 'src/app/models/session.interface';
