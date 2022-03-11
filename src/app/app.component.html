@@ -23,7 +23,8 @@
             <fa-icon class="icon-button" (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon" size="lg"></fa-icon>
 
             <label *ngIf="!isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</label>
-            <button mat-raised-button color="accent" *ngIf="isGameOver()" (click)="openResultsDialog()">Open results</button>
+
+            <button mat-raised-button color="accent" *ngIf="isGameOver()" (click)="openResultsDialog()">View results</button>
 
             <fa-icon class="icon-button" (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg"></fa-icon>
         </div>
