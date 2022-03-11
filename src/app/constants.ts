@@ -6,6 +6,9 @@ export const DefaultWordLength = 5;
 export const ENTER = "ENTER";
 export const BACKSPACE = "⟵";
 
+//  Session
+export const RecentGameMaximum = 100;
+
 // Descriptions
 export const HardModeDescription = "Hard mode";
 export const ExtremeModeDescription = "Extreme mode";

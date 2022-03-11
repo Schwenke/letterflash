@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DefaultWordLength, ExtremeModeDescription, HardModeDescription, SessionKey } from '../constants';
+import { DefaultWordLength, ExtremeModeDescription, HardModeDescription, RecentGameMaximum, SessionKey } from '../constants';
 import { BoardState } from '../models/board-state.interface';
 import { Options } from '../models/options.interface';
 import { Game, Session, Stats } from '../models/session.interface';
@@ -52,8 +52,7 @@ export class SessionService {
 
       let previousGameCount = session.recentGames.unshift(currentGame);
 
-      //  Only store the most recent 5
-      if (previousGameCount > 5) {
+      if (previousGameCount > RecentGameMaximum) {
         session.recentGames.pop();
       }
     }
