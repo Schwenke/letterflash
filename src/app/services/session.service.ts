@@ -152,6 +152,10 @@ export class SessionService {
     if (!session.stats) {
       session.stats = this.getDefaultStats();
     }
+
+    if  (!session.stats.trackingDate) {
+      session.stats.trackingDate = new Date().toLocaleDateString("en-US");
+    }
   }
 
   private removeDeprecatedValues(session: Session): void {
@@ -201,6 +205,7 @@ export class SessionService {
 
   private getDefaultStats(): Stats {
     return {
+      trackingDate: new Date().toLocaleDateString("en-US"),
       played_5: 0,
       played_6: 0,
       played_7: 0,

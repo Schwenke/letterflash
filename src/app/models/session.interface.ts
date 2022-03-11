@@ -20,6 +20,7 @@ export interface Game{
 }
 
 export interface Stats {
+    trackingDate: string;
     played_5: number;
     played_6: number;
     played_7: number;
