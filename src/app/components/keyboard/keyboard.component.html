@@ -5,7 +5,9 @@
         'key--used': key.guessed && !(key.perfect || key.partial),
         'key--unused': !key.guessed,
         'key--perfect': key.perfect,
-        'key--partial': key.partial
+        'key--partial': key.partial,
+        'enter-key': key.letter === 'ENTER',
+        'backspace-key': key.letter === '⟵'
     }">
         {{key.letter}}
     </button>

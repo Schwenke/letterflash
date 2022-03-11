@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
+import { BACKSPACE, ENTER } from '../constants';
 import { Key, Keyboard, KeyboardRow } from '../models/keyboard.interface';
 
 @Injectable({
@@ -47,7 +48,7 @@ export class KeyboardService {
       { letter: "J", guessed: false, partial: false, perfect: false },
       { letter: "K", guessed: false, partial: false, perfect: false },
       { letter: "L", guessed: false, partial: false, perfect: false },
-      { letter: "ENTER", guessed: false, partial: false, perfect: false }
+      { letter: ENTER, guessed: false, partial: false, perfect: false },
     ];
 
     keyBoard.rows[2].keys = [
@@ -58,7 +59,7 @@ export class KeyboardService {
       { letter: "B", guessed: false, partial: false, perfect: false },
       { letter: "N", guessed: false, partial: false, perfect: false },
       { letter: "M", guessed: false, partial: false, perfect: false },
-      { letter: "BACKSPACE", guessed: false, partial: false, perfect: false }
+      { letter: BACKSPACE, guessed: false, partial: false, perfect: false }
     ];
 
     this.keyboard.next(keyBoard);

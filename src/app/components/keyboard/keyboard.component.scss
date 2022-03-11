@@ -8,6 +8,15 @@
     touch-action: manipulation;
 }
 
+.enter-key {
+    min-width: 80px !important;
+}
+
+.backspace-key {
+    font-size: xx-large !important;
+    min-width: 90px !important;
+}
+
 .key {
     user-select: none;
     border-radius: 5px;
@@ -21,10 +30,11 @@
     flex: 1;
     // Override material button default value
     min-width: auto;
+    font-size: medium;
 
     &--unused {
         @extend .key;
-        background-color: mat.get-color-from-palette($primary, 'default');
+        background-color: #BDBDBD;
 
         &.darkMode {
             background-color: #818384;
@@ -33,20 +43,34 @@
 
     &--used {
         @extend .key;
-        background-color: mat.get-color-from-palette($primary, 'darker');
+        color: white;
+        background-color: #616161;
 
         &.darkMode {
-            background-color: #4b4b4e;
+            background-color: #424242;
         }
     }
 
     &--partial {
         @extend .key;
-        background-color: mat.get-color-from-palette($partial, 'darker');
+        color: white;
+        background-color: #FF8F00;
     }
 
     &--perfect {
         @extend .key;
-        background-color: mat.get-color-from-palette($perfect, 'default');
+        color: white;
+        background-color: #388E3C;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .enter-key {
+        min-width: 60px !important;
+    }
+    
+    .backspace-key {
+        font-size: xx-large !important;
+        min-width: 70px !important;
     }
 }

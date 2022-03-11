@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { BACKSPACE, ENTER } from 'src/app/constants';
 import { BoardState } from 'src/app/models/board-state.interface';
 import { Key, Keyboard } from 'src/app/models/keyboard.interface';
 import { Options } from 'src/app/models/options.interface';
@@ -67,9 +68,9 @@ export class KeyboardComponent implements OnInit {
     if (this.boardState.success || this.boardState.failure) return;
     if (key.letter === " ") return;
     
-    if (key.letter === "ENTER") {
+    if (key.letter === ENTER) {
       this.boardStateService.guess();
-    } else if (key.letter === "BACKSPACE") {
+    } else if (key.letter === BACKSPACE) {
       this.boardStateService.removeInput();
     } else {
       this.boardStateService.appendInput(key.letter);
@@ -77,11 +78,11 @@ export class KeyboardComponent implements OnInit {
   }
 
   getTitle(key: Key): string {
-    if (key.letter === "ENTER") {
+    if (key.letter === ENTER) {
       return "Submits your guess";
     }
 
-    if (key.letter === "BACKSPACE") {
+    if (key.letter === BACKSPACE) {
       return "Deletes the most recent letter from the current guess";
     }
     

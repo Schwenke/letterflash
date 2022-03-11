@@ -2,6 +2,10 @@
 export const MaxGuesses = 6;
 export const DefaultWordLength = 5;
 
+//  Keyboard
+export const ENTER = "ENTER";
+export const BACKSPACE = "⟵";
+
 // Descriptions
 export const HardModeDescription = "Hard mode";
 export const ExtremeModeDescription = "Extreme mode";
