@@ -67,7 +67,7 @@ export class AppComponent {
 
           if (shareLink && shareLink.length > 0) {
             let secret: string = atob(shareLink);
-            this.boardStateService.startCustomGame(secret);
+            this.boardStateService.startChallenge(secret);
           } else {
             this.boardStateService.initialize();
           }

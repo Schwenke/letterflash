@@ -5,7 +5,7 @@ export interface Session {
     secret: string;
     previousGames: Game[];
     options: Options;
-    customGame: boolean;
+    challenge: boolean;
 }
 
 export interface Game{
@@ -15,4 +15,5 @@ export interface Game{
     word: string;
     victory: boolean;
     options: string[];
+    challenge: boolean;
 }

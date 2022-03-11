@@ -69,7 +69,8 @@ export class SessionService {
       guesses: session.guesses,
       word: session.secret,
       victory: boardState.success,
-      options: optionsList
+      options: optionsList,
+      challenge: session.challenge
     };
 
     return game;
@@ -106,7 +107,7 @@ export class SessionService {
       guesses: [],
       previousGames: [],
       options: this.getDefaultOptions(),
-      customGame: false
+      challenge: false
     };
 
     this.session = new BehaviorSubject<Session>(session);

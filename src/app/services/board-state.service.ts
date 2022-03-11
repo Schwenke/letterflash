@@ -48,15 +48,15 @@ export class BoardStateService {
     this.updateSession();
   }
 
-  public startCustomGame(secret: string): void {
+  public startChallenge(secret: string): void {
     this.wordLength = secret.length;
 
     this.session.secret = secret;
 
     this.session.guesses = [];
 
-    //  Session needs to be aware it is a custom game, as some behaviors change
-    this.session.customGame = true;
+    //  Session needs to be aware it is a challenge, as some behaviors change
+    this.session.challenge = true;
 
     this.resetBoard();
 
@@ -76,7 +76,7 @@ export class BoardStateService {
 
     this.session.guesses = [];
 
-    this.session.customGame = false;
+    this.session.challenge = false;
 
     this.resetBoard();
 
