@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DefaultWordLength, SessionKey } from '../constants';
+import { DefaultWordLength, ExtremeModeDescription, HardModeDescription, SessionKey } from '../constants';
 import { BoardState } from '../models/board-state.interface';
 import { Options } from '../models/options.interface';
-import { Game, Session } from '../models/session.interface';
+import { Game, Session, Stats } from '../models/session.interface';
 import { TimerService } from './timer.service';
 
 @Injectable({
@@ -48,11 +48,13 @@ export class SessionService {
     if (boardState.failure || boardState.success) {
       let currentGame = this.createGameFromBoardState(boardState);
 
-      let length = session.previousGames.unshift(currentGame);
+      this.updateStatsFromGame(session.stats, currentGame);
 
-      if (length > 100) {
-        //  arbitrary number of games to track
-        session.previousGames.pop();
+      let previousGameCount = session.recentGames.unshift(currentGame);
+
+      //  Only store the most recent 5
+      if (previousGameCount > 5) {
+        session.recentGames.pop();
       }
     }
 
@@ -76,14 +78,48 @@ export class SessionService {
     return game;
   }
 
+  private updateStatsFromGame(stats: Stats, game: Game): void {
+    let length: number = game.word.length;
+
+    switch (length) {
+      case 7:
+        ++stats.played_7;
+        if (game.victory) ++stats.wins_7;
+        break;
+      case 6:
+        ++stats.played_6;
+        if (game.victory) ++stats.wins_6;
+        break;
+      default:
+        ++stats.played_5;
+        if (game.victory) ++stats.wins_5;
+        break;
+    }
+
+    stats.guesses += game.guesses.length;
+    
+    if (game.challenge) ++stats.challenges;
+    if (game.challenge && game.victory) ++stats.challengesWon;
+    if (game.options.indexOf(HardModeDescription) > -1) ++stats.wins_hard;
+    if (game.options.indexOf(ExtremeModeDescription) > -1) ++stats.wins_extreme;
+
+    let timeSpent: string[] = game.timeSpent.split(":");
+    let hours = +timeSpent[0] * 3600;
+    let minutes = +timeSpent[1] * 60;
+    let seconds = +timeSpent[2];
+    let totalTime = (hours + minutes + seconds);
+
+    stats.time += totalTime;
+  }
+
   private getCurrentGameOptionsList(): string[] {
     let session = this.session.value;
     let options = session.options;
 
     let optionsList: string[] = [];
 
-    if (options.hardMode) optionsList.push("Hard mode");
-    if (options.extremeMode) optionsList.push("Extreme mode");
+    if (options.hardMode) optionsList.push(HardModeDescription);
+    if (options.extremeMode) optionsList.push(ExtremeModeDescription);
 
     return optionsList;
   }
@@ -92,22 +128,61 @@ export class SessionService {
     let sessionJSON = localStorage.getItem(SessionKey);
 
     if (sessionJSON) {
-      //  backwards compat fix
-      sessionJSON = sessionJSON.replace('masochistMode', 'extremeMode');
+      let session: Session = JSON.parse(sessionJSON);
 
-      return JSON.parse(sessionJSON);
+      this.triageSession(session);
+
+      return session;
     }
 
     return null;
+  }
+
+  /**
+   * Updates existing sessions with default values for any new properties
+   * Also removes any deprecated properties
+   */
+  private triageSession(session: Session): void {
+    this.removeDeprecatedValues(session);
+
+    if (!session.recentGames) {
+      session.recentGames = [];
+    }
+
+    if (!session.stats) {
+      session.stats = this.getDefaultStats();
+    }
+  }
+
+  private removeDeprecatedValues(session: Session): void {
+    let sessionAny = session as any;
+
+    let keys = Object.keys(sessionAny);
+
+    //  Changed to 'extremeMode'
+    if (keys.indexOf('masochistMode') > -1) {
+      delete sessionAny.masochistMode;
+    }
+
+    //  Changed to 'recentGames' - 03/10/2022
+    if (keys.indexOf('previousGames') > -1) {
+      delete sessionAny.previousGames;
+    }
+
+    //  Changed to 'challenge' - 03/10/2022
+    if (keys.indexOf('customGame') > -1) {
+      delete sessionAny.customGame;
+    }
   }
 
   private createSession(): void {
     let session: Session = {
       secret: "",
       guesses: [],
-      previousGames: [],
+      recentGames: [],
       options: this.getDefaultOptions(),
-      challenge: false
+      challenge: false,
+      stats: this.getDefaultStats()
     };
 
     this.session = new BehaviorSubject<Session>(session);
@@ -122,5 +197,22 @@ export class SessionService {
       darkMode: false,
       wordLength: defaultWordLength
     };
+  }
+
+  private getDefaultStats(): Stats {
+    return {
+      played_5: 0,
+      played_6: 0,
+      played_7: 0,
+      wins_5: 0,
+      wins_6: 0,
+      wins_7: 0,
+      wins_hard: 0,
+      wins_extreme: 0,
+      guesses: 0,
+      time: 0,
+      challenges: 0,
+      challengesWon: 0
+    } as Stats;
   }
 }

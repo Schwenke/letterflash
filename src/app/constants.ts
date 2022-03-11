@@ -2,6 +2,10 @@
 export const MaxGuesses = 6;
 export const DefaultWordLength = 5;
 
+// Descriptions
+export const HardModeDescription = "Hard mode";
+export const ExtremeModeDescription = "Extreme mode";
+
 //  Dialog symbols
 export const OneStarSymbol = "⁕";
 export const TwoStarSymbol = "⁑";

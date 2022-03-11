@@ -18,7 +18,7 @@ export class HistoryComponent implements OnInit {
 
   ngOnInit(): void {
     this.sessionService.session.subscribe(session => {
-      this.previousGames = session.previousGames;
+      this.previousGames = session.recentGames;
     });
   }
 
