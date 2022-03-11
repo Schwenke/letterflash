@@ -80,11 +80,7 @@ export class AppComponent {
 
       this.boardState = boardState;
 
-      if (boardState.success) {
-        this.openResultsDialog();
-      }
-
-      if (boardState.failure) {
+      if (this.isGameOver()) {
         this.openResultsDialog();
       }
 
@@ -92,6 +88,10 @@ export class AppComponent {
         this.openErrorDialog();
       }
     })
+  }
+
+  isGameOver(): boolean {
+    return (this.boardState.success || this.boardState.failure);
   }
 
   private setSiteTags(): void {
