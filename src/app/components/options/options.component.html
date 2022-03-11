@@ -67,9 +67,9 @@
 
     <div class="options-row">
         <div class="button-container">
-            <button mat-raised-button matTooltipPosition="right" aria-label="History"
-                matTooltip="View your last 100 game results" role="button" class="history-button" color="accent"
-                type="button" (click)="viewHistory()">View history</button>
+            <button mat-raised-button [disabled]="true" matTooltipPosition="right" aria-label="History"
+                matTooltip="History is being rewritten! (Pun intended)" role="button" class="history-button" color="accent"
+                type="button" (click)="viewHistory()">Under construction</button>
 
             <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
                 role="button" class="reset-button" color="accent" type="button" onclick="this.blur()"
