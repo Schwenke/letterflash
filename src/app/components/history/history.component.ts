@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import { take } from 'rxjs/operators';
 import { Game } from 'src/app/models/session.interface';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -28,8 +27,10 @@ export class HistoryComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.sessionService.session.pipe(take(1)).subscribe(session => {
-      this.dataSource = new MatTableDataSource<Game>(session.recentGames);
+    this.dataSource = new MatTableDataSource<Game>();
+
+    this.sessionService.session.subscribe(session => {
+      this.dataSource.data = session.recentGames;
     });
   }
 
