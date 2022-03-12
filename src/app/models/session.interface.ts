@@ -7,6 +7,7 @@ export interface Session {
     guesses: string[];
     secret: string;
     challenge: boolean;
+    lastVisited: string;
 }
 
 export interface Game{

@@ -45,6 +45,8 @@ export class SessionService {
   update(boardState: BoardState): void {
     let session = this.session.value;
 
+    session.lastVisited = new Date().toLocaleString();
+
     if (boardState.failure || boardState.success) {
       let currentGame = this.createGameFromBoardState(boardState);
 
@@ -192,7 +194,8 @@ export class SessionService {
       recentGames: [],
       options: this.getDefaultOptions(),
       challenge: false,
-      stats: this.getDefaultStats()
+      stats: this.getDefaultStats(),
+      lastVisited: new Date().toLocaleString()
     };
 
     this.session = new BehaviorSubject<Session>(session);
