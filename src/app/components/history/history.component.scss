@@ -29,7 +29,6 @@
 
 .mat-column-date {
     @extend .table-column;
-    border-right: 1px solid currentColor;
     padding-right: 16px;
     padding-left: 16px !important;
 }
@@ -64,6 +63,10 @@
     @extend .table-column;
 }
 
+.copy-button {
+    padding: 0 0 0 0;
+}
+
 @media only screen and (max-width: 500px) {
     .table-container {
         height: 500px;
@@ -71,9 +74,8 @@
 
     .copy-button {
         font-size: x-small;
-        min-width: 40px;
+        min-width: 30px;
         line-height: 30px;
-        padding: 0;
     }
 
     .table-column {
