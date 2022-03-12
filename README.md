@@ -1,13 +1,30 @@
-Inspired by the popular word game, Wordle.
+# Letter Flash
 
-This is a fan-appreciation open source clone I made mostly to work on my front end code skills and because I enjoyed Wordle so much.
+### Inspired by the popular online game Wordle.
 
-The key point of divergence between this game and Wordle is that this game is not one-word-a-day, and instead has infinite replayability.
+### Check out the deployed site from github pages here: https://www.letterflash.com/
 
-I also took the time to add some features I thought would be neat, like support for six and seven letter words, as well as an extreme mode.
+-----------------------------------------------------------------------------------------------------------------------------------------
+This is an open source, replayable version of **Wordle**
 
-If you enjoy the base wordle game as much as I do, then you might also enjoy this version.
+Some key points of difference include:
 
-Please give it a look, critique the source if you like, and share it with your friends if you think they would enjoy it as well.
+- ### Favor replayability over challenge-of-the-day
+  - Letter Flash allows you to keep playing over and over!
+- ### Additional features
+  - **Extreme mode:** the secret word pulls from the entire dictionary instead of using a curated list. Incredibly difficult, for masochists only!
+  - **Support for 6 and 7 letter words**
+  - **Stat tracking and history:** Letter flash keeps track of total games played and wins for each word length and several other statistics!
+- ### Fully open source and actively developed
+  - The code is available to everyone and so is the issue tracker. I consider this an on-going project and am always looking for new features to add
+- ### Purely client side with no server
+  - The game loads fast and there is no concern over ads, malicious cookies, or anything of the sort
+- ### Easy to build and run
+  - This app is built using Angular and typescript and not much else. Grab the code, grab your favorite IDE, npm install, and have at it!
 
-Thanks for taking a look, and please let me know if you find any issues or have any ideas for feature adds.
+
+If you enjoy the base Wordle game and would like to play more of it, give Letter Flash a shot!
+
+If you are interested in the project and would like to contribute, let me know.
+
+Special thanks to all of my friends and co-workers who have helped play, test, and play even more of my game to help me refine it!
