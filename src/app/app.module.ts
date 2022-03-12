@@ -23,6 +23,8 @@ import { HistoryComponent } from './components/history/history.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTooltipModule } from '@angular/material/tooltip'; 
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,9 @@ import { MatTooltipModule } from '@angular/material/tooltip';
     MatSidenavModule,
     MatSnackBarModule,
     FontAwesomeModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

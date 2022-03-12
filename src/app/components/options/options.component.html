@@ -35,7 +35,7 @@
         <fieldset class="field-set">
             <legend class="header-label">Word length</legend>
             <mat-divider class="divider"></mat-divider>
-            
+
             <mat-radio-group role="radiogroup" class="radio-group" [(ngModel)]="options.wordLength"
                 (change)="storeOptions()" [value]="options.wordLength">
                 <mat-radio-button matTooltip="New puzzles will generate 5 letter words" matTooltipPosition="right"
@@ -60,25 +60,33 @@
     </div>
 
     <div class="options-row">
-        <label class="header-label">Game</label>
+        <label class="header-label">View</label>
     </div>
 
     <mat-divider class="divider"></mat-divider>
 
     <div class="options-row">
         <div class="button-container">
-            <button mat-raised-button [disabled]="true" matTooltipPosition="right" aria-label="History"
-                matTooltip="History is being rewritten! (Pun intended)" role="button" class="history-button" color="accent"
-                type="button" (click)="viewHistory()">History</button>
-
-            <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
-                role="button" class="reset-button" color="accent" type="button" onclick="this.blur()"
-                (click)="startNewGame()">Start new game</button>
+            <button mat-raised-button matTooltipPosition="right" aria-label="History"
+                matTooltip="View up to 100 recent games" role="button" class="history-button" color="accent"
+                type="button" (click)="viewHistory()">Recent games</button>
 
             <button mat-raised-button matTooltipPosition="right" aria-label="Current game results"
                 matTooltip="Re-opens the end of game result dialog" role="button" class="results-button" color="accent"
-                [disabled]="!gamePaused" (click)="viewResults()">View results</button>
+                [disabled]="!gamePaused" (click)="viewResults()">Game results</button>
         </div>
+    </div>
+
+    <div class="options-row">
+        <label class="header-label">Game</label>
+    </div>
+
+    <mat-divider class="divider"></mat-divider>
+
+    <div class="options-row">
+        <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
+            role="button" class="reset-button" color="accent" type="button" onclick="this.blur()"
+            (click)="startNewGame()">Start new game</button>
     </div>
 
 </div>

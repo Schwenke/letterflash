@@ -1,4 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import { take } from 'rxjs/operators';
 import { Game } from 'src/app/models/session.interface';
 import { SessionService } from 'src/app/services/session.service';
 
@@ -9,17 +12,56 @@ import { SessionService } from 'src/app/services/session.service';
 })
 export class HistoryComponent implements OnInit {
 
-  previousGames: Game[];
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  dataSource: MatTableDataSource<Game>;
+
+  displayedColumns: string[] = ['date', 'secret', 'guesses', 'time-spent', 'win', 'options', 'share'];
+
+  resultCount: number = 5;
 
   constructor(
     private sessionService: SessionService
 
-  ) { }
+  ) {
+    this.getScreenSize();
+  }
 
   ngOnInit(): void {
-    this.sessionService.session.subscribe(session => {
-      this.previousGames = session.recentGames;
+    this.sessionService.session.pipe(take(1)).subscribe(session => {
+      this.dataSource = new MatTableDataSource<Game>(session.recentGames);
     });
+  }
+
+  ngAfterViewInit(): void {
+    this.dataSource.paginator = this.paginator;
+  }
+
+  trimOption(option: string): string {
+    return option.replace(" mode", "");
+  }
+
+  copyShareLink(word: string): void {
+    let link: string =  this.sessionService.getShareLink(word);
+
+    navigator.clipboard.writeText(link);
+  }
+
+  @HostListener('window:resize', ['$event'])
+  getScreenSize(event?: any) {
+        let screenHeight = window.innerHeight;
+
+        if (screenHeight < 800) {
+          this.resultCount = 4;
+        }
+
+        if (screenHeight < 650) {
+          this.resultCount = 3;
+        }
+  }
+
+  getResultCount(): number[] {
+    return [this.resultCount];
   }
 
 }

@@ -22,16 +22,14 @@
             <!-- Secret: {{session.secret}} -->
             <fa-icon class="icon-button" (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon" size="lg"></fa-icon>
 
-            <label *ngIf="!isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</label>
+            <label *ngIf="showGame && !isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</label>
 
-            <button mat-raised-button color="accent" *ngIf="isGameOver()" (click)="openResultsDialog()">View results</button>
+            <button mat-raised-button role="button" color="accent" *ngIf="isGameOver()" (click)="openResultsDialog()">View results</button>
+
+            <button mat-raised-button role="button" color="accent" *ngIf="!showGame" (click)="switchViews()">Return to game</button>
 
             <fa-icon class="icon-button" (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg"></fa-icon>
         </div>
-
-        <button mat-raised-button color="accent" aria-label="Return to game"
-            matTooltip="Leave the history view and return back to the game" role="button"
-            [ngClass]="{'hidden': showGame}" class="reset-button" (click)="switchViews()">Return to game</button>
 
         <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
 

@@ -1,70 +1,101 @@
 @use '@angular/material' as mat;
 @import "../../../themeVariables";
 
-.history-table {
-    border-spacing: 2px;
+
+.history-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.history-row {
-
+.table-container {
+    height: 600px;
 }
 
-.cell {
-    border-spacing: 10px;
-    padding: .5rem;
+.paginator {
+    font-size: x-large;
+    color: mat.get-color-from-palette($accent, 'default');
+    margin-bottom: .5em;
+}
+
+.table-column {
+    padding-left: 16px;
+    font-size: medium;
     text-align: center;
-    border: 1px solid mat.get-color-from-palette($primary, 'default');
-    font-size: large;
 }
 
-.history-header-cell {
-    @extend .cell;
+.mat-column-date {
+    @extend .table-column;
+    border-right: 1px solid currentColor;
+    padding-right: 16px;
+    padding-left: 16px !important;
 }
 
-.history-cell {
-    @extend .cell;
+.mat-column-time-spent {
+    @extend .table-column;
+}
+
+.mat-column-guesses {
+    @extend .table-column;
 }
 
 .guess {
     font-size: small;
+    font-style: italic;
+    margin: 2px 0 2px 0;
 }
 
-@media only screen and (max-width: 800px) {   
-    .cell {
-        font-size: large;
-        padding: .4rem;
-        border-spacing: 4px;
+.mat-column-secret {
+    @extend .table-column;
+}
+
+.mat-column-win {
+    @extend .table-column;
+}
+
+.mat-column-options {
+    @extend .table-column;
+}
+
+.mat-column-share {
+    @extend .table-column;
+}
+
+@media only screen and (max-width: 500px) {
+    .table-container {
+        height: 500px;
     }
-}
 
-@media only screen and (max-width: 600px) {   
-    .cell {
+    .copy-button {
+        font-size: x-small;
+        min-width: 40px;
+        line-height: 30px;
+        padding: 0;
+    }
+
+    .table-column {
+        padding-left: 12px;
+        font-size: x-small;
+    }
+
+    .mat-header-row {
+        height: 40px;
+    }
+
+    .mat-column-date {
+        padding-right: 8px;
+        padding-left: 8px !important;
+    }
+
+    .guess {
+        font-size: x-small;
+        margin: 0 0 0 0;
+    }
+
+    .paginator {
         font-size: medium;
-        padding: .3rem;
-        border-spacing: 3px;
-    }
-}
-
-@media only screen and (max-width: 500px) {   
-    .cell {
-        font-size: small;
-        padding: .2rem;
-        border-spacing: 3px;
-    }
-
-    .guess {
-        font-size: x-small;
-    }
-}
-
-@media only screen and (max-width: 400px) {   
-    .cell {
-        font-size: x-small;
-        padding: .1rem;
-        border-spacing: 3px;
-    }
-
-    .guess {
-        font-size: x-small;
     }
 }
