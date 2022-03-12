@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { DefaultWordLength, ExtremeModeDescription, HardModeDescription, RecentGameMaximum, SessionKey } from '../constants';
+import { BaseURL, DefaultWordLength, ExtremeModeDescription, HardModeDescription, RecentGameMaximum, SessionKey, ShareParameter } from '../constants';
 import { BoardState } from '../models/board-state.interface';
 import { Options } from '../models/options.interface';
 import { Game, Session, Stats } from '../models/session.interface';
@@ -58,6 +58,13 @@ export class SessionService {
     }
 
     this.session.next(session);
+  }
+
+  getShareLink(secret: string): string {
+    let encodedSecret: string = btoa(secret);
+    let shareLink: string = `${BaseURL}?${ShareParameter}=${encodedSecret}`;
+
+    return shareLink;
   }
 
   private createGameFromBoardState(boardState: BoardState): Game {

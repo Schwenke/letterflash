@@ -10,8 +10,8 @@ export const BACKSPACE = "⟵";
 export const RecentGameMaximum = 100;
 
 // Descriptions
-export const HardModeDescription = "Hard mode";
-export const ExtremeModeDescription = "Extreme mode";
+export const HardModeDescription = "Hard";
+export const ExtremeModeDescription = "Extreme";
 
 //  Dialog symbols
 export const OneStarSymbol = "⁕";

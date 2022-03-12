@@ -1,5 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-import { MatDialogRef} from '@angular/material/dialog';
+import { Component, OnInit } from '@angular/core';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL, ShareParameter, MaxGuesses } from 'src/app/constants';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
@@ -33,7 +33,7 @@ export class ResultsDialogComponent implements OnInit {
     private boardStateService: BoardStateService,
     private sessionService: SessionService,
     public dialogRef: MatDialogRef<ResultsDialogComponent>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.timeSpent = this.timerService.getClockTime();
@@ -72,20 +72,14 @@ export class ResultsDialogComponent implements OnInit {
   }
 
   public sharePuzzle(): void {
-    let shareLink: string = this.getShareLink();
+    let secret: string = this.session.secret;
+
+    let shareLink: string = this.sessionService.getShareLink(secret);
 
     this.writeToClipboard(shareLink);
 
     this.sharePuzzleText = "Share link copied to clipboard!"
     this.sharePuzzleClicked = true;
-  }
-
-  private getShareLink(): string {
-    let secret: string = this.session.secret;
-    let encodedSecret: string = btoa(secret);
-    let shareLink: string = `${BaseURL}?${ShareParameter}=${encodedSecret}`;
-
-    return shareLink;
   }
 
   private getResultsText(): string {
@@ -118,7 +112,7 @@ export class ResultsDialogComponent implements OnInit {
     let messageHeader: string = "";
 
     if (challenge) {
-      let shareLink: string = this.getShareLink();
+      let shareLink: string = this.sessionService.getShareLink(secret);
       let questionMarks: string = "".padEnd(secret.length, "?");
       messageHeader += `${shareLink}\n`;
       messageHeader += `${questionMarks} (${guessesMade}/${MaxGuesses}) ${modeOptions}\n`;
