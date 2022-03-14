@@ -26,7 +26,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
-import { StatsComponent } from './components/stats/stats/stats.component';
+import { StatsComponent } from './components/stats/stats.component';
 
 @NgModule({
   declarations: [
