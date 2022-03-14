@@ -11,7 +11,7 @@
 
     <!-- Options right side nav -->
     <mat-sidenav role="region" class="options-sidenav" autoFocus="false" #options position="end">
-        <app-options (newGameClicked)="startNewGame()" (viewHistoryClicked)="switchViews()" (closeButtonClicked)="options.toggle()"
+        <app-options (newGameClicked)="startNewGame()" (viewHistoryClicked)="viewHistory()" (viewStatsClicked)="viewStats()" (closeButtonClicked)="options.toggle()"
             (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 
@@ -26,12 +26,14 @@
 
             <button mat-raised-button role="button" color="accent" *ngIf="isGameOver()" (click)="openResultsDialog()">View results</button>
 
-            <button mat-raised-button role="button" color="accent" *ngIf="!showGame" (click)="switchViews()">Return to game</button>
+            <button mat-raised-button role="button" color="accent" *ngIf="showHistory || showStats" (click)="viewGame()">Return to game</button>
 
             <fa-icon class="icon-button" (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg"></fa-icon>
         </div>
 
-        <app-history [ngClass]="{'hidden': showGame}" class="history-board"></app-history>
+        <app-history [ngClass]="{'hidden': !showHistory}" class="history-board"></app-history>
+
+        <!-- <app-stats [ngClass]="{'hidden': !showStats}" class="stats-board"></app-stats> -->
 
         <app-game-board [ngClass]="{'hidden': !showGame, 'shake': showError}" class="game-board"></app-game-board>
 

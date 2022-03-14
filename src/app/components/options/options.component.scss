@@ -60,7 +60,7 @@
     font-size: large;
 }
 
-.button {
+.options-button {
     font-size: large;
     margin-bottom: .75em;
 }
@@ -69,18 +69,6 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.reset-button {
-    @extend .button; 
-}
-
-.history-button {
-    @extend .button;
-}
-
-.results-button {
-    @extend .button;
 }
 
 @media only screen and (max-width: 450px) {

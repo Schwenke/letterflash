@@ -23,13 +23,17 @@ export class AppComponent {
   @ViewChild('options') optionSideNav: MatSidenav;
 
   initialized: boolean = false;
+  //  Views - TODO find an elegant way to just swap out entire main body component
   showGame: boolean = true;
-  darkModeClass: string = "darkMode";
-  boardState: BoardState;
+  showHistory: boolean = false;
+  showStats: boolean = false;
+
   questionIcon = faQuestionCircle;
   cogsIcon = faCogs;
+  darkModeClass: string = "darkMode";
   darkMode: boolean = false;
   showError: boolean = false;
+  boardState: BoardState;
   session: Session;
 
   constructor(
@@ -115,12 +119,30 @@ export class AppComponent {
     this.metaService.addTag({ property: "og:image", content: "https://i.imgur.com/P5hzOI8.png" });
   }
 
-  switchViews(): void {
+  viewGame(): void {
+    this.showHistory = false;
+    this.showStats = false;
+    this.showGame = true;
+  }
+
+  viewHistory(): void {
     if (this.showGame) {
       this.optionSideNav.toggle();
     }
 
-    this.showGame = !this.showGame;
+    this.showGame = false;
+    this.showStats = false;
+    this.showHistory = true;
+  }
+
+  viewStats(): void {
+    if (this.showGame) {
+      this.optionSideNav.toggle();
+    }
+
+    this.showGame = false;
+    this.showHistory = false;
+    this.showStats = true;
   }
 
   startNewGame(): void {

@@ -67,9 +67,13 @@
 
     <div class="options-row">
         <div class="button-container">
-            <button mat-raised-button matTooltipPosition="right" aria-label="History"
-                matTooltip="View up to 100 recent games" role="button" class="history-button" color="accent"
+            <button mat-raised-button matTooltipPosition="right" aria-label="View history"
+                matTooltip="View up to 100 recent games" role="button" class="options-button" color="accent"
                 type="button" (click)="viewHistory()">Recent games</button>
+
+                <!-- <button mat-raised-button matTooltipPosition="right" aria-label="View stats"
+                matTooltip="View overall game stats" role="button" class="options-button" color="accent"
+                type="button" (click)="viewStats()">Stats</button> -->
         </div>
     </div>
 
@@ -81,7 +85,7 @@
 
     <div class="options-row">
         <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
-            role="button" class="reset-button" color="accent" type="button" onclick="this.blur()"
+            role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
             (click)="startNewGame()">Start new game</button>
     </div>
 

@@ -25,6 +25,8 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { StatsComponent } from './components/stats/stats/stats.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +36,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     KeyboardComponent,
     OptionsComponent,
     FaqComponent,
-    HistoryComponent
+    HistoryComponent,
+    StatsComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +58,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     FontAwesomeModule,
     MatTooltipModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

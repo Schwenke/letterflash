@@ -14,7 +14,7 @@ export class OptionsComponent implements OnInit {
 
   @Output() newGameClicked = new EventEmitter<boolean>();
   @Output() viewHistoryClicked = new EventEmitter<boolean>();
-  @Output() viewResultsClicked = new EventEmitter<boolean>();
+  @Output() viewStatsClicked = new EventEmitter<boolean>();
   @Output() closeButtonClicked = new EventEmitter<boolean>();
 
   options: Options = {} as Options;
@@ -57,8 +57,8 @@ export class OptionsComponent implements OnInit {
     this.viewHistoryClicked.emit(true);
   }
 
-  viewResults(): void {
-    this.viewResultsClicked.emit(true);
+  viewStats(): void {
+    this.viewStatsClicked.emit(true);
   }
 
   storeOptions(): void {
