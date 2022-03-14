@@ -77,17 +77,17 @@ export class SessionService {
       timeSpent: this.timerService.getClockTime(),
       date: new Date().toLocaleDateString("en-US"),
       guesses: session.guesses,
-      word: session.secret,
+      secret: session.secret,
       victory: boardState.success,
       options: optionsList,
-      challenge: session.challenge
+      shared: session.shared
     };
 
     return game;
   }
 
   private updateStatsFromGame(stats: Stats, game: Game): void {
-    let length: number = game.word.length;
+    let length: number = game.secret.length;
 
     switch (length) {
       case 7:
@@ -106,8 +106,8 @@ export class SessionService {
 
     stats.guesses += game.guesses.length;
     
-    if (game.challenge) ++stats.challenges;
-    if (game.challenge && game.victory) ++stats.challengesWon;
+    if (game.shared) ++stats.shares;
+    if (game.shared && game.victory) ++stats.sharesWon;
     if (game.options.indexOf(HardModeDescription) > -1) ++stats.wins_hard;
     if (game.options.indexOf(ExtremeModeDescription) > -1) ++stats.wins_extreme;
 
@@ -151,6 +151,7 @@ export class SessionService {
    * Also removes any deprecated properties
    */
   private triageSession(session: Session): void {
+    this.syncOldPropertiesToNew(session);
     this.removeDeprecatedValues(session);
 
     if (!session.recentGames) {
@@ -166,25 +167,86 @@ export class SessionService {
     }
   }
 
-  private removeDeprecatedValues(session: Session): void {
-    let sessionAny = session as any;
+  private syncOldPropertiesToNew(session: Session): void {
+    let statsAny = session.stats as any;
+    let statKeys = Object.keys(statsAny);
 
-    let keys = Object.keys(sessionAny);
-
-    //  Changed to 'extremeMode'
-    if (keys.indexOf('masochistMode') > -1) {
-      delete sessionAny.masochistMode;
+    //  Changed to 'shares' - 03/13/2022
+    if (statKeys.indexOf('challenges') > -1) {
+      session.stats.shares = statsAny.challenges;
     }
 
+    //  Changed to 'sharesWon' - 03/13/2022
+    if (statKeys.indexOf('challengesWon') > -1) {
+      session.stats.sharesWon = statsAny.challengesWon;
+    }
+
+    if (session.recentGames && session.recentGames.length > 0) {
+      for (let i = 0; i < session.recentGames.length; i++) {
+        let game: Game = session.recentGames[i];
+        let gameAny = session.recentGames[i] as any;
+        let gameKeys = Object.keys(gameAny);
+
+        //  Changed to 'sharesWon' - 03/13/2022
+        if (gameKeys.indexOf('word') > -1) {
+          game.secret = gameAny.word;
+        }
+
+        if (gameKeys.indexOf('challenge') > -1) {
+          game.shared = gameAny.challenge;
+        }
+      }
+    }
+  }
+
+  private removeDeprecatedValues(session: Session): void {
+    let sessionAny = session as any;
+    let statsAny = session.stats as any;
+    let sessionKeys = Object.keys(sessionAny);
+    let statKeys = Object.keys(statsAny);
+
     //  Changed to 'recentGames' - 03/10/2022
-    if (keys.indexOf('previousGames') > -1) {
+    if (sessionKeys.indexOf('previousGames') > -1) {
       delete sessionAny.previousGames;
     }
 
     //  Changed to 'challenge' - 03/10/2022
-    if (keys.indexOf('customGame') > -1) {
+    if (sessionKeys.indexOf('customGame') > -1) {
       delete sessionAny.customGame;
     }
+
+    //  Changed to 'shared' - 03/13/2022
+    if (sessionKeys.indexOf('challenge') > -1) {
+      delete sessionAny.challenge;
+    }
+
+    //  Changed to 'shares' - 03/13/2022
+    if (statKeys.indexOf('challenges') > -1) {
+      delete statsAny.challenges;
+    }
+
+    //  Changed to 'sharesWon' - 03/13/2022
+    if (statKeys.indexOf('challengesWon') > -1) {
+      delete statsAny.challengesWon;
+    }
+
+    if (session.recentGames && session.recentGames.length > 0) {
+      for (let i = 0; i < session.recentGames.length; i++) {
+        let gameAny = session.recentGames[i] as any;
+        let gameKeys = Object.keys(gameAny);
+
+        //  Changed to 'secret' - 03/13/2022
+        if (gameKeys.indexOf('word') > -1) {
+          delete gameAny.word;
+        }
+
+        //  Changed to 'shared' - 03/13/2022
+        if (gameKeys.indexOf('challenge') > -1) {
+          delete gameAny.challenge;
+        }
+      }
+    }
+
   }
 
   private createSession(): void {
@@ -193,7 +255,7 @@ export class SessionService {
       guesses: [],
       recentGames: [],
       options: this.getDefaultOptions(),
-      challenge: false,
+      shared: false,
       stats: this.getDefaultStats(),
       lastVisited: new Date().toLocaleString()
     };
@@ -225,8 +287,8 @@ export class SessionService {
       wins_extreme: 0,
       guesses: 0,
       time: 0,
-      challenges: 0,
-      challengesWon: 0
+      shares: 0,
+      sharesWon: 0
     } as Stats;
   }
 }

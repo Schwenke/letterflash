@@ -108,10 +108,10 @@ export class ResultsDialogComponent implements OnInit {
     let secret: string = this.session.secret;
     let modeOptions: string = this.getModeOptionString();
     let guessesMade: string = this.boardState.success ? `${this.boardState.rowIndex}` : "X";
-    let challenge: boolean = this.session.challenge;
+    let shared: boolean = this.session.shared;
     let messageHeader: string = "";
 
-    if (challenge) {
+    if (shared) {
       let shareLink: string = this.sessionService.getShareLink(secret);
       let questionMarks: string = "".padEnd(secret.length, "?");
       messageHeader += `${shareLink}\n`;

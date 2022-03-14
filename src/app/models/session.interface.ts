@@ -5,8 +5,10 @@ export interface Session {
     stats: Stats;
     recentGames: Game[];
     guesses: string[];
+    //  Current game secret word
     secret: string;
-    challenge: boolean;
+    //  Whether or not the current game was from a share link
+    shared: boolean;
     lastVisited: string;
 }
 
@@ -14,13 +16,15 @@ export interface Game{
     date: string;
     timeSpent: string;
     guesses: string[];
-    word: string;
+    secret: string;
     victory: boolean;
     options: string[];
-    challenge: boolean;
+    //  Was the game from a shared puzzle link
+    shared: boolean;
 }
 
 export interface Stats {
+    //  When stat tracking began for this device/browser/session
     trackingDate: string;
     played_5: number;
     played_6: number;
@@ -30,8 +34,10 @@ export interface Stats {
     wins_7: number;
     wins_hard: number;
     wins_extreme: number;
+    //  Total number of guesses made
     guesses: number;
+    //  Total time spent playing in seconds
     time: number;
-    challenges: number;
-    challengesWon: number;
+    shares: number;
+    sharesWon: number;
 }

@@ -48,15 +48,15 @@ export class BoardStateService {
     this.updateSession();
   }
 
-  public startChallenge(secret: string): void {
+  public startSharedPuzzle(secret: string): void {
     this.wordLength = secret.length;
 
     this.session.secret = secret;
 
     this.session.guesses = [];
 
-    //  Session needs to be aware it is a challenge, as some behaviors change
-    this.session.challenge = true;
+    //  Session needs to be aware it is a shared puzzle, as some behaviors change
+    this.session.shared = true;
 
     this.resetBoard();
 
@@ -76,7 +76,7 @@ export class BoardStateService {
 
     this.session.guesses = [];
 
-    this.session.challenge = false;
+    this.session.shared = false;
 
     this.resetBoard();
 
