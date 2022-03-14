@@ -5,7 +5,47 @@
     </mat-card>
 
     <mat-card class="card">
-        <div class="text-item">Games played</div>
-        <div class="text-item">{{getTotalGames()}}</div>
+        <div class="text-item">Games won</div>
+        <div class="text-item">{{getTotalWins()}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Average win %</div>
+        <div class="text-item">{{getAverageWinPercent()}}%</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Guesses made</div>
+        <div class="text-item">{{formatNumber(stats.guesses)}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Average # of guesses to solve</div>
+        <div class="text-item">{{getAverageGuesses()}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Hard mode wins</div>
+        <div class="text-item">{{formatNumber(stats.wins_hard)}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Extreme mode wins</div>
+        <div class="text-item">{{formatNumber(stats.wins_extreme)}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Time played</div>
+        <div class="text-item">{{getTotalTimePlayed()}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Shared puzzles played</div>
+        <div class="text-item">{{formatNumber(stats.shares)}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Shared puzzle win %</div>
+        <div class="text-item">{{getAverageSharePuzzleWinPercent()}}%</div>
     </mat-card>
 </div>

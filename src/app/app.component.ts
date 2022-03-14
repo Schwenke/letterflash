@@ -126,7 +126,7 @@ export class AppComponent {
   }
 
   viewHistory(): void {
-    if (this.showGame) {
+    if (this.showGame || this.showStats) {
       this.optionSideNav.toggle();
     }
 
@@ -136,7 +136,7 @@ export class AppComponent {
   }
 
   viewStats(): void {
-    if (this.showGame) {
+    if (this.showGame || this.showHistory) {
       this.optionSideNav.toggle();
     }
 

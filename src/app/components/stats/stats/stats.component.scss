@@ -19,3 +19,14 @@
     font-size: large;
     font-weight: 400;
 }
+
+@media only screen and (max-width: 450px) {
+    .text-item {
+        font-size: medium;
+    }
+
+    .card {
+        margin-top: .5em;
+        width: 300px;
+    }
+}
