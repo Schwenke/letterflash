@@ -43,13 +43,15 @@ export class StatsComponent implements OnInit {
     return totalGamesWon;
   }
 
-  getAverageWinPercent(): string {
+  getAverageWinPercent(): number {
     let gamesPlayed = this.getTotalGames();
     let gamesWon = this.getTotalWins();
 
-    if (!gamesPlayed || !gamesWon) return "0";
+    if (!gamesPlayed || !gamesWon) return 0;
 
-    return (gamesWon / gamesPlayed).toFixed(2);
+    let averageWinPercent = (gamesWon / gamesPlayed) * 100;
+
+    return Math.floor(averageWinPercent);
   }
 
   getAverageGuesses(): string {
@@ -95,12 +97,14 @@ export class StatsComponent implements OnInit {
     return `${hourString}:${minuteString}:${secondString}`;
   }
 
-  getAverageSharePuzzleWinPercent(): string {
+  getAverageSharePuzzleWinPercent(): number {
     let sharesPlayed = this.stats.shares;
 
-    if (!sharesPlayed || !this.stats.sharesWon) return "0";
+    if (!sharesPlayed || !this.stats.sharesWon) return 0;
 
-    return (this.stats.sharesWon / sharesPlayed).toFixed(2);
+    let sharedPuzzleWinPercent = (this.stats.sharesWon / sharesPlayed) * 100;
+
+    return Math.floor(sharedPuzzleWinPercent);
   }
 
   formatNumber(value: number): number {
