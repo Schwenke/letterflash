@@ -151,9 +151,12 @@ export class SessionService {
    * Also removes any deprecated properties
    */
   private triageSession(session: Session): void {
+    this.initializeSessionVariables(session);
     this.syncOldPropertiesToNew(session);
     this.removeDeprecatedValues(session);
+  }
 
+  private initializeSessionVariables(session: Session): void {
     if (!session.recentGames) {
       session.recentGames = [];
     }
