@@ -22,7 +22,7 @@ export const GreyBlock = "⬜";
 export const YellowBlock = "🟨";
 
 //  Misc
-export const SessionKey = "uwg-session";
+export const SessionKey = "lf-session";
 export const BaseURL = "https://www.letterflash.com/"
 export const SiteName = "Letter Flash";
 export const ShareParameter = "share";

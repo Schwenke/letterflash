@@ -14,7 +14,7 @@ export class TimerService {
     timer(0, 1000).subscribe(ellapsedCycles => {
       if (this.running) {
         this.time++;
-        let timeSpan = this.getTimeSpan();
+        let timeSpan = this.getTimeSpan(this.time);
         this.timeSpan.next(timeSpan);
       }
     });
@@ -32,8 +32,16 @@ export class TimerService {
     this.time = 0;
   }
 
+  public getSeconds(): number {
+    return this.time;
+  }
+
   public getClockTime(): string {
-    let timeSpan: TimeSpan = this.timeSpan.value;
+    return this.formatClockTime(this.time);
+  }
+
+  public formatClockTime(time: number): string {
+    let timeSpan: TimeSpan = this.getTimeSpan(time);
 
     let hours = timeSpan.hours > 9 ? timeSpan.hours : `0${timeSpan.hours}`;
     let minutes = timeSpan.minutes > 9 ? timeSpan.minutes : `0${timeSpan.minutes}`;
@@ -42,9 +50,7 @@ export class TimerService {
     return `${hours}:${minutes}:${seconds}`;
   }
 
-  private getTimeSpan(): TimeSpan {
-    let time = this.time;
-
+  private getTimeSpan(time: number): TimeSpan {
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor(time % 3600 / 60);
     const seconds = Math.floor(time % 3600 % 60);

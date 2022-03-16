@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Stats } from 'src/app/models/session.interface';
 import { SessionService } from 'src/app/services/session.service';
+import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
   selector: 'app-stats',
@@ -11,7 +12,10 @@ export class StatsComponent implements OnInit {
 
   stats: Stats;
 
-  constructor(private sessionService: SessionService) { }
+  constructor(
+    private sessionService: SessionService,
+    private timerService: TimerService
+    ) { }
 
   ngOnInit(): void {
     this.sessionService.session.subscribe(session => {
@@ -62,49 +66,47 @@ export class StatsComponent implements OnInit {
     return (this.stats.guesses / gamesPlayed).toFixed(2);
   }
 
-  getTotalTimePlayed(): string {
-    let totalSeconds = this.stats.time;
-
-    if (!totalSeconds || totalSeconds === 0) return "00:00:00";
-
-    let hours   = Math.floor(totalSeconds / 3600); // get hours
-    let minutes = Math.floor((totalSeconds - (hours * 3600)) / 60); // get minutes
-    let seconds = totalSeconds - (hours * 3600) - (minutes * 60); //  get seconds
-
-    let hourString = hours < 10 ? `0${hours}` : `${hours}`;
-    let minuteString = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    let secondString = seconds < 10 ? `0${seconds}` : `${seconds}`;
-
-    return `${hourString}:${minuteString}:${secondString}`;
-  }
-
   getAverageGameTime(): string {
-    let totalSeconds = this.stats.time;
+    let totalSeconds = this.stats.time_5 + this.stats.time_6 + this.stats.time_7;
     let gamesPlayed = this.getTotalGames();
 
     if (!totalSeconds || totalSeconds === 0 || gamesPlayed === 0) return "00:00:00";
 
     let averageSeconds = Math.floor(totalSeconds / gamesPlayed);
 
-    let hours   = Math.floor(averageSeconds / 3600); // get hours
-    let minutes = Math.floor((averageSeconds - (hours * 3600)) / 60); // get minutes
-    let seconds = averageSeconds - (hours * 3600) - (minutes * 60); //  get seconds
+    let formattedTime: string = this.timerService.formatClockTime(averageSeconds);
 
-    let hourString = hours < 10 ? `0${hours}` : `${hours}`;
-    let minuteString = minutes < 10 ? `0${minutes}` : `${minutes}`;
-    let secondString = seconds < 10 ? `0${seconds}` : `${seconds}`;
-
-    return `${hourString}:${minuteString}:${secondString}`;
+    return formattedTime;
   }
 
   getAverageSharePuzzleWinPercent(): number {
-    let sharesPlayed = this.stats.shares;
+    let gamesPlayed = this.stats.played_shared;
 
-    if (!sharesPlayed || !this.stats.sharesWon) return 0;
+    if (!gamesPlayed || !this.stats.wins_shared) return 0;
 
-    let sharedPuzzleWinPercent = (this.stats.sharesWon / sharesPlayed) * 100;
+    let winPercent = (this.stats.wins_shared / gamesPlayed) * 100;
 
-    return Math.floor(sharedPuzzleWinPercent);
+    return Math.floor(winPercent);
+  }
+
+  getAverageHardModeWinPercent(): number {
+    let gamesPlayed = this.stats.played_hard;
+
+    if (!gamesPlayed || !this.stats.wins_hard) return 0;
+
+    let winPercent = (this.stats.wins_hard / gamesPlayed) * 100;
+
+    return Math.floor(winPercent);
+  }
+
+  getAverageExtremeModeWinPercent(): number {
+    let gamesPlayed = this.stats.played_extreme;
+
+    if (!gamesPlayed || !this.stats.wins_extreme) return 0;
+
+    let winPercent = (this.stats.wins_extreme / gamesPlayed) * 100;
+
+    return Math.floor(winPercent);
   }
 
   formatNumber(value: number): number {

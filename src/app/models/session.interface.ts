@@ -5,39 +5,46 @@ export interface Session {
     stats: Stats;
     recentGames: Game[];
     guesses: string[];
-    //  Current game secret word
     secret: string;
-    //  Whether or not the current game was from a share link
     shared: boolean;
     lastVisited: string;
 }
 
 export interface Game{
     date: string;
-    timeSpent: string;
+    time: number;
     guesses: string[];
     secret: string;
     victory: boolean;
-    options: string[];
-    //  Was the game from a shared puzzle link
+    hard: boolean;
+    extreme: boolean;
     shared: boolean;
 }
 
 export interface Stats {
-    //  When stat tracking began for this device/browser/session
     trackingDate: string;
+    guesses: number;
     played_5: number;
     played_6: number;
     played_7: number;
+    played_hard: number;
+    played_extreme: number;
+    played_shared: number;
     wins_5: number;
     wins_6: number;
     wins_7: number;
     wins_hard: number;
     wins_extreme: number;
-    //  Total number of guesses made
-    guesses: number;
-    //  Total time spent playing in seconds
-    time: number;
-    shares: number;
-    sharesWon: number;
+    wins_shared: number;
+    time_5: number;
+    time_6: number;
+    time_7: number;
+    winStreak: number;
+    winStreak_hard: number;
+    winStreak_extreme: number;
+    winStreak_shared: number;
+    maxWinStreak: number;
+    maxWinStreak_hard: number;
+    maxWinStreak_extreme: number;
+    maxWinStreak_shared: number;
 }

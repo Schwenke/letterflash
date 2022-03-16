@@ -10,37 +10,42 @@
     </mat-card>
 
     <mat-card class="card">
-        <div class="text-item">Average guesses to solve</div>
+        <div class="text-item">Win streak / max</div>
+        <div class="text-item">{{formatNumber(stats.winStreak)}} / {{formatNumber(stats.maxWinStreak)}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Average guesses per game</div>
         <div class="text-item">{{getAverageGuesses()}}</div>
     </mat-card>
 
     <mat-card class="card">
-        <div class="text-item">Hard mode wins</div>
-        <div class="text-item">{{formatNumber(stats.wins_hard)}}</div>
-    </mat-card>
-
-    <mat-card class="card">
-        <div class="text-item">Extreme mode wins</div>
-        <div class="text-item">{{formatNumber(stats.wins_extreme)}}</div>
-    </mat-card>
-
-    <mat-card class="card">
-        <div class="text-item">Total time played</div>
-        <div class="text-item">{{getTotalTimePlayed()}}</div>
-    </mat-card>
-
-    <mat-card class="card">
-        <div class="text-item">Average game time</div>
+        <div class="text-item">Average time per game</div>
         <div class="text-item">{{getAverageGameTime()}}</div>
     </mat-card>
 
     <mat-card class="card">
-        <div class="text-item">Shared games played</div>
-        <div class="text-item">{{formatNumber(stats.shares)}}</div>
+        <div class="text-item">Hard win %</div>
+        <div class="text-item">{{getAverageHardModeWinPercent()}}%</div>
     </mat-card>
 
     <mat-card class="card">
-        <div class="text-item">Shared game win %</div>
-        <div class="text-item">{{getAverageSharePuzzleWinPercent()}}%</div>
+        <div class="text-item">Hard win streak / max</div>
+        <div class="text-item">{{formatNumber(stats.winStreak_hard)}} / {{formatNumber(stats.maxWinStreak_hard)}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Extreme win %</div>
+        <div class="text-item">{{getAverageExtremeModeWinPercent()}}%</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Extreme win streak / max</div>
+        <div class="text-item">{{formatNumber(stats.winStreak_extreme)}} / {{formatNumber(stats.maxWinStreak_extreme)}}</div>
+    </mat-card>
+
+    <mat-card class="card">
+        <div class="text-item">Shared win streak / max</div>
+        <div class="text-item">{{formatNumber(stats.winStreak_shared)}} / {{formatNumber(stats.maxWinStreak_shared)}}</div>
     </mat-card>
 </div>

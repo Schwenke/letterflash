@@ -3,6 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Game } from 'src/app/models/session.interface';
 import { SessionService } from 'src/app/services/session.service';
+import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
   selector: 'app-history',
@@ -20,7 +21,8 @@ export class HistoryComponent implements OnInit {
   resultCount: number = 5;
 
   constructor(
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private timerService: TimerService
 
   ) {
     this.getScreenSize();
@@ -63,6 +65,10 @@ export class HistoryComponent implements OnInit {
 
   getResultCount(): number[] {
     return [this.resultCount];
+  }
+
+  getGameTime(game: Game): string {
+    return this.timerService.formatClockTime(game.time);
   }
 
 }

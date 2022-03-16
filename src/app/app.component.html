@@ -24,7 +24,7 @@
 
             <label *ngIf="showGame && !isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</label>
 
-            <button mat-raised-button role="button" color="accent" *ngIf="isGameOver()" (click)="openResultsDialog()">View results</button>
+            <button mat-raised-button role="button" color="accent" *ngIf="isGameOver() && !(showHistory || showStats)" (click)="openResultsDialog()">View results</button>
 
             <button mat-raised-button role="button" color="accent" *ngIf="showHistory || showStats" (click)="viewGame()">Return to game</button>
 
