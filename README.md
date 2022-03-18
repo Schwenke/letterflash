@@ -15,6 +15,7 @@ Some key points of difference include:
   - **Extreme mode:** the secret word pulls from the entire dictionary instead of using a curated list. Incredibly difficult, for masochists only!
   - **Support for 6 and 7 letter words**
   - **Stat tracking and history:** Letter flash keeps track of total games played and wins for each word length and several other statistics!
+  - **Sharing:** When you finish a puzzle, or from the recent game list, you can copy a link to send to friends. They will load the game with the same word you just solved! And when they go to share the results, the word will be obscured and the original link will be included so others can try!
 - ### Fully open source and actively developed
   - The code is available to everyone and so is the issue tracker. I consider this an on-going project and am always looking for new features to add
 - ### Purely client side with no server
