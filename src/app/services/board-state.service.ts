@@ -357,15 +357,15 @@ export class BoardStateService {
     }
 
     if (!this.dictionaryService.hasWord(guess)) {
-      return "This isn't a real word!";
+      return "Word not found in dictionary!";
     }
 
     if (this.guessedPreviously(guess)) {
-      return "You've already guessed this before!";
+      return "You've already guessed this word!";
     }
 
     if (!this.validateHardMode(guess)) {
-      return "Hard mode is enabled - you must use all previous correctly guessed letters in subsequent guesses!";
+      return "Hard mode is enabled - guesses must include all previous clues!";
     }
 
     return "";

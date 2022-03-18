@@ -39,13 +39,13 @@
     gap: .5rem;
 }
 
-.cell-committed {
+.letter-committed {
     transition: background-color 1s ease-in;
     transition: border 1s ease-in;
     color: mat.get-color-from-palette($primary, 'lighter');
 }
 
-.cell {
+.letter {
     font-size: xx-large;
     user-select: none;
     display: flex;
@@ -54,8 +54,8 @@
     align-items: center;
     font-weight: 700;
     
-    &--empty {
-        @extend .cell;
+    &-empty {
+        @extend .letter;
         border: 2px solid #d3d6da;
 
         &.darkMode {
@@ -63,8 +63,8 @@
         }
     }
 
-    &--pending {
-        @extend .cell;
+    &-pending {
+        @extend .letter;
         animation: animatePending .1s;
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
 
@@ -73,9 +73,9 @@
         }
     }
 
-    &--miss {
-        @extend .cell;
-        @extend .cell-committed;
+    &-miss {
+        @extend .letter;
+        @extend .letter-committed;
         background-color: mat.get-color-from-palette($primary, 'darker');
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
 
@@ -85,45 +85,45 @@
         }
     }
 
-    &--perfect {
-        @extend .cell;
-        @extend .cell-committed;
+    &-perfect {
+        @extend .letter;
+        @extend .letter-committed;
         background-color: mat.get-color-from-palette($perfect, 'default');
         border: 2px solid mat.get-color-from-palette($perfect, 'default');
     }
     
-    &--partial {
-        @extend .cell;
-        @extend .cell-committed;
+    &-partial {
+        @extend .letter;
+        @extend .letter-committed;
         background-color: mat.get-color-from-palette($partial, 'darker');
         border: 2px solid mat.get-color-from-palette($partial, 'darker');
     }
 }
 
-.cell-committed:nth-child(1) {
+.letter-committed:nth-child(1) {
     animation: animateCommit .6s linear 0s;
 }
 
-.cell-committed:nth-child(2) {
+.letter-committed:nth-child(2) {
     animation: animateCommit .6s linear 0.1s;
 }
 
-.cell-committed:nth-child(3) {
+.letter-committed:nth-child(3) {
     animation: animateCommit .6s linear 0.2s;
 }
 
-.cell-committed:nth-child(4) {
+.letter-committed:nth-child(4) {
     animation: animateCommit .6s linear 0.3s;
 }
 
-.cell-committed:nth-child(5) {
+.letter-committed:nth-child(5) {
     animation: animateCommit .6s linear 0.4s;
 }
 
-.cell-committed:nth-child(6) {
+.letter-committed:nth-child(6) {
     animation: animateCommit .6s linear .5s;
 }
 
-.cell-committed:nth-child(7) {
+.letter-committed:nth-child(7) {
     animation: animateCommit .6s linear .6s;
 }
