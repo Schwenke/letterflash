@@ -22,7 +22,7 @@
             <!-- Secret: {{session.secret}} -->
             <fa-icon class="icon-button" (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon" size="lg"></fa-icon>
 
-            <label *ngIf="showGame && !isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</label>
+            <h1 *ngIf="showGame && !isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</h1>
 
             <button mat-raised-button role="button" color="accent" *ngIf="isGameOver() && !(showHistory || showStats)" (click)="openResultsDialog()">View results</button>
 

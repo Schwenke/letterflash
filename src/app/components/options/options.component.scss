@@ -20,15 +20,17 @@
 .options-row {
     display: flex;
     flex-direction: row;
-    padding: .75em 0 .75em .75em;
+    padding: .75em 0 .5em .75em;
 }
 
 .divider {
     width: 95%;
 }
 
-.header-label {
-    font-size: large;
+.section-header {
+    font-size: x-large;
+    font-weight: 500;
+    margin-bottom: 0;
 }
 
 .clock {
@@ -77,7 +79,7 @@
     }
 
     .options-row {
-        padding: .5em 0 .5em .5em;
+        padding: .5em 0 .25em .5em;
     }
 
     .close-button {
@@ -89,7 +91,7 @@
         font-size: medium;
     }
 
-    .header-label {
+    .section-header {
         font-size: medium;
     }
 

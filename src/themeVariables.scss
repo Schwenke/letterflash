@@ -2,7 +2,7 @@
 
 $primary: mat.define-palette(mat.$grey-palette);
 $perfect: mat.define-palette(mat.$green-palette, 600);
-$partial: mat.define-palette(mat.$amber-palette);
+$partial: mat.define-palette(mat.$amber-palette, 800);
 $accent: mat.define-palette(mat.$light-blue-palette, A700);
 $warn: mat.define-palette(mat.$red-palette);
 

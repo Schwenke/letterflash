@@ -46,7 +46,7 @@
 }
 
 .letter {
-    font-size: xx-large;
+    font-size: 2.5em;
     user-select: none;
     display: flex;
     flex: 1;
@@ -95,8 +95,8 @@
     &-partial {
         @extend .letter;
         @extend .letter-committed;
-        background-color: mat.get-color-from-palette($partial, 'darker');
-        border: 2px solid mat.get-color-from-palette($partial, 'darker');
+        background-color: mat.get-color-from-palette($partial, 'default');
+        border: 2px solid mat.get-color-from-palette($partial, 'default');
     }
 }
 

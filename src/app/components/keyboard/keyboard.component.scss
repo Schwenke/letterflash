@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import "../../../themeVariables";
+
 .row {
     display: flex;
     width: 100%;
@@ -51,13 +54,13 @@
     &--partial {
         @extend .key;
         color: white;
-        background-color: #FF8F00;
+        background-color: mat.get-color-from-palette($partial, 'default');
     }
 
     &--perfect {
         @extend .key;
         color: white;
-        background-color: #388E3C;
+        background-color: mat.get-color-from-palette($perfect, 'default');
     }
 }
 

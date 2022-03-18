@@ -23,35 +23,33 @@
     padding: .75em 0 .75em .75em;
 }
 
-.divider {
-    margin-top: .5rem;
-}
-
-.faq-label {
-    font-size: x-large;
+.faq-section-header {
+    font-size: xx-large;
+    font-weight: 500;
+    margin-bottom: 8px;
 }
 
 .faq-text-header {
     font-size: large;
     font-style: italic;
-    font-weight: 500;
+    font-weight: 600;
+    margin-bottom: 8px;
 }
 
 .faq-text-item {
     font-size: medium;
-    padding-top: .75em;
 }
 
 .faq-link {
     font-size: large;
-    font-weight: 400;
-    color: rgb(204, 151, 18);
+    font-weight: 600;
+    color: mat.get-color-from-palette($partial, 'default');
 }
 
 .colored-text {
     font-size: medium;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
 }
 
 .perfect-text {
@@ -61,7 +59,7 @@
 
 .partial-text {
     @extend .colored-text;
-    color: mat.get-color-from-palette($partial, 'darker');
+    color: mat.get-color-from-palette($partial, 'default');
 }
 
 .bold-text {
