@@ -1,6 +1,6 @@
 # Letter Flash
 
-### Inspired by the popular online game Wordle.
+### For fans of the popular online game Wordle.
 
 ### Check out the deployed site from github pages here: https://www.letterflash.com/
 
