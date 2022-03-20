@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, forkJoin } from 'rxjs';
-import { Options } from '../models/options.interface';
 import { SessionService } from './session.service';
+import { Session } from '../models/session.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +11,7 @@ export class DictionaryService {
   public initialized: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   private dictionary: string[] = [];
   cache: Map<number, string[]> = new Map<number, string[]>();
-  options: Options;
+  session: Session;
 
   private fullDictionaryURL = "assets/dictionary.json"
   private fiveLetterDictionaryURL = "assets/five-letter-words.json";
@@ -24,7 +24,7 @@ export class DictionaryService {
     ) { 
 
     this.sessionService.session.subscribe(session => {
-      this.options = session.options;
+      this.session = session;
     });
 
     this.fetchDictionary();
@@ -41,7 +41,7 @@ export class DictionaryService {
   private getWords(length: number): string[] {
     let words;
 
-    if (this.options.extremeMode) {
+    if (this.session.options.extremeMode) {
       words = this.dictionary.filter(word => word.length === length);
     } else {
       words = this.cache.get(length);
@@ -51,6 +51,11 @@ export class DictionaryService {
   }
 
   public hasWord(word: string): boolean {
+    //  Validation happens before checking end game state - handle a case where someone pulled a naughty and shared a word not in our dictionary
+    if (word === this.session.secret) {
+      return true;
+    }
+
     let curatedList: string[] = this.getWords(word.length);
 
     //  Check the curated list first since its smaller
