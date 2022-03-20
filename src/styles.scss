@@ -15,18 +15,21 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.error-snackbar-body {
-    background-color: black;
-
-    &--dark {
-        background-color: white;
-    }
+.snackbar {
+    font-weight: 500;
 }
 
-.error-snackbar-text {
+.error-snackbar {
+    @extend .snackbar;
+    background-color: black;
     color: mat.get-color-from-palette($warn, 'default');
 }
 
+.error-snackbar--dark {
+    @extend .snackbar;
+    background-color: white;
+    color: mat.get-color-from-palette($warn, 'A700');
+}
 
 html, body { 
     height: 100%; 

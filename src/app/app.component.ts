@@ -173,11 +173,9 @@ export class AppComponent {
 
     let error: string = this.boardState.error;
 
-    let snackbarBodyClass: string = this.darkMode ? "error-snackbar-body--dark" : "error-snackbar-body";
-    let snackbarTextClass: string = "error-snackbar-text";
-    let panelClasses: string[] = [snackbarBodyClass, snackbarTextClass];
+    let snackbarBodyClass: string = this.darkMode ? "error-snackbar--dark" : "error-snackbar";
 
-    this.snackBar.open(error, "OK", { panelClass: panelClasses, verticalPosition: "top", horizontalPosition: "center", duration: 2000 });
+    this.snackBar.open(error, "Dismiss", { panelClass: snackbarBodyClass, verticalPosition: "top", horizontalPosition: "center", duration: 2500 });
 
     //  Give animation time to play and finish
     setTimeout(() => {

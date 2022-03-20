@@ -199,7 +199,7 @@ export class BoardStateService {
     //  Cannot remove input - already at the first column
     if (boardState.columnIndex === -1) return;
 
-    let word = this.getCurrentWord();
+    let word = this.getCurrentWord(boardState);
 
     word.letters[boardState.columnIndex].letter = "";
 
@@ -224,7 +224,7 @@ export class BoardStateService {
     if (validInput) {
       ++boardState.columnIndex;
 
-      let word = this.getCurrentWord();
+      let word = this.getCurrentWord(boardState);
 
       word.letters[boardState.columnIndex].letter = key.toLocaleUpperCase();
 
@@ -235,9 +235,7 @@ export class BoardStateService {
     }
   }
 
-  public getCurrentWord(): Word {
-    let boardState: BoardState = this.boardState.value;
-
+  private getCurrentWord(boardState: BoardState): Word {
     return boardState.words[boardState.rowIndex];
   }
 
@@ -356,16 +354,17 @@ export class BoardStateService {
       return `Words must be ${wordLength} letters long!`;
     }
 
-    if (!this.dictionaryService.hasWord(guess)) {
-      return "Word not found in dictionary!";
-    }
-
     if (this.guessedPreviously(guess)) {
       return "You've already guessed this word!";
     }
 
     if (!this.validateHardMode(guess)) {
       return "Hard mode is enabled - guesses must include all previous clues!";
+    }
+
+    //  most processing intensive, so do it last
+    if (!this.dictionaryService.hasWord(guess)) {
+      return "Word not found in dictionary!";
     }
 
     return "";
@@ -396,15 +395,7 @@ export class BoardStateService {
   private guessedPreviously(guess: string): boolean {
     let previousGuesses: string[] = this.session.guesses;
 
-    for (let i = 0; i < previousGuesses.length; i++) {
-      let previousGuess = previousGuesses[i];
-
-      if (guess === previousGuess) {
-        return true
-      }
-    }
-
-    return false;
+    return previousGuesses.includes(guess);
   }
 
   private getCorrectlyGuessedLetters(): string[] {
