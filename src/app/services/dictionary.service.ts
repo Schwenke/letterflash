@@ -51,11 +51,6 @@ export class DictionaryService {
   }
 
   public hasWord(word: string): boolean {
-    //  Validation happens before checking end game state - handle a case where someone pulled a naughty and shared a word not in our dictionary
-    if (word === this.session.secret) {
-      return true;
-    }
-
     let curatedList: string[] = this.getWords(word.length);
 
     //  Check the curated list first since its smaller

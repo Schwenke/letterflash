@@ -344,6 +344,9 @@ export class BoardStateService {
   }
 
   private validate(guess: string): string {
+    //  If they won the game, save performance by returning early
+    if (guess === this.session.secret) return "";
+
     if (!guess || guess.trim() === "") {
       return "You cannot enter empty words!";
     }
@@ -362,7 +365,6 @@ export class BoardStateService {
       return "Hard mode is enabled - guesses must include all previous clues!";
     }
 
-    //  most processing intensive, so do it last
     if (!this.dictionaryService.hasWord(guess)) {
       return "Word not found in dictionary!";
     }
