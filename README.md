@@ -1,6 +1,6 @@
 # Letter Flash
 
-### Inspired by the popular online game Wordle.
+### For fans of the popular online game Wordle.
 
 ### Check out the deployed site from github pages here: https://www.letterflash.com/
 
@@ -12,10 +12,16 @@ Some key points of difference include:
 - ### Favor replayability over challenge-of-the-day
   - Letter Flash allows you to keep playing over and over!
 - ### Additional features
-  - **Extreme mode:** the secret word pulls from the entire dictionary instead of using a curated list. Incredibly difficult, for masochists only!
+  - **Share puzzles!** 
+    - After finishing a game or from the recent game list, you can copy a link to send to friends. 
+    - When they open the link, they will start a new game with the word you sent them!
+    - When they share results, the word will be obscured and the original link will be included so others can try as well!
+  - **Extreme mode** 
+    - The secret word pulls from the entire dictionary instead of using a curated list. Incredibly difficult, for masochists only!
   - **Support for 6 and 7 letter words**
-  - **Stat tracking and history:** Letter flash keeps track of total games played and wins for each word length and several other statistics!
-  - **Sharing:** When you finish a puzzle, or from the recent game list, you can copy a link to send to friends. They will load the game with the same word you just solved! And when they go to share the results, the word will be obscured and the original link will be included so others can try!
+    - Use the buttons under the options menu to select a word length. New games will generate puzzles of that word length!
+  - **Stat tracking and history** 
+    - Buttons in the option menu allow you to view up to 100 recently played games and see rich statistics about your games!
 - ### Fully open source and actively developed
   - The code is available to everyone and so is the issue tracker. I consider this an on-going project and am always looking for new features to add
 - ### Purely client side with no server
