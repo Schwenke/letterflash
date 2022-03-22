@@ -150,6 +150,11 @@ export class AppComponent {
     this.boardStateService.startNewGame();
   }
 
+  concede(): void {
+    this.optionSideNav.toggle();
+    this.boardStateService.concede();
+  }
+
   viewResults(): void {
     this.optionSideNav.toggle();
     this.openResultsDialog();

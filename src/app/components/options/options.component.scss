@@ -33,9 +33,20 @@
     margin-bottom: 0;
 }
 
-.clock {
-    font-size: medium;
-    margin-left: 1rem;
+.clock-row {
+    @extend .options-row;
+    padding-top: 0;
+    align-items: flex-end;
+}
+
+.clock-label {
+    font-size: large;
+    margin-left: 5px;
+}
+
+.clock-text {
+    font-size: large;
+    margin-left: 5px;
 }
 
 .options-check {
@@ -87,7 +98,15 @@
         font-size: small;
     }
 
-    .clock {
+    .clock-row {
+        @extend .options-row;
+    }
+
+    .clock-label {
+        font-size: medium;
+    }
+    
+    .clock-text {
         font-size: medium;
     }
 
@@ -107,8 +126,8 @@
         width: 100px;
     }
 
-    .button {
-        font-size: small;
-        margin-bottom: .5rem;
+    .options-button {
+        font-size: medium;
+        margin-bottom: .6rem;
     }
 }

@@ -48,6 +48,22 @@ export class BoardStateService {
     this.updateSession();
   }
 
+  public concede(): void {
+    let boardState: BoardState = this.boardState.value;
+
+    //  Fill out the board with fake guesses - needed so existing sessions load correctly
+    let emptyGuess: string = "".padEnd(this.wordLength, " ");
+
+    for (let i = this.session.guesses.length; i < 6; i++) {
+      this.session.guesses.push(emptyGuess);
+    }
+
+    boardState.failure = true;
+
+    this.endCurrentGame();
+    this.updateSession();
+  }
+
   public startSharedPuzzle(secret: string): void {
     this.wordLength = secret.length;
 

@@ -49,17 +49,6 @@
     </div>
 
     <div class="options-row">
-        <h1 class="section-header">Time Spent</h1>
-    </div>
-
-    <mat-divider class="divider"></mat-divider>
-
-    <div class="options-row">
-        <fa-icon aria-hidden="true" class="faq-icon" [icon]="clockIcon" size="lg"></fa-icon>
-        <label role="timer" class="clock">{{clockTime}}</label>
-    </div>
-
-    <div class="options-row">
         <h1 class="section-header">View</h1>
     </div>
 
@@ -71,9 +60,9 @@
                 matTooltip="View up to 100 recent games" role="button" class="options-button" color="accent"
                 type="button" (click)="viewHistory()">Recent games</button>
 
-                <button mat-raised-button matTooltipPosition="right" aria-label="View stats"
-                matTooltip="View overall game stats" role="button" class="options-button" color="accent"
-                type="button" (click)="viewStats()">Stats</button>
+            <button mat-raised-button matTooltipPosition="right" aria-label="View stats"
+                matTooltip="View overall game stats" role="button" class="options-button" color="accent" type="button"
+                (click)="viewStats()">Stats</button>
         </div>
     </div>
 
@@ -84,9 +73,21 @@
     <mat-divider class="divider"></mat-divider>
 
     <div class="options-row">
-        <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
-            role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
-            (click)="startNewGame()">Start new game</button>
+        <div class="button-container">
+            <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
+                role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
+                (click)="startNewGame()">Start new game</button>
+
+            <button mat-raised-button [disabled]="gameOver" matTooltipPosition="right" aria-label="Concede" matTooltip="Ends the current game"
+                role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
+                (click)="concede()">Concede</button>
+        </div>
+    </div>
+
+    <div class="clock-row">
+        <fa-icon aria-hidden="true" class="faq-icon" [icon]="clockIcon" size="lg"></fa-icon>
+        <label class="clock-label">Time Spent: </label>
+        <div role="timer" class="clock-text">{{clockTime}}</div>
     </div>
 
 </div>

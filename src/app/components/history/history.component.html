@@ -14,7 +14,7 @@
             <ng-container matColumnDef="guesses">
                 <th mat-header-cell *matHeaderCellDef> Guesses </th>
                 <td mat-cell *matCellDef="let game">
-                    <p class="guess" *ngFor="let guess of game.guesses">
+                    <p class="guess" *ngFor="let guess of getValidGuesses(game.guesses)">
                         {{guess}}
                     </p>
                 </td>
@@ -42,8 +42,8 @@
             <ng-container matColumnDef="share">
                 <th mat-header-cell *matHeaderCellDef> Share </th>
                 <td mat-cell *matCellDef="let game">
-                    <button mat-raised-button class="copy-button" role="button" aria-label="Copy share link" color="accent"
-                        (click)="copyShareLink(game.secret)">Copy</button>
+                    <button mat-raised-button class="copy-button" role="button" aria-label="Copy share link"
+                        color="accent" (click)="copyShareLink(game.secret)">Copy</button>
                 </td>
             </ng-container>
 

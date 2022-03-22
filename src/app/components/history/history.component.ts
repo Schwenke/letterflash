@@ -71,4 +71,8 @@ export class HistoryComponent implements OnInit {
     return this.timerService.formatClockTime(game.time);
   }
 
+  getValidGuesses(guesses: string[]): string[] {
+    return guesses.filter(guess => guess.trim() !== "");
+  }
+
 }

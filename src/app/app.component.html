@@ -11,7 +11,8 @@
 
     <!-- Options right side nav -->
     <mat-sidenav role="region" class="options-sidenav" autoFocus="false" #options position="end">
-        <app-options (newGameClicked)="startNewGame()" (viewHistoryClicked)="viewHistory()" (viewStatsClicked)="viewStats()" (closeButtonClicked)="options.toggle()"
+        <app-options (newGameClicked)="startNewGame()" (viewHistoryClicked)="viewHistory()"
+            (viewStatsClicked)="viewStats()" (closeButtonClicked)="options.toggle()" (concedeClicked)="concede()"
             (viewResultsClicked)="viewResults()"></app-options>
     </mat-sidenav>
 
@@ -20,15 +21,19 @@
         <div class="game-header" role="banner">
             <!-- DEBUG -->
             <!-- Secret: {{session.secret}} -->
-            <fa-icon class="icon-button" (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon" size="lg"></fa-icon>
+            <fa-icon class="icon-button" (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon"
+                size="lg"></fa-icon>
 
             <h1 *ngIf="showGame && !isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</h1>
 
-            <button mat-raised-button role="button" color="accent" *ngIf="isGameOver() && !(showHistory || showStats)" (click)="openResultsDialog()">View results</button>
+            <button mat-raised-button role="button" color="accent" *ngIf="isGameOver() && !(showHistory || showStats)"
+                (click)="openResultsDialog()">View results</button>
 
-            <button mat-raised-button role="button" color="accent" *ngIf="showHistory || showStats" (click)="viewGame()">Return to game</button>
+            <button mat-raised-button role="button" color="accent" *ngIf="showHistory || showStats"
+                (click)="viewGame()">Return to game</button>
 
-            <fa-icon class="icon-button" (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg"></fa-icon>
+            <fa-icon class="icon-button" (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg">
+            </fa-icon>
         </div>
 
         <app-history [ngClass]="{'hidden': !showHistory}" class="history-board"></app-history>
