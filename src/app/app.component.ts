@@ -106,15 +106,15 @@ export class AppComponent {
     this.metaService.addTag({ charset: "utf-8" });
 
     //  Misc
+    this.metaService.addTag({ name: "description", content: "An open source word puzzle game you can share with friends" });
     this.metaService.addTag({ name: "viewport", content: "webswidth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0ite" });
-    this.metaService.addTag({ name: "keywords", content: "game, wordle, word, words, letterflash, letter, flash" });
     this.metaService.addTag({ name: "author", content: "Ben Schwenke" });
     this.metaService.addTag({ name: "twitter:card", content: "summary_large_image" });
 
     //  OpenGraph
     this.metaService.addTag({ property: "og:type", content: "website" });
     this.metaService.addTag({ property: "og:title", content: SiteName });
-    this.metaService.addTag({ property: "og:description", content: "An open source, replayable word game you can share with friends" });
+    this.metaService.addTag({ property: "og:description", content: "An open source word puzzle game you can share with friends" });
     this.metaService.addTag({ property: "og:url", content: BaseURL });
     this.metaService.addTag({ property: "og:image", content: "https://i.imgur.com/P5hzOI8.png" });
   }
