@@ -1,6 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { BACKSPACE, ENTER } from 'src/app/constants';
-import { BoardState } from 'src/app/models/board-state.interface';
+import { BoardState, GameStatus } from 'src/app/models/board-state.interface';
 import { Key, Keyboard } from 'src/app/models/keyboard.interface';
 import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
@@ -52,7 +52,7 @@ export class KeyboardComponent implements OnInit {
   @HostListener('window:keydown', ['$event'])
   handleInput(event: KeyboardEvent): void {
     //  Game is in a state of not running - don't accept further keyboard clicks
-    if (this.boardState.success || this.boardState.failure) return;
+    if (this.boardState.gameStatus !== GameStatus.Active) return;
 
     if (event.key === this.enterKey) {
       this.boardStateService.guess();
@@ -65,7 +65,7 @@ export class KeyboardComponent implements OnInit {
 
   keyClicked(key: Key): void {
     //  Game is in a state of not running - don't accept further keyboard clicks
-    if (this.boardState.success || this.boardState.failure) return;
+    if (this.boardState.gameStatus !== GameStatus.Active) return;
     if (key.letter === " ") return;
     
     if (key.letter === ENTER) {

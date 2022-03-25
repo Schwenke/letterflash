@@ -6,8 +6,7 @@ export interface BoardState {
     columnIndex: number;
 
     //  Game State
-    success: boolean;
-    failure: boolean;
+    gameStatus: GameStatus;
     error: string;
 }
 
@@ -20,4 +19,10 @@ export interface Letter {
     perfect: boolean;
     partial: boolean;
     committed: boolean;
+}
+
+export enum GameStatus {
+    Active,
+    Completed,
+    Failed
 }

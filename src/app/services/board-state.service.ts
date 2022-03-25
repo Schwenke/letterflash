@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { DefaultWordLength, MaxGuesses } from '../constants';
-import { BoardState, Letter, Word } from '../models/board-state.interface';
+import { BoardState, GameStatus, Letter, Word } from '../models/board-state.interface';
 import { Session } from '../models/session.interface';
 import { DictionaryService } from './dictionary.service';
 import { KeyboardService } from './keyboard.service';
@@ -13,7 +13,7 @@ import { TimerService } from './timer.service';
 })
 
 export class BoardStateService {
-  boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({ error: "" } as BoardState);
+  boardState: BehaviorSubject<BoardState> = new BehaviorSubject<BoardState>({ error: "", gameStatus: GameStatus.Active } as BoardState);
   session: Session;
   wordLength: number = DefaultWordLength;
 
@@ -58,7 +58,7 @@ export class BoardStateService {
       this.session.guesses.push(emptyGuess);
     }
 
-    boardState.failure = true;
+    boardState.gameStatus = GameStatus.Failed;
 
     this.endCurrentGame();
     this.updateSession();
@@ -78,9 +78,6 @@ export class BoardStateService {
 
     //  Obliterate old session
     this.updateSession();
-
-    //  Clear the URL parameter
-    window.history.pushState({}, document.title, "/");
 
     this.resetTimer();
   }
@@ -112,8 +109,7 @@ export class BoardStateService {
 
     boardState.rowIndex = 0;
     boardState.columnIndex = -1;
-    boardState.success = false;
-    boardState.failure = false;
+    boardState.gameStatus = GameStatus.Active;
     boardState.error = "";
     boardState.words = [];
 
@@ -164,13 +160,12 @@ export class BoardStateService {
     let boardState: BoardState = this.boardState.value;
 
     if (this.secretGuessed(guess)) {
-      boardState.success = true;
-
+      boardState.gameStatus = GameStatus.Completed;
       return true;
     }
 
     if (this.exceededMaxGuesses()) {
-      boardState.failure = true;
+      boardState.gameStatus = GameStatus.Failed;
       return true;
     }
 
@@ -188,11 +183,9 @@ export class BoardStateService {
   private exceededMaxGuesses(): boolean {
     let boardState: BoardState = this.boardState.value;
 
-    if (!boardState.success && boardState.rowIndex >= MaxGuesses) {
-      return true;
-    }
+    if (boardState.gameStatus === GameStatus.Completed) return false;
 
-    return false;
+    return boardState.rowIndex >= MaxGuesses;
   }
 
   /**
@@ -230,10 +223,10 @@ export class BoardStateService {
   public appendInput(key: string): void {
     let boardState: BoardState = this.boardState.value;
 
-    let wordLength = this.wordLength - 1;
+    let maxColumnIndex = this.wordLength - 1;
 
     //  Can't append any more characters - word is at max length
-    if (boardState.columnIndex === wordLength) return;
+    if (boardState.columnIndex === maxColumnIndex) return;
 
     let validInput: boolean = this.keyboardService.validateInput(key);
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { BaseURL, DefaultWordLength, ExtremeModeDescription, HardModeDescription, RecentGameMaximum, SessionKey, ShareParameter } from '../constants';
-import { BoardState } from '../models/board-state.interface';
+import { BoardState, GameStatus } from '../models/board-state.interface';
 import { Options } from '../models/options.interface';
 import { Game, Session, Stats } from '../models/session.interface';
 import { TimerService } from './timer.service';
@@ -47,7 +47,7 @@ export class SessionService {
 
     session.lastVisited = new Date().toLocaleString();
 
-    if (boardState.failure || boardState.success) {
+    if (boardState.gameStatus !== GameStatus.Active) {
       let currentGame = this.createGameFromBoardState(boardState);
 
       this.updateStatsFromGame(session, currentGame);
@@ -77,7 +77,7 @@ export class SessionService {
       date: new Date().toLocaleDateString("en-US"),
       guesses: session.guesses,
       secret: session.secret,
-      victory: boardState.success,
+      victory: boardState.gameStatus === GameStatus.Completed,
       hard: session.options.hardMode,
       extreme: session.options.extremeMode,
       shared: session.shared

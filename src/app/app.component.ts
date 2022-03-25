@@ -1,5 +1,5 @@
 import { Component, HostBinding, ViewChild } from '@angular/core';
-import { BoardState } from './models/board-state.interface';
+import { BoardState, GameStatus } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
 import { SessionService } from './services/session.service';
@@ -19,19 +19,25 @@ import { BaseURL, ShareParameter, SiteName } from './constants';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  //  Used to swap between dark/light mode themes
   @HostBinding('class') className = '';
   @ViewChild('options') optionSideNav: MatSidenav;
 
-  initialized: boolean = false;
-  //  Views - TODO find an elegant way to just swap out entire main body component
+  //  Views
   showGame: boolean = true;
   showHistory: boolean = false;
   showStats: boolean = false;
 
+  //  Icons
   questionIcon = faQuestionCircle;
   cogsIcon = faCogs;
+
+  //  Dark mode
   darkModeClass: string = "darkMode";
   darkMode: boolean = false;
+
+  //  App state
+  initialized: boolean = false;
   showError: boolean = false;
   boardState: BoardState;
   session: Session;
@@ -68,13 +74,7 @@ export class AppComponent {
 
         this.activatedRoute.queryParamMap.subscribe(params => {
           let shareLink = params.get(ShareParameter);
-
-          if (shareLink && shareLink.length > 0) {
-            let secret: string = atob(shareLink);
-            this.boardStateService.startSharedPuzzle(secret);
-          } else {
-            this.boardStateService.initialize();
-          }
+          this.startGame(shareLink);
         });
       })
     });
@@ -89,13 +89,31 @@ export class AppComponent {
       }
 
       if (boardState.error.length > 0) {
-        this.openErrorDialog();
+        this.showErrorMessage(boardState.error);
       }
     })
   }
 
+  private startGame(shareLink: string | null): void {
+    if (!shareLink || shareLink.length === 0) {
+      this.boardStateService.initialize();
+    } else {
+      try {
+        let secret: string = atob(shareLink);
+        this.boardStateService.startSharedPuzzle(secret);
+      } catch(ex) {
+        //  Possibly mutated or incorrect format
+        this.showErrorMessage("Invalid share link");
+        this.boardStateService.initialize();
+      } finally {
+        //  Clear the URL parameter
+        window.history.pushState({}, document.title, "/");
+      }
+    }
+  }
+
   isGameOver(): boolean {
-    return (this.boardState.success || this.boardState.failure);
+    return this.boardState.gameStatus !== GameStatus.Active;
   }
 
   private setSiteTags(): void {
@@ -163,24 +181,22 @@ export class AppComponent {
   openResultsDialog(): void {
     const dialogRef = this.dialog.open(ResultsDialogComponent, {});
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
+    dialogRef.afterClosed().subscribe(startNewGame => {
+      if (startNewGame) {
         this.boardStateService.startNewGame();
       }
     });
   }
 
-  openErrorDialog(): void {
+  showErrorMessage(errorMessage: string): void {
     //  Already showing it
     if (this.showError) return;
 
     this.showError = true;
 
-    let error: string = this.boardState.error;
-
     let snackbarBodyClass: string = this.darkMode ? "error-snackbar--dark" : "error-snackbar";
 
-    this.snackBar.open(error, "Dismiss", { panelClass: snackbarBodyClass, verticalPosition: "top", horizontalPosition: "center", duration: 2500 });
+    this.snackBar.open(errorMessage, "Dismiss", { panelClass: snackbarBodyClass, verticalPosition: "top", horizontalPosition: "center", duration: 2500 });
 
     //  Give animation time to play and finish
     setTimeout(() => {

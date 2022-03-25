@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
 import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL, ShareParameter, MaxGuesses } from 'src/app/constants';
-import { BoardState, Letter } from 'src/app/models/board-state.interface';
+import { BoardState, GameStatus, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
 import { Session } from 'src/app/models/session.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
@@ -52,7 +52,7 @@ export class ResultsDialogComponent implements OnInit {
   }
 
   private setMessage(): void {
-    if (this.boardState.success) {
+    if (this.boardState.gameStatus === GameStatus.Completed) {
       this.message = `Congratulations! You guessed the secret word ${this.session.secret}`;
     } else {
       this.message = `Too bad! You failed to guess the secret word ${this.session.secret}`;
@@ -107,7 +107,7 @@ export class ResultsDialogComponent implements OnInit {
   private getResultsHeader(): string {
     let secret: string = this.session.secret;
     let modeOptions: string = this.getModeOptionString();
-    let guessesMade: string = this.boardState.success ? `${this.boardState.rowIndex}` : "X";
+    let guessesMade: string = this.boardState.gameStatus === GameStatus.Completed ? `${this.boardState.rowIndex}` : "X";
     let shared: boolean = this.session.shared;
     let messageHeader: string = "";
 
