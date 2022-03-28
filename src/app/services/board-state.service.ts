@@ -43,14 +43,11 @@ export class BoardStateService {
 
   public startNewGame(): void {
     this.reset();
-
     //  If a user starts a new game, clear out existing session secret and guesses
     this.updateSession();
   }
 
   public concede(): void {
-    let boardState: BoardState = this.boardState.value;
-
     //  Fill out the board with fake guesses - needed so existing sessions load correctly
     let emptyGuess: string = "".padEnd(this.wordLength, " ");
 
@@ -58,9 +55,7 @@ export class BoardStateService {
       this.session.guesses.push(emptyGuess);
     }
 
-    boardState.gameStatus = GameStatus.Failed;
-
-    this.endCurrentGame();
+    this.endCurrentGame(GameStatus.Failed);
     this.updateSession();
   }
 
@@ -141,10 +136,10 @@ export class BoardStateService {
       this.updateBoardState(previousGuess);
     }
 
-    let isGameOver = this.isGameOver(previousGuess);
+    let gameStatus = this.getGameStatus();
 
-    if (isGameOver) {
-      this.endCurrentGame();
+    if (gameStatus !== GameStatus.Active) {
+      this.endCurrentGame(gameStatus);
     } else {
       this.resetTimer();
     }
@@ -156,25 +151,27 @@ export class BoardStateService {
 
   /** GAME END METHODS **/
 
-  private isGameOver(guess: string): boolean {
-    let boardState: BoardState = this.boardState.value;
-
-    if (this.secretGuessed(guess)) {
-      boardState.gameStatus = GameStatus.Completed;
-      return true;
+  private getGameStatus(): GameStatus {
+    if (this.secretGuessed()) {
+      return GameStatus.Completed;
     }
 
     if (this.exceededMaxGuesses()) {
-      boardState.gameStatus = GameStatus.Failed;
-      return true;
+      return GameStatus.Failed;
     }
 
-    return false;
+    return GameStatus.Active;
   }
 
-  private secretGuessed(guess: string): boolean {
-    if (guess === this.session.secret) {
-      return true;
+  private secretGuessed(): boolean {
+    let length: number = this.session.guesses.length - 1;
+
+    for (let i = length; i >= 0; i--) {
+      let previousGuess: string = this.session.guesses[i];
+
+      if (previousGuess === this.session.secret) {
+        return true;
+      }
     }
 
     return false;
@@ -183,17 +180,17 @@ export class BoardStateService {
   private exceededMaxGuesses(): boolean {
     let boardState: BoardState = this.boardState.value;
 
-    if (boardState.gameStatus === GameStatus.Completed) return false;
-
     return boardState.rowIndex >= MaxGuesses;
   }
 
   /**
-   * Stops the timer and pushes board state so obs listeners can pick up current victory/failure state
+   * Stops the timer, sets the new game status, and pushes the observable
    * @param boardState 
    */
-  private endCurrentGame(): void {
+  private endCurrentGame(gameStatus: GameStatus): void {
     let boardState: BoardState = this.boardState.value;
+
+    boardState.gameStatus = gameStatus;
 
     this.timerService.stop();
 
@@ -268,7 +265,7 @@ export class BoardStateService {
     //  Give enough time for the pending animation to finish before attempting to commit, which can trigger another animation
     //  If the animations collide, then the flip never plays and causes some weirdness to happen with the pending
 
-    setTimeout(() => {
+    window.setTimeout(() => {
       this.processGuess();
     }, timeOut);
   }
@@ -293,10 +290,10 @@ export class BoardStateService {
 
     this.updateSession();
 
-    let isGameOver: boolean = this.isGameOver(guess);
+    let gameStatus: GameStatus = this.getGameStatus();
 
-    if (isGameOver) {
-      this.endCurrentGame();
+    if (gameStatus !== GameStatus.Active) {
+      this.endCurrentGame(gameStatus);
       this.updateSession();
     }
   }
@@ -311,12 +308,12 @@ export class BoardStateService {
 
     //  First look for perfect matches - correct letter in the correct position
     for (let i = 0; i < guess.length; i++) {
-      let guessLetter = guess[i];
+      let guessLetter = guess[i].trim();
       let correctLetter = secret[i];
       let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
       const index = secretWordLetters.indexOf(guessLetter);
 
-      boardStateLetter.committed = true;
+      boardStateLetter.committed = guessLetter.length > 0;
       boardStateLetter.letter = guessLetter;
 
       if (guessLetter === correctLetter) {

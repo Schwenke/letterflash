@@ -15,12 +15,12 @@
 @keyframes animateCommit {
     from {
         opacity: 0;
-        filter: brightness(40%);
+        filter: brightness(20%);
     }
 
     to {
         opacity: 1;
-        filter: brightness(90%);
+        filter: brightness(100%);
     }
 }
 
@@ -42,7 +42,6 @@
 .letter-committed {
     transition: background-color 1s ease-in;
     transition: border 1s ease-in;
-    color: mat.get-color-from-palette($primary, 'lighter');
 }
 
 .letter {
@@ -101,29 +100,29 @@
 }
 
 .letter-committed:nth-child(1) {
-    animation: animateCommit .6s linear 0s;
+    animation: animateCommit .8s linear 0s;
 }
 
 .letter-committed:nth-child(2) {
-    animation: animateCommit .6s linear 0.1s;
+    animation: animateCommit .8s linear 0.1s;
 }
 
 .letter-committed:nth-child(3) {
-    animation: animateCommit .6s linear 0.2s;
+    animation: animateCommit .8s linear 0.15s;
 }
 
 .letter-committed:nth-child(4) {
-    animation: animateCommit .6s linear 0.3s;
+    animation: animateCommit .8s linear 0.2s;
 }
 
 .letter-committed:nth-child(5) {
-    animation: animateCommit .6s linear 0.4s;
+    animation: animateCommit .8s linear 0.25s;
 }
 
 .letter-committed:nth-child(6) {
-    animation: animateCommit .6s linear .5s;
+    animation: animateCommit .8s linear .3s;
 }
 
 .letter-committed:nth-child(7) {
-    animation: animateCommit .6s linear .6s;
+    animation: animateCommit .8s linear .35s;
 }
