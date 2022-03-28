@@ -354,25 +354,25 @@ export class BoardStateService {
     if (guess === this.session.secret) return "";
 
     if (!guess || guess.trim() === "") {
-      return "You cannot enter empty words!";
+      return "Please enter a word";
     }
 
     let wordLength = this.wordLength;
 
     if (guess.length !== wordLength) {
-      return `Words must be ${wordLength} letters long!`;
+      return `Word length must be ${wordLength}`;
     }
 
     if (this.guessedPreviously(guess)) {
-      return "You've already guessed this word!";
+      return "Word has already been used";
     }
 
     if (!this.validateHardMode(guess)) {
-      return "Hard mode is enabled - guesses must include all previous clues!";
+      return "Word must use all previous clues";
     }
 
     if (!this.dictionaryService.hasWord(guess)) {
-      return "Word not found in dictionary!";
+      return "Word not found in dictionary";
     }
 
     return "";

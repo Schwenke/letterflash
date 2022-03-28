@@ -15,18 +15,17 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
-.snackbar {
-    font-weight: 500;
+.mat-simple-snackbar {
+    font-size: large;
+    font-weight: 400;
 }
 
 .error-snackbar {
-    @extend .snackbar;
     background-color: black;
     color: mat.get-color-from-palette($warn, 'default');
 }
 
 .error-snackbar--dark {
-    @extend .snackbar;
     background-color: white;
     color: mat.get-color-from-palette($warn, 'A700');
 }
@@ -43,3 +42,9 @@ body {
     display: block;
     height: 100%;
   }
+
+@media only screen and (max-width: 450px) {
+    .mat-simple-snackbar {
+        font-size: medium;
+    }
+}
