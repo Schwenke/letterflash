@@ -1,7 +1,7 @@
 @use '@angular/material' as mat;
 @import "../../../themeVariables";
 
-@keyframes animatePending {
+@keyframes popIn {
     from {
         transform: scale(1.4);
         opacity: .4;
@@ -12,22 +12,20 @@
     }
 }
 
-@keyframes animateCommit {
+@keyframes flash {
     from {
-        opacity: 0;
-        filter: brightness(20%);
+        filter: opacity(0%) brightness(20%);
     }
 
     to {
-        opacity: 1;
-        filter: brightness(100%);
+        filter: opacity(100%) brightness(100%);
     }
 }
 
 .column-container {
     display: flex;
     flex-direction: column;
-    gap: .5rem;
+    gap: .5em;
     width: 100%;
     height: 100%;
 }
@@ -36,12 +34,7 @@
     display: flex;
     flex-direction: row;
     flex: 1;
-    gap: .5rem;
-}
-
-.letter-committed {
-    transition: background-color 1s ease-in;
-    transition: border 1s ease-in;
+    gap: .5em;
 }
 
 .letter {
@@ -64,7 +57,7 @@
 
     &-pending {
         @extend .letter;
-        animation: animatePending .1s;
+        @extend .letter-pop;
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
 
         &.darkMode {
@@ -74,7 +67,7 @@
 
     &-miss {
         @extend .letter;
-        @extend .letter-committed;
+        @extend .letter-flash;
         background-color: mat.get-color-from-palette($primary, 'darker');
         border: 2px solid mat.get-color-from-palette($primary, 'darker');
 
@@ -86,43 +79,60 @@
 
     &-perfect {
         @extend .letter;
-        @extend .letter-committed;
+        @extend .letter-flash;
         background-color: mat.get-color-from-palette($perfect, 'default');
         border: 2px solid mat.get-color-from-palette($perfect, 'default');
     }
     
     &-partial {
         @extend .letter;
-        @extend .letter-committed;
+        @extend .letter-flash;
         background-color: mat.get-color-from-palette($partial, 'default');
         border: 2px solid mat.get-color-from-palette($partial, 'default');
     }
 }
 
-.letter-committed:nth-child(1) {
-    animation: animateCommit .8s linear 0s;
+.letter-pop {
+    animation: popIn .1s;
 }
 
-.letter-committed:nth-child(2) {
-    animation: animateCommit .8s linear 0.1s;
+// That's the game name lmao
+.letter-flash {
+    color: white;
+    animation: flash .8s linear;
 }
 
-.letter-committed:nth-child(3) {
-    animation: animateCommit .8s linear 0.15s;
+.letter-flash:nth-child(1) {
+    @extend .letter-flash;
+    animation-delay: 0s;
 }
 
-.letter-committed:nth-child(4) {
-    animation: animateCommit .8s linear 0.2s;
+.letter-flash:nth-child(2) {
+    @extend .letter-flash;
+    animation-delay: 0.1s;
 }
 
-.letter-committed:nth-child(5) {
-    animation: animateCommit .8s linear 0.25s;
+.letter-flash:nth-child(3) {
+    @extend .letter-flash;
+    animation-delay: 0.15s;
 }
 
-.letter-committed:nth-child(6) {
-    animation: animateCommit .8s linear .3s;
+.letter-flash:nth-child(4) {
+    @extend .letter-flash;
+    animation-delay: 0.2s;
 }
 
-.letter-committed:nth-child(7) {
-    animation: animateCommit .8s linear .35s;
+.letter-flash:nth-child(5) {
+    @extend .letter-flash;
+    animation-delay: 0.25s;
+}
+
+.letter-flash:nth-child(6) {
+    @extend .letter-flash;
+    animation-delay: .3s;
+}
+
+.letter-flash:nth-child(7) {
+    @extend .letter-flash;
+    animation-delay: .35s;
 }
