@@ -60,7 +60,8 @@
     justify-content: space-between;
     width: 100%;
     max-width: 600px;
-    gap: 1rem;
+    /* needed for mobile to provide space between gameboard and keyboard */
+    gap: 1em;
     /* needed to center content */
     margin: 0 auto;
 }
@@ -69,8 +70,8 @@
     display: flex;
     flex: 1;
     align-self: center;
-    width: 70%;
-    max-height: 500px;
+    width: 330px;
+    max-height: 400px;
     /* allow letter commit animation to display out of bounds */
     overflow: visible;
 }
@@ -117,10 +118,4 @@
 .game-keyboard {
     display: block;
     margin: 0 8px;
-}
-
-@media only screen and (max-width: 450px) {
-    .game-board {
-        width: 90%;
-    }
 }

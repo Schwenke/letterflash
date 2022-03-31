@@ -9,12 +9,13 @@
 }
 
 .enter-key {
-    min-width: 80px !important;
+    min-width: 60px !important;
 }
 
 .backspace-key {
     font-size: xx-large !important;
-    min-width: 90px !important;
+    min-width: 80px !important;
+    text-align: center;
 }
 
 .key {
@@ -61,16 +62,5 @@
         @extend .key;
         color: white;
         background-color: mat.get-color-from-palette($perfect, 'default');
-    }
-}
-
-@media only screen and (max-width: 450px) {
-    .enter-key {
-        min-width: 60px !important;
-    }
-    
-    .backspace-key {
-        font-size: xx-large !important;
-        min-width: 70px !important;
     }
 }
