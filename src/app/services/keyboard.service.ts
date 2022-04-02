@@ -85,10 +85,6 @@ export class KeyboardService {
     this.keyboard.next(keyBoard);
   }
 
-  public validateInput(key: string): boolean {
-    return /^[a-zA-Z]$/.test(key);
-  }
-
   private getKey(keyBoard: Keyboard, letter: string): Key | null {   
     for (let i = 0; i < keyBoard.rows.length; i++) {
       let row = keyBoard.rows[i];

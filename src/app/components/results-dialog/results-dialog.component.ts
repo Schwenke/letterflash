@@ -21,6 +21,7 @@ export class ResultsDialogComponent implements OnInit {
   message: string = "";
   timeSpent: string = "";
   mode: string = "Default";
+  showTime: boolean = true;
 
   //  button state
   shareResultsText: string = "Share results";
@@ -36,7 +37,9 @@ export class ResultsDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.timeSpent = this.timerService.getClockTime();
+    let totalTime: number = this.timerService.getSeconds();
+    this.timeSpent = this.timerService.formatClockTime(totalTime);
+    this.showTime = totalTime > 0;
 
     this.boardStateService.boardState.subscribe(boardState => {
       if (!boardState) return;

@@ -38,8 +38,8 @@ export class OptionsComponent implements OnInit {
       this.options = session.options;
     });
 
-    this.timerService.timeSpan.subscribe(time => {
-      this.clockTime = this.timerService.getClockTime();
+    this.timerService.formattedTime.subscribe(time => {
+      this.clockTime = time;
     });
 
     this.boardStateService.boardState.subscribe(boardState => {

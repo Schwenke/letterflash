@@ -5,7 +5,7 @@
     
     <div class="content">
         <label class="message-header">{{message}}</label>
-        <label class="message-header">Time spent: {{timeSpent}}</label>
+        <label *ngIf="showTime" class="message-header">Time spent: {{timeSpent}}</label>
         <button mat-raised-button [color]="shareResultsClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="shareResults()">{{shareResultsText}}</button>
         <button mat-raised-button [color]="sharePuzzleClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="sharePuzzle()">{{sharePuzzleText}}</button>
         <button mat-raised-button color="accent" class="dialog-button" type="button" (click)="reset()">Play again!</button>

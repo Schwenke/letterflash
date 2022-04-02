@@ -225,7 +225,8 @@ export class BoardStateService {
     //  Can't append any more characters - word is at max length
     if (boardState.columnIndex === maxColumnIndex) return;
 
-    let validInput: boolean = this.keyboardService.validateInput(key);
+    //  Only let users enter alphabetical characters a-Z
+    let validInput: boolean = /^[a-zA-Z]$/.test(key);
 
     if (validInput) {
       ++boardState.columnIndex;

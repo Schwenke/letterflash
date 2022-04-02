@@ -8,7 +8,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatButtonModule } from '@angular/material/button';
-import { MatInputModule } from '@angular/material/input';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatRadioModule } from '@angular/material/radio';
 import { ResultsDialogComponent } from './components/results-dialog/results-dialog.component';
@@ -46,7 +45,6 @@ import { StatsComponent } from './components/stats/stats.component';
     BrowserAnimationsModule,
     MatSlideToggleModule,
     MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
     MatDividerModule,
     MatRadioModule,
