@@ -96,43 +96,13 @@
     animation: popIn .1s;
 }
 
-// That's the game name lmao
 .letter-flash {
     color: white;
     animation: flash .8s linear;
-}
 
-.letter-flash:nth-child(1) {
-    @extend .letter-flash;
-    animation-delay: 0s;
-}
-
-.letter-flash:nth-child(2) {
-    @extend .letter-flash;
-    animation-delay: 0.1s;
-}
-
-.letter-flash:nth-child(3) {
-    @extend .letter-flash;
-    animation-delay: 0.15s;
-}
-
-.letter-flash:nth-child(4) {
-    @extend .letter-flash;
-    animation-delay: 0.2s;
-}
-
-.letter-flash:nth-child(5) {
-    @extend .letter-flash;
-    animation-delay: 0.25s;
-}
-
-.letter-flash:nth-child(6) {
-    @extend .letter-flash;
-    animation-delay: .3s;
-}
-
-.letter-flash:nth-child(7) {
-    @extend .letter-flash;
-    animation-delay: .35s;
+    @for $i from 1 through 7 {
+        &:nth-child(#{$i}) { 
+          animation-delay: (0.05s * $i);
+        }
+     }
 }
