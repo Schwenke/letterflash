@@ -3,6 +3,12 @@
     width: 100%;
 }
 
+.table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 .paginator {
     font-size: medium;
     margin-bottom: .75em;
