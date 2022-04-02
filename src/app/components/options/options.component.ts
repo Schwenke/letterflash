@@ -68,7 +68,6 @@ export class OptionsComponent implements OnInit {
   }
 
   storeOptions(): void {
-    this.sessionService.save();
-    this.sessionService.refresh();
+    this.sessionService.save(true);
   }
 }

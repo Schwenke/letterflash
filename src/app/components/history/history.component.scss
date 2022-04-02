@@ -1,36 +1,22 @@
-@use '@angular/material' as mat;
-@import "../../../themeVariables";
-
-
 .history-container {
     height: 100%;
     width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.table-container {
-    height: 600px;
 }
 
 .paginator {
-    font-size: x-large;
-    color: mat.get-color-from-palette($accent, 'default');
-    margin-bottom: .5em;
+    font-size: medium;
+    margin-bottom: .75em;
 }
 
 .table-column {
-    padding-left: 16px;
-    font-size: medium;
+    font-size: small;
     text-align: center;
+    width: 70px;
+    padding: 0 0 0 0 !important;
 }
 
 .mat-column-date {
     @extend .table-column;
-    padding-right: 16px;
-    padding-left: 16px !important;
 }
 
 .mat-column-time-spent {
@@ -53,6 +39,7 @@
 
 .mat-column-win {
     @extend .table-column;
+    max-width: 30px;
 }
 
 .mat-column-options {
@@ -61,43 +48,29 @@
 
 .mat-column-share {
     @extend .table-column;
+    padding-right: 0px !important;
 }
 
 .copy-button {
+    font-size: small;
     padding: 0 0 0 0;
+    min-width: 50px;
+    line-height: 30px;
 }
 
 @media only screen and (max-width: 500px) {
-    .table-container {
-        height: 500px;
-    }
-
-    .copy-button {
-        font-size: x-small;
-        min-width: 30px;
-        line-height: 30px;
-    }
-
     .table-column {
-        padding-left: 12px;
         font-size: x-small;
-    }
-
-    .mat-header-row {
-        height: 40px;
-    }
-
-    .mat-column-date {
-        padding-right: 8px;
-        padding-left: 8px !important;
+        width: 50px;
     }
 
     .guess {
-        font-size: x-small;
         margin: 0 0 0 0;
+        font-size: x-small;
     }
 
-    .paginator {
-        font-size: medium;
+    .copy-button {
+        min-width: 35px;
+        font-size: x-small;
     }
 }

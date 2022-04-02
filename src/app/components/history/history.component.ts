@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, HostListener } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Game } from 'src/app/models/session.interface';
@@ -18,14 +18,14 @@ export class HistoryComponent implements OnInit {
 
   displayedColumns: string[] = ['date', 'secret', 'guesses', 'time-spent', 'win', 'options', 'share'];
 
-  resultCount: number = 5;
+  resultCount: number = 4;
 
   constructor(
     private sessionService: SessionService,
     private timerService: TimerService
 
   ) {
-    this.getScreenSize();
+
   }
 
   ngOnInit(): void {
@@ -48,19 +48,6 @@ export class HistoryComponent implements OnInit {
     let link: string =  this.sessionService.getShareLink(word);
 
     navigator.clipboard.writeText(link);
-  }
-
-  @HostListener('window:resize', ['$event'])
-  getScreenSize(event?: any) {
-        let screenHeight = window.innerHeight;
-
-        if (screenHeight < 800) {
-          this.resultCount = 4;
-        }
-
-        if (screenHeight < 650) {
-          this.resultCount = 3;
-        }
   }
 
   getResultCount(): number[] {

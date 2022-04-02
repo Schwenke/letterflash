@@ -15,10 +15,20 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+/* Material component overrides -- */
+
+// History - paginator panel
+.mat-paginator-container {
+    min-height: 45px;
+}
+
+// Error snackbar - override font styles
 .mat-simple-snackbar {
     font-size: large;
     font-weight: 400;
 }
+
+/* -- Material component overrides */
 
 .error-snackbar {
     background-color: black;

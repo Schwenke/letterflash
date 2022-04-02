@@ -25,23 +25,23 @@ export class SessionService {
     }
   }
 
-  // Saves the current session into local storage
-  save(): void {
+  /**
+   * Saves the current session values to the local storage
+   * @param refresh whether or not the observable should be pushed
+   */
+  save(refresh: boolean = false): void {
     let session = this.session.value;
 
     let jsonValue = JSON.stringify(session);
 
     localStorage.setItem(SessionKey, jsonValue);
+
+    if (refresh) {
+      this.session.next(session);
+    }
   }
 
-  //  Gets the current observable value and pushes it back, triggering an update in components that listen
-  refresh(): void {
-    let session = this.session.value;
-
-    this.session.next(session);
-  }
-
-  //  Updates the current session with data from the board state
+  //  Updates the current session with data from the board state and pushes the observable
   update(boardState: BoardState): void {
     let session = this.session.value;
 
