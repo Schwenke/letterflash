@@ -17,12 +17,14 @@
 
 /* Material component overrides -- */
 
-// History - paginator panel
 .mat-paginator-container {
     min-height: 45px;
 }
 
-// Error snackbar - override font styles
+.mat-paginator-range-label {
+    width: 120px;
+}
+
 .mat-simple-snackbar {
     font-size: large;
     font-weight: 400;
