@@ -3,7 +3,6 @@ import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { SessionService } from 'src/app/services/session.service';
 import { TimerService } from 'src/app/services/timer.service';
-import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { GameStatus } from 'src/app/models/board-state.interface';
 
 @Component({
@@ -21,7 +20,6 @@ export class OptionsComponent implements OnInit {
 
   options: Options = {} as Options;
   gameOver: boolean = false;
-  clockIcon = faClock;
 
   clockTime: string = "";
 

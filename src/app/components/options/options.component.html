@@ -1,7 +1,9 @@
 <div class="options-container" aria-labelledby="pageTitle">
     <div class="options-header">
         <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button"
-            (click)="closePanel()">X</button>
+            (click)="closePanel()">
+            <mat-icon class="icon" aria-hidden="true">clear</mat-icon>
+        </button>
     </div>
 
     <div class="options-row">
@@ -38,11 +40,11 @@
 
             <mat-radio-group role="radiogroup" class="radio-group" [(ngModel)]="options.wordLength"
                 (change)="storeOptions()" [value]="options.wordLength">
-                <mat-radio-button matTooltip="New puzzles will generate 5 letter words" matTooltipPosition="right"
+                <mat-radio-button matTooltip="New games will generate 5 letter words" matTooltipPosition="right"
                     aria-label="Word length 5" role="radio" class="radio-button" value=5>5</mat-radio-button>
-                <mat-radio-button matTooltip="New puzzles will generate 6 letter words" matTooltipPosition="right"
+                <mat-radio-button matTooltip="New games will generate 6 letter words" matTooltipPosition="right"
                     aria-label="Word length 6" role="radio" class="radio-button" value=6>6</mat-radio-button>
-                <mat-radio-button matTooltip="New puzzles will generate 7 letter words" matTooltipPosition="right"
+                <mat-radio-button matTooltip="New games will generate 7 letter words" matTooltipPosition="right"
                     aria-label="Word length 7" role="radio" class="radio-button" value=7>7</mat-radio-button>
             </mat-radio-group>
         </fieldset>
@@ -58,11 +60,12 @@
         <div class="button-container">
             <button mat-raised-button matTooltipPosition="right" aria-label="View history"
                 matTooltip="View up to 100 recent games" role="button" class="options-button" color="accent"
-                type="button" (click)="viewHistory()">Recent games</button>
+                type="button" (click)="viewHistory()">History <mat-icon class="icon" aria-hidden="true">history
+                </mat-icon></button>
 
             <button mat-raised-button matTooltipPosition="right" aria-label="View stats"
-                matTooltip="View overall game stats" role="button" class="options-button" color="accent" type="button"
-                (click)="viewStats()">Stats</button>
+                matTooltip="View game statistics" role="button" class="options-button" color="accent" type="button"
+                (click)="viewStats()">Statistics <mat-icon class="icon" aria-hidden="true">bar_chart</mat-icon></button>
         </div>
     </div>
 
@@ -78,14 +81,14 @@
                 role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
                 (click)="startNewGame()">Start new game</button>
 
-            <button mat-raised-button [disabled]="gameOver" matTooltipPosition="right" aria-label="Concede" matTooltip="Ends the current game"
-                role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
-                (click)="concede()">Concede</button>
+            <button mat-raised-button [disabled]="gameOver" matTooltipPosition="right" aria-label="Concede"
+                matTooltip="Ends the current game" role="button" class="options-button" color="accent" type="button"
+                onclick="this.blur()" (click)="concede()">Concede</button>
         </div>
     </div>
 
     <div class="clock-row">
-        <fa-icon aria-hidden="true" class="faq-icon" [icon]="clockIcon" size="lg"></fa-icon>
+        <mat-icon aria-hidden="true" class="faq-icon">schedule</mat-icon>
         <label class="clock-label">Time Spent: </label>
         <div role="timer" class="clock-text">{{clockTime}}</div>
     </div>

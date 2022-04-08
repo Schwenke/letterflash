@@ -16,7 +16,12 @@
 }
 
 .close-button {
-    min-width: 50px;
+    min-width: 30px;
+    transform: scale(.9);
+}
+
+.icon {
+    transform: scale(.9);
 }
 
 .faq-row {
@@ -68,13 +73,12 @@
 }
 
 @media only screen and (max-width: 450px) {
-    .close-button {
-        min-width: 30px;
-        font-size: small;
-    }
-
     .faq-row {
         padding: .5em 0 0 .5em;
+    }
+
+    .faq-section-header {
+        font-size: x-large;
     }
 
     .faq-label {

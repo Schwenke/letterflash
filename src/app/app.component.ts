@@ -6,7 +6,6 @@ import { SessionService } from './services/session.service';
 import { MatDialog } from '@angular/material/dialog';
 import { ResultsDialogComponent } from './components/results-dialog/results-dialog.component'
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { faQuestionCircle, faCogs } from '@fortawesome/free-solid-svg-icons';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Session } from './models/session.interface';
 import { ActivatedRoute } from '@angular/router';
@@ -27,10 +26,6 @@ export class AppComponent {
   showGame: boolean = true;
   showHistory: boolean = false;
   showStats: boolean = false;
-
-  //  Icons
-  questionIcon = faQuestionCircle;
-  cogsIcon = faCogs;
 
   //  Dark mode
   darkModeClass: string = "darkMode";
@@ -100,7 +95,7 @@ export class AppComponent {
     } else {
       try {
         let secret: string = atob(shareLink);
-        this.boardStateService.startSharedPuzzle(secret);
+        this.boardStateService.startSharedGame(secret);
       } catch(ex) {
         //  Possibly mutated or incorrect format
         this.showErrorMessage("Invalid share link");

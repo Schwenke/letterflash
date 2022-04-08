@@ -1,7 +1,9 @@
 <div class="container">
     <div class="faq-header">
-        <button mat-raised-button aria-h1="Close window" role="button" color="accent" class="close-button"
-            (click)="closePanel()">X</button>
+        <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button"
+            (click)="closePanel()">
+            <mat-icon class="icon" aria-hidden="true">clear</mat-icon>
+        </button>
     </div>
 
     <div class="faq-row">
@@ -10,15 +12,14 @@
     </div>
 
     <div class="faq-row">
-        <p class="faq-text-item">You get six chances to guess a secret word. Make a guess by typing in a valid word and
-            pressing enter.</p>
+        <p class="faq-text-item">You get six chances to guess a secret word</p>
 
         <p class="faq-text-item">
-            <em class="perfect-text">Perfect</em> clues are in the secret word and in the correct position.
+            <em class="perfect-text">Perfect</em> clues are in the secret word and in the correct position
         </p>
 
         <p class="faq-text-item">
-            <em class="partial-text">Partial</em> clues are in the secret word but in the wrong position.
+            <em class="partial-text">Partial</em> clues are in the secret word but in the wrong position
         </p>
     </div>
 
@@ -29,7 +30,7 @@
 
     <div class="faq-row">
         <h2 class="faq-text-header">What is hard mode?</h2>
-        <p class="faq-text-item">When enabled, guesses must include all previous clues.</p>
+        <p class="faq-text-item">When enabled, guesses must include all previous clues</p>
     </div>
 
     <div class="faq-row">
@@ -39,31 +40,22 @@
     </div>
 
     <div class="faq-row">
-        <h2 class="faq-text-header">How do I share a puzzle?</h2>
-        <p class="faq-text-item">When you finish a game, click the <em class="bold-text">"Share a link to this
-                puzzle"</em> button to copy a link to your clipboard.</p>
-        <p class="faq-text-item">Then, share the link with your friends. They will be given the secret word you just
-            solved as their puzzle!</p>
-        <p class="faq-text-item">Copying the results from a share link will hide the secret
-            word and include a link to that puzzle.</p>
+        <h2 class="faq-text-header">How do I share a word?</h2>
+        <p class="faq-text-item">When you finish a game, click <em class="bold-text">"Share"</em> to copy the results
+            into your clipboard. This includes a link to the word you just solved</p>
     </div>
 
     <div class="faq-row">
         <h2 class="faq-text-header">Where can I contact you?</h2>
         <p class="faq-text-item">
             <a role="link" class="faq-link" target="_blank" rel="noopener noreferrer"
-            href="mailto: letterflash@protonmail.com">letterflash@protonmail.com</a>
+                href="mailto: letterflash@protonmail.com">letterflash@protonmail.com</a>
         </p>
     </div>
 
     <div class="faq-row">
         <h1 class="faq-section-header">What's new</h1>
         <mat-divider class="divider"></mat-divider>
-    </div>
-
-    <div class="faq-row">
-        <h2 class="faq-text-header">03-21-2022</h2>
-        <p class="faq-text-item">Added a concede button to options</p>
     </div>
 
     <div class="faq-row">
@@ -75,5 +67,13 @@
     <div class="faq-row">
         <h2 class="faq-text-header">04-06-2022</h2>
         <p class="faq-text-item">Added SPORK to dictionary (thanks for the reports!)</p>
+    </div>
+
+    <div class="faq-row">
+        <h2 class="faq-text-header">04-08-2022</h2>
+        <p class="faq-text-item">Removed "Share results" button. There is now a single "Share" button</p>
+        <p class="faq-text-item">"Share" now includes the game board emojis and an obscured word</p>
+        <p class="faq-text-item">"Recent games" is once again "History"</p>
+        <p class="faq-text-item">Added/Updated icons</p>
     </div>
 </div>

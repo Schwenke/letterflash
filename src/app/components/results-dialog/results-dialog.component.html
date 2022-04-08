@@ -1,13 +1,18 @@
 <div role="dialog">
     <div class="header">
-        <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button" (click)="dialogRef.close()">X</button>
+        <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button"
+            (click)="dialogRef.close()">
+            <mat-icon aria-hidden="true">clear</mat-icon>
+        </button>
     </div>
-    
+
     <div class="content">
         <label class="message-header">{{message}}</label>
         <label *ngIf="showTime" class="message-header">Time spent: {{timeSpent}}</label>
-        <button mat-raised-button [color]="shareResultsClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="shareResults()">{{shareResultsText}}</button>
-        <button mat-raised-button [color]="sharePuzzleClicked ? 'primary' : 'accent'" class="dialog-button" type="button" (click)="sharePuzzle()">{{sharePuzzleText}}</button>
-        <button mat-raised-button color="accent" class="dialog-button" type="button" (click)="reset()">Play again!</button>
+        <button mat-raised-button [color]="shareButtonClicked ? 'primary' : 'accent'" class="dialog-button"
+            type="button" (click)="share()">{{shareButtonText}} <mat-icon aria-hidden="true">share</mat-icon>
+            </button>
+        <button mat-raised-button color="accent" class="dialog-button" type="button" (click)="reset()">Play
+            again!</button>
     </div>
 </div>

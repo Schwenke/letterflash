@@ -79,16 +79,6 @@ export class StatsComponent implements OnInit {
     return formattedTime;
   }
 
-  getAverageSharePuzzleWinPercent(): number {
-    let gamesPlayed = this.stats.played_shared;
-
-    if (!gamesPlayed || !this.stats.wins_shared) return 0;
-
-    let winPercent = (this.stats.wins_shared / gamesPlayed) * 100;
-
-    return Math.floor(winPercent);
-  }
-
   getAverageHardModeWinPercent(): number {
     let gamesPlayed = this.stats.played_hard;
 

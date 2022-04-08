@@ -20,12 +20,12 @@ import { OptionsComponent } from './components/options/options.component';
 import { FaqComponent } from './components/faq/faq.component';
 import { HistoryComponent } from './components/history/history.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatTooltipModule } from '@angular/material/tooltip'; 
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { StatsComponent } from './components/stats/stats.component';
+import { MatIconModule } from '@angular/material/icon';
 
 @NgModule({
   declarations: [
@@ -53,11 +53,11 @@ import { StatsComponent } from './components/stats/stats.component';
     HttpClientModule,
     MatSidenavModule,
     MatSnackBarModule,
-    FontAwesomeModule,
     MatTooltipModule,
     MatTableModule,
     MatPaginatorModule,
-    MatCardModule
+    MatCardModule,
+    MatIconModule
   ],
   providers: [],
   bootstrap: [AppComponent]

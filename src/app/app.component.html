@@ -21,8 +21,7 @@
         <div class="game-header" role="banner">
             <!-- DEBUG -->
             <!-- Secret: {{session.secret}} -->
-            <fa-icon class="icon-button" (click)="faq.toggle()" aria-label="Information" [icon]="questionIcon"
-                size="lg"></fa-icon>
+            <mat-icon class="icon-button" (click)="faq.toggle()" aria-label="Information">help</mat-icon>
 
             <h1 *ngIf="showGame && !isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</h1>
 
@@ -32,8 +31,7 @@
             <button mat-raised-button role="button" color="accent" *ngIf="showHistory || showStats"
                 (click)="viewGame()">Return to game</button>
 
-            <fa-icon class="icon-button" (click)="options.toggle()" aria-label="Options" [icon]="cogsIcon" size="lg">
-            </fa-icon>
+            <mat-icon class="icon-button" (click)="options.toggle()" aria-label="Options">settings</mat-icon>
         </div>
 
         <app-history [ngClass]="{'hidden': !showHistory}" class="history-board"></app-history>

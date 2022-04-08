@@ -24,10 +24,8 @@ export class ResultsDialogComponent implements OnInit {
   showTime: boolean = true;
 
   //  button state
-  shareResultsText: string = "Share results";
-  sharePuzzleText: string = "Share a link to this puzzle";
-  shareResultsClicked: boolean = false;
-  sharePuzzleClicked: boolean = false;
+  shareButtonText: string = "Share";
+  shareButtonClicked: boolean = false;
 
   constructor(
     private timerService: TimerService,
@@ -62,27 +60,17 @@ export class ResultsDialogComponent implements OnInit {
     }
   }
 
-  public shareResults(): void {
-    let text: string = this.getResultsText();
-    this.writeToClipboard(text);
-
-    this.shareResultsText = "Results copied to clipboard!"
-    this.shareResultsClicked = true;
-  }
-
   public reset(): void {
     this.dialogRef.close(true);
   }
 
-  public sharePuzzle(): void {
-    let secret: string = this.session.secret;
+  public share(): void {
+    let clipboardText: string = this.getResultsText();
 
-    let shareLink: string = this.sessionService.getShareLink(secret);
+    this.writeToClipboard(clipboardText);
 
-    this.writeToClipboard(shareLink);
-
-    this.sharePuzzleText = "Share link copied to clipboard!"
-    this.sharePuzzleClicked = true;
+    this.shareButtonText = "Share link copied!"
+    this.shareButtonClicked = true;
   }
 
   private getResultsText(): string {
@@ -111,18 +99,12 @@ export class ResultsDialogComponent implements OnInit {
     let secret: string = this.session.secret;
     let modeOptions: string = this.getModeOptionString();
     let guessesMade: string = this.boardState.gameStatus === GameStatus.Completed ? `${this.boardState.rowIndex}` : "X";
-    let shared: boolean = this.session.shared;
     let messageHeader: string = "";
 
-    if (shared) {
-      let shareLink: string = this.sessionService.getShareLink(secret);
-      let questionMarks: string = "".padEnd(secret.length, "?");
-      messageHeader += `${shareLink}\n`;
-      messageHeader += `${questionMarks} (${guessesMade}/${MaxGuesses}) ${modeOptions}\n`;
-    } else {
-      messageHeader += `${BaseURL}\n`;
-      messageHeader += `${secret} (${guessesMade}/${MaxGuesses}) ${modeOptions}\n`;
-    }
+    let shareLink: string = this.sessionService.getShareLink(secret);
+    let questionMarks: string = "".padEnd(secret.length, "?");
+    messageHeader += `${shareLink}\n`;
+    messageHeader += `${questionMarks} (${guessesMade}/${MaxGuesses}) ${modeOptions}\n`;
 
     return messageHeader;
   }

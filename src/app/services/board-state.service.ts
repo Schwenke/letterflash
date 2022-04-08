@@ -59,14 +59,14 @@ export class BoardStateService {
     this.updateSession();
   }
 
-  public startSharedPuzzle(secret: string): void {
+  public startSharedGame(secret: string): void {
     this.wordLength = secret.length;
 
     this.session.secret = secret;
 
     this.session.guesses = [];
 
-    //  Session needs to be aware it is a shared puzzle, as some behaviors change
+    //  Session needs to be aware it is a shared game for stat/game tracking
     this.session.shared = true;
 
     this.resetBoard();
