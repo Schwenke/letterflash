@@ -115,7 +115,7 @@ export class BoardStateService {
       boardState.words.push(word);
 
       for (let j = 0; j < this.wordLength; j++) {
-        let letter = { letter: "", perfect: false, partial: false, committed: false } as Letter;
+        let letter = { value: "", perfect: false, partial: false, committed: false } as Letter;
         boardState.words[i].letters.push(letter);
       }
     }
@@ -207,7 +207,7 @@ export class BoardStateService {
 
     let word = this.getCurrentWord(boardState);
 
-    word.letters[boardState.columnIndex].letter = "";
+    word.letters[boardState.columnIndex].value = "";
 
     --boardState.columnIndex;
 
@@ -233,7 +233,7 @@ export class BoardStateService {
 
       let word = this.getCurrentWord(boardState);
 
-      word.letters[boardState.columnIndex].letter = key.toLocaleUpperCase();
+      word.letters[boardState.columnIndex].value = key.toLocaleUpperCase();
 
       //  check to clear any errors, since we will be pushing the observable
       boardState.error = "";
@@ -254,7 +254,7 @@ export class BoardStateService {
     for (let i = 0; i < letters.length; i++) {
       let letter = letters[i];
 
-      userGuess += letter.letter;
+      userGuess += letter.value;
     }
 
     return userGuess;
@@ -315,7 +315,7 @@ export class BoardStateService {
       const index = secretWordLetters.indexOf(guessLetter);
 
       boardStateLetter.committed = guessLetter.length > 0;
-      boardStateLetter.letter = guessLetter;
+      boardStateLetter.value = guessLetter;
 
       if (guessLetter === correctLetter) {
         boardStateLetter.perfect = true;
@@ -419,7 +419,7 @@ export class BoardStateService {
         let letter = row.letters[k];
 
         if (letter.perfect || letter.partial) {
-          correctGuesses.push(letter.letter);
+          correctGuesses.push(letter.value);
         }
       }
     }

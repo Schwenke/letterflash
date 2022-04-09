@@ -15,7 +15,7 @@ export interface Word {
 }
 
 export interface Letter {
-    letter: string;
+    value: string;
     perfect: boolean;
     partial: boolean;
     committed: boolean;

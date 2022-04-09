@@ -2,13 +2,13 @@
     <div class="row-container" *ngFor="let word of boardState.words">
         <div title="{{getTitle(letter)}}" [ngClass]="{
             'darkMode': options.darkMode,
-            'letter-empty': !letter.committed && letter.letter.length === 0,
-            'letter-pending': !letter.committed && letter.letter.length > 0,
+            'letter-empty': !letter.committed && letter.value.length === 0,
+            'letter-pending': !letter.committed && letter.value.length > 0,
             'letter-miss': letter.committed && !(letter.partial || letter.perfect),
             'letter-perfect': letter.perfect, 
             'letter-partial': letter.partial
         }" *ngFor="let letter of word.letters">
-                {{letter.letter}}
+                {{letter.value}}
         </div>
     </div>
 </div>
