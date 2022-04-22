@@ -26,3 +26,4 @@ export const SessionKey = "lf-session";
 export const BaseURL = "https://www.letterflash.com/"
 export const SiteName = "Letter Flash";
 export const ShareParameter = "share";
+export const DarkModeClassName = "darkMode";

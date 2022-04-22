@@ -22,14 +22,6 @@
     min-width: 33vh;
 }
 
-.options-sidenav {
-    @extend .sidenav;
-}
-
-.faq-sidenav {
-    @extend .sidenav;
-}
-
 .reset-button {
     font-size: large;
     border-radius: 5px;
@@ -82,6 +74,20 @@
     justify-content: space-around;
 }
 
+.info-icon-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    width: 70px;
+}
+
+.settings-icon-container {
+    display: flex;
+    flex-direction: row;
+    width: 70px;
+    justify-content: center;
+}
+
 .icon-button {
     cursor: pointer;
     transform: scale(1.2);
@@ -91,26 +97,6 @@
     font-size: 2em;
     font-weight: 600;
     margin: 0;
-}
-
-.header-button {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.header-button:focus {
-    border: 2px solid;
-}
-
-.faq-button {
-    @extend .header-button;
-    cursor: pointer;
-}
-
-.options-button {
-    @extend .header-button;
-    cursor: pointer;
 }
 
 .game-keyboard {

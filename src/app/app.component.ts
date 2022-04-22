@@ -10,7 +10,9 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { Session } from './models/session.interface';
 import { ActivatedRoute } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
-import { BaseURL, ShareParameter, SiteName } from './constants';
+import { BaseURL, DarkModeClassName, ShareParameter, SiteName } from './constants';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { AboutComponent } from './components/about/about.component';
 
 @Component({
   selector: 'app-root',
@@ -28,7 +30,6 @@ export class AppComponent {
   showStats: boolean = false;
 
   //  Dark mode
-  darkModeClass: string = "darkMode";
   darkMode: boolean = false;
 
   //  App state
@@ -45,7 +46,8 @@ export class AppComponent {
     private snackBar: MatSnackBar,
     private activatedRoute: ActivatedRoute,
     private metaService: Meta,
-    private titleService: Title
+    private titleService: Title,
+    private bottomSheet: MatBottomSheet
   ) {
     this.setSiteTags();
   }
@@ -61,7 +63,7 @@ export class AppComponent {
 
         this.darkMode = session.options.darkMode;
 
-        this.className = this.darkMode ? this.darkModeClass : "";
+        this.className = this.darkMode ? DarkModeClassName : "";
 
         if (this.initialized) return;
 
@@ -174,7 +176,9 @@ export class AppComponent {
   }
 
   openResultsDialog(): void {
-    const dialogRef = this.dialog.open(ResultsDialogComponent, {});
+    const dialogRef = this.dialog.open(ResultsDialogComponent, {
+      panelClass: this.className
+    });
 
     dialogRef.afterClosed().subscribe(startNewGame => {
       if (startNewGame) {
@@ -197,5 +201,9 @@ export class AppComponent {
     setTimeout(() => {
       this.showError = false;
     }, 1000);
+  }
+
+  openAbout(): void {
+    this.bottomSheet.open(AboutComponent, {});
   }
 }

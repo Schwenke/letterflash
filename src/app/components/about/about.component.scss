@@ -7,7 +7,7 @@
     padding-right: 1em;
 }
 
-.faq-header {
+.about-header {
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
@@ -24,78 +24,53 @@
     transform: scale(.9);
 }
 
-.faq-row {
+.about-row {
     margin-left: .75em;
     margin-top: .75em;
 }
 
-.faq-section-header {
+.about-section-header {
     font-size: x-large;
     font-weight: 500;
     margin-bottom: 5px;
 }
 
-.faq-text-header {
+.about-text-header {
     font-size: large;
     font-style: italic;
     font-weight: 500;
     margin-bottom: 8px;
 }
 
-.faq-text-item {
+.about-text-item {
     font-size: medium;
 }
 
-.faq-link {
-    font-size: large;
-    font-weight: 500;
-    color: mat.get-color-from-palette($partial, 'default');
-}
-
-.colored-text {
+.about-link {
     font-size: medium;
-    font-style: normal;
-    font-weight: 600;
-}
-
-.perfect-text {
-    @extend .colored-text;
-    color: mat.get-color-from-palette($perfect, 'default');
-}
-
-.partial-text {
-    @extend .colored-text;
-    color: mat.get-color-from-palette($partial, 'default');
-}
-
-.bold-text {
-    font-style: normal;
     font-weight: 500;
+    color: mat.get-color-from-palette($partial, 'default');
 }
 
 @media only screen and (max-width: 450px) {
-    .faq-row {
+    .about-row {
         margin-left: .5em;
         margin-top: .5em;
     }
 
-    .faq-section-header {
+    .about-section-header {
         font-size: large;
     }
 
-    .faq-text-header {
+    .about-text-header {
+        font-size: medium;
+    }
+
+    .about-text-item {
         font-size: small;
     }
 
-    .colored-text {
-        font-size: small;
-    }
-
-    .faq-text-item {
-        font-size: small;
-    }
-
-    .faq-link {
+    .about-link {
         font-size: small;
     }
 }

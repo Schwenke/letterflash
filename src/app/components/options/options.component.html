@@ -65,7 +65,7 @@
 
             <button mat-raised-button matTooltipPosition="right" aria-label="View stats"
                 matTooltip="View game statistics" role="button" class="options-button" color="accent" type="button"
-                (click)="viewStats()">Statistics <mat-icon class="icon" aria-hidden="true">bar_chart</mat-icon></button>
+                (click)="viewStats()">Statistics <mat-icon class="icon" aria-hidden="true">equalizer</mat-icon></button>
         </div>
     </div>
 
@@ -86,11 +86,4 @@
                 onclick="this.blur()" (click)="concede()">Concede</button>
         </div>
     </div>
-
-    <div class="clock-row">
-        <mat-icon aria-hidden="true" class="faq-icon">schedule</mat-icon>
-        <label class="clock-label">Time Spent: </label>
-        <div role="timer" class="clock-text">{{clockTime}}</div>
-    </div>
-
 </div>

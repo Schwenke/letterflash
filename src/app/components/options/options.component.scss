@@ -34,22 +34,6 @@
     margin-bottom: 0;
 }
 
-.clock-row {
-    @extend .options-row;
-    padding-top: 0;
-    align-items: flex-end;
-}
-
-.clock-label {
-    font-size: large;
-    margin-left: 5px;
-}
-
-.clock-text {
-    font-size: large;
-    margin-left: 5px;
-}
-
 .options-check {
     font-size: x-large;
     margin-left: .5rem;
@@ -76,8 +60,8 @@
 
 .options-button {
     font-size: medium;
-    margin-bottom: .7em;
-    line-height: 35px;
+    margin-bottom: .75em;
+    margin-top: .5em;
 }
 
 .button-container {
@@ -91,28 +75,12 @@
 }
 
 @media only screen and (max-width: 450px) {
-    .options-header {
-        height: 45px;
-    }
-
     .options-row {
         padding: .5em 0 .25em .5em;
     }
 
     .options-button {
         font-size: small;
-    }
-
-    .clock-row {
-        @extend .options-row;
-    }
-
-    .clock-label {
-        font-size: medium;
-    }
-    
-    .clock-text {
-        font-size: medium;
     }
 
     .section-header {

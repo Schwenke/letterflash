@@ -26,6 +26,8 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatCardModule } from '@angular/material/card';
 import { StatsComponent } from './components/stats/stats.component';
 import { MatIconModule } from '@angular/material/icon';
+import { AboutComponent } from './components/about/about.component';
+import { MatBottomSheetModule } from "@angular/material/bottom-sheet";
 
 @NgModule({
   declarations: [
@@ -36,7 +38,8 @@ import { MatIconModule } from '@angular/material/icon';
     OptionsComponent,
     FaqComponent,
     HistoryComponent,
-    StatsComponent
+    StatsComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -57,7 +60,8 @@ import { MatIconModule } from '@angular/material/icon';
     MatTableModule,
     MatPaginatorModule,
     MatCardModule,
-    MatIconModule
+    MatIconModule,
+    MatBottomSheetModule
   ],
   providers: [],
   bootstrap: [AppComponent]
