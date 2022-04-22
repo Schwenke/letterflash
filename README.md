@@ -5,7 +5,7 @@
 ### Check out the deployed site from github pages here: https://www.letterflash.com/
 
 -----------------------------------------------------------------------------------------------------------------------------------------
-This is an open source, replayable version of **Wordle**
+This is an open source, replayable word game built in Angular.
 
 Some key points of difference include:
 
