@@ -28,10 +28,8 @@ Key features include:
     - The link is included automatically when you share the results of a game you just finished
       - You can also visit the "History" page under options and copy a link there
     - When someone clicks the link, a new game of letter flash will start which uses the word you shared!
-- ### Fully open source and actively developed
-  - The code is available to everyone and so is the issue tracker. I am always open to suggestions and feedback!
-- ### Purely client side with no server
-  - The game loads fast and there is no concern over ads, malicious cookies, or anything of the sort
+- ### Open source and actively developed
+  - Feel free to check the code out and leave some feedback!
 - ### Easy to build and run
   - This app is built using Angular and typescript and not much else. Grab the code, grab your favorite IDE, npm install, and have at it!
 
