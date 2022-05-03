@@ -5,32 +5,37 @@
 ### Check out the deployed site from github pages here: https://www.letterflash.com/
 
 -----------------------------------------------------------------------------------------------------------------------------------------
-This is an open source, replayable version of **Wordle**
+This is an open source, replayable word game built in Angular.
 
-Some key points of difference include:
+Key features include:
 
-- ### Favor replayability over challenge-of-the-day
-  - Letter Flash allows you to keep playing over and over!
-- ### Additional features
-  - **Share puzzles!** 
-    - After finishing a game or from the recent game list, you can copy a link to send to friends. 
-    - When they open the link, they will start a new game with the word you sent them!
-    - When they share results, the word will be obscured and the original link will be included so others can try as well!
+- ### Infinite replayability
+  - Letter Flash dynamically generates a new word on demand, allowing you to keep playing more throughout the day!
+- ### Unique options
   - **Extreme mode** 
     - The secret word pulls from the entire dictionary instead of using a curated list. Incredibly difficult, for masochists only!
   - **Support for 6 and 7 letter words**
-    - Use the buttons under the options menu to select a word length. New games will generate puzzles of that word length!
-  - **Stat tracking and history** 
-    - Buttons in the option menu allow you to view up to 100 recently played games and see rich statistics about your games!
-- ### Fully open source and actively developed
-  - The code is available to everyone and so is the issue tracker. I consider this an on-going project and am always looking for new features to add
-- ### Purely client side with no server
-  - The game loads fast and there is no concern over ads, malicious cookies, or anything of the sort
+    - Use the buttons under the options menu to select a word length
+    - New games will generate puzzles of that word length!
+  - **View previous games, statistics, and more** 
+    - Click the "History" button under the options window to view up to your 100 previously played games!
+    - Click the "Statistics" button under the options window to view several statistics about your games, such as win streaks!
+    - Got a tough word you just can't figure out? Click the "Concede" button under options to give up and see what the word was!
+    - Don't like the current word, or just want to start a new game? Click the "Start new game" button under options!
+- ### Sharing
+  - **Share words with friends and family to see how they fare!** 
+    - Letter flash allows you to share specific words via an encoded link which you can send to others
+    - The link is included automatically when you share the results of a game you just finished
+      - You can also visit the "History" page under options and copy a link there
+    - When someone clicks the link, a new game of letter flash will start which uses the word you shared!
+- ### Open source and actively developed
+  - Feel free to check the code out and leave some feedback!
 - ### Easy to build and run
   - This app is built using Angular and typescript and not much else. Grab the code, grab your favorite IDE, npm install, and have at it!
 
+-----------------------------------------------------------------------------------------------------------------------------------------
 
-If you enjoy the base Wordle game and would like to play more of it, give Letter Flash a shot!
+If you enjoy word games and want to play more of them, please give Letter flash a shot!
 
 If you are interested in the project and would like to contribute, let me know.
 
