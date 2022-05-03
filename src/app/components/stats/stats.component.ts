@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Stats } from 'src/app/models/session.interface';
 import { SessionService } from 'src/app/services/session.service';
-import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
   selector: 'app-stats',
@@ -13,8 +12,7 @@ export class StatsComponent implements OnInit {
   stats: Stats;
 
   constructor(
-    private sessionService: SessionService,
-    private timerService: TimerService
+    private sessionService: SessionService
     ) { }
 
   ngOnInit(): void {
@@ -74,7 +72,7 @@ export class StatsComponent implements OnInit {
 
     let averageSeconds = Math.floor(totalSeconds / gamesPlayed);
 
-    let formattedTime: string = this.timerService.formatClockTime(averageSeconds);
+    let formattedTime: string = this.sessionService.formatClockTime(averageSeconds);
 
     return formattedTime;
   }

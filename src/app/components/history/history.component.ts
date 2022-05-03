@@ -3,7 +3,6 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import { Game } from 'src/app/models/session.interface';
 import { SessionService } from 'src/app/services/session.service';
-import { TimerService } from 'src/app/services/timer.service';
 
 @Component({
   selector: 'app-history',
@@ -21,8 +20,7 @@ export class HistoryComponent implements OnInit {
   resultCount: number = 4;
 
   constructor(
-    private sessionService: SessionService,
-    private timerService: TimerService
+    private sessionService: SessionService
 
   ) {
 
@@ -55,7 +53,7 @@ export class HistoryComponent implements OnInit {
   }
 
   getGameTime(game: Game): string {
-    return this.timerService.formatClockTime(game.time);
+    return this.sessionService.formatClockTime(game.time);
   }
 
   getValidGuesses(guesses: string[]): string[] {

@@ -8,6 +8,7 @@ export interface Session {
     secret: string;
     shared: boolean;
     lastVisited: string;
+    time: number;
 }
 
 export interface Game{

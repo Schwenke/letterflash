@@ -6,8 +6,6 @@ import { Options } from 'src/app/models/options.interface';
 import { Session } from 'src/app/models/session.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { SessionService } from 'src/app/services/session.service';
-import { TimerService } from 'src/app/services/timer.service';
-
 @Component({
   selector: 'app-results-dialog',
   templateUrl: './results-dialog.component.html',
@@ -21,24 +19,18 @@ export class ResultsDialogComponent implements OnInit {
   message: string = "";
   timeSpent: string = "";
   mode: string = "Default";
-  showTime: boolean = true;
 
   //  button state
   shareButtonText: string = "Share";
   shareButtonClicked: boolean = false;
 
   constructor(
-    private timerService: TimerService,
     private boardStateService: BoardStateService,
     private sessionService: SessionService,
     public dialogRef: MatDialogRef<ResultsDialogComponent>
   ) { }
 
   ngOnInit(): void {
-    let totalTime: number = this.timerService.getSeconds();
-    this.timeSpent = this.timerService.formatClockTime(totalTime);
-    this.showTime = totalTime > 0;
-
     this.boardStateService.boardState.subscribe(boardState => {
       if (!boardState) return;
 
@@ -47,6 +39,7 @@ export class ResultsDialogComponent implements OnInit {
 
         this.boardState = boardState;
         this.session = session;
+        this.timeSpent = this.sessionService.formatClockTime(session.time);
         this.setMessage();
       });
     })

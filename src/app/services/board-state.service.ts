@@ -1,12 +1,11 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, timer } from 'rxjs';
 import { DefaultWordLength, MaxGuesses } from '../constants';
 import { BoardState, GameStatus, Letter, Word } from '../models/board-state.interface';
 import { Session } from '../models/session.interface';
 import { DictionaryService } from './dictionary.service';
 import { KeyboardService } from './keyboard.service';
 import { SessionService } from './session.service';
-import { TimerService } from './timer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +18,6 @@ export class BoardStateService {
 
   constructor(
     private dictionaryService: DictionaryService,
-    private timerService: TimerService,
     private keyboardService: KeyboardService,
     private sessionService: SessionService
   ) {
@@ -39,6 +37,8 @@ export class BoardStateService {
     } else {
       this.reset();
     }
+
+    this.startTimer();
   }
 
   public startNewGame(): void {
@@ -75,6 +75,30 @@ export class BoardStateService {
     this.updateSession();
 
     this.resetTimer();
+
+    this.startTimer();
+  }
+
+  /**
+   * Starts the game timer (used for results, stats, history)
+   * Runs while game is active and auto updates session every 60s to track time between refreshes
+   */
+  private startTimer(): void {
+    timer(0, 1000).subscribe(ellapsedCycles => {
+      let boardState: BoardState = this.boardState.value;
+
+      let gameIsActive: boolean = boardState.gameStatus === GameStatus.Active && this.session.guesses.length > 0;
+
+      //  Tick every second while game is active and game is set as the active tab in browser
+      if (gameIsActive && !document.hidden) {
+        ++this.session.time;
+
+        //  Auto-update the session every 30 seconds
+        if (this.session.time % 30 === 0) {
+          this.sessionService.save();
+        }
+      }
+    });
   }
 
   private reset(): void {
@@ -140,8 +164,6 @@ export class BoardStateService {
 
     if (gameStatus !== GameStatus.Active) {
       this.endCurrentGame(gameStatus);
-    } else {
-      this.resetTimer();
     }
   }
 
@@ -191,8 +213,6 @@ export class BoardStateService {
     let boardState: BoardState = this.boardState.value;
 
     boardState.gameStatus = gameStatus;
-
-    this.timerService.stop();
 
     this.boardState.next(boardState);
   }
@@ -437,8 +457,7 @@ export class BoardStateService {
   }
 
   private resetTimer(): void {
-    this.timerService.reset();
-    this.timerService.start();
+    this.session.time = 0;
   }
 
 

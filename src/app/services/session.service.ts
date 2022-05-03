@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { BaseURL, DefaultWordLength, ExtremeModeDescription, HardModeDescription, RecentGameMaximum, SessionKey, ShareParameter } from '../constants';
+import { BaseURL, DefaultWordLength, RecentGameMaximum, SessionKey, ShareParameter } from '../constants';
 import { BoardState, GameStatus } from '../models/board-state.interface';
 import { Options } from '../models/options.interface';
 import { Game, Session, Stats } from '../models/session.interface';
-import { TimerService } from './timer.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,9 +12,7 @@ export class SessionService {
 
   session: BehaviorSubject<Session>;
 
-  constructor(
-    private timerService: TimerService
-  ) { 
+  constructor() { 
     let existingSession = this.getExistingSession();
 
     if (!existingSession) {
@@ -69,11 +66,19 @@ export class SessionService {
     return shareLink;
   }
 
+  formatClockTime(time: number): string {
+    let hours = `${Math.floor(time / 3600)}`.padStart(2, "0");
+    let minutes = `${Math.floor(time % 3600 / 60)}`.padStart(2, "0");
+    let seconds = `${Math.floor(time % 3600 % 60)}`.padStart(2, "0");
+
+    return `${hours}:${minutes}:${seconds}`;
+  }
+
   private createGameFromBoardState(boardState: BoardState): Game {
     let session = this.session.value;
 
     let game: Game = {
-      time: this.timerService.getSeconds(),
+      time: session.time,
       date: new Date().toLocaleDateString("en-US"),
       guesses: session.guesses,
       secret: session.secret,
@@ -171,7 +176,8 @@ export class SessionService {
       options: this.getDefaultOptions(),
       shared: false,
       stats: this.getDefaultStats(),
-      lastVisited: new Date().toLocaleString()
+      lastVisited: new Date().toLocaleString(),
+      time: 0
     };
 
     this.session = new BehaviorSubject<Session>(session);

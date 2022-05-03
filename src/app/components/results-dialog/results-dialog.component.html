@@ -8,7 +8,7 @@
 
     <div class="content">
         <label class="message-header">{{message}}</label>
-        <label *ngIf="showTime" class="message-header">Time spent: {{timeSpent}}</label>
+        <label class="message-header">Time spent: {{timeSpent}}</label>
         <button mat-raised-button [color]="shareButtonClicked ? 'primary' : 'accent'" class="dialog-button"
             type="button" (click)="share()">{{shareButtonText}} <mat-icon aria-hidden="true">share</mat-icon>
             </button>
