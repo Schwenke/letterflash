@@ -23,15 +23,15 @@ export class HistoryComponent implements OnInit {
     private sessionService: SessionService
 
   ) {
-
-  }
-
-  ngOnInit(): void {
     this.dataSource = new MatTableDataSource<Game>();
 
     this.sessionService.session.subscribe(session => {
       this.dataSource.data = session.recentGames;
     });
+  }
+
+  ngOnInit(): void {
+
   }
 
   ngAfterViewInit(): void {

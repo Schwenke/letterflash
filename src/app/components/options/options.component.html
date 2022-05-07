@@ -81,7 +81,7 @@
                 role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
                 (click)="startNewGame()">Start new game</button>
 
-            <button mat-raised-button [disabled]="gameOver" matTooltipPosition="right" aria-label="Concede"
+            <button mat-raised-button [disabled]="disableConcede" matTooltipPosition="right" aria-label="Concede"
                 matTooltip="Ends the current game" role="button" class="options-button" color="accent" type="button"
                 onclick="this.blur()" (click)="concede()">Concede</button>
         </div>

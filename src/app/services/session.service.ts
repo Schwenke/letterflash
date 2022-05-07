@@ -67,9 +67,11 @@ export class SessionService {
   }
 
   formatClockTime(time: number): string {
-    let hours = `${Math.floor(time / 3600)}`.padStart(2, "0");
-    let minutes = `${Math.floor(time % 3600 / 60)}`.padStart(2, "0");
-    let seconds = `${Math.floor(time % 3600 % 60)}`.padStart(2, "0");
+    let clockTime = time ? time : 0;
+
+    let hours = `${Math.floor(clockTime / 3600)}`.padStart(2, "0");
+    let minutes = `${Math.floor(clockTime % 3600 / 60)}`.padStart(2, "0");
+    let seconds = `${Math.floor(clockTime % 3600 % 60)}`.padStart(2, "0");
 
     return `${hours}:${minutes}:${seconds}`;
   }

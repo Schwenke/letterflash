@@ -3,6 +3,7 @@ import { BoardStateService } from 'src/app/services/board-state.service';
 import { BoardState, Letter } from 'src/app/models/board-state.interface';
 import { SessionService } from 'src/app/services/session.service';
 import { Options } from 'src/app/models/options.interface';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-game-board',
@@ -11,28 +12,24 @@ import { Options } from 'src/app/models/options.interface';
 })
 
 export class GameBoardComponent implements OnInit {
-  boardState: BoardState = {} as BoardState;
+  boardState: BoardState;
   options: Options;
 
   constructor(
-    private boardStateService: BoardStateService,
-    private sessionService: SessionService
+    boardStateService: BoardStateService,
+    sessionService: SessionService
   ) {
+    combineLatest([boardStateService.boardState, sessionService.session]).subscribe(data => {
+      let boardState = data[0];
+      let session = data[1];
 
+      this.boardState = boardState;
+      this.options = session.options;
+    });
   }
 
   ngOnInit(): void {
-    this.boardStateService.boardState.subscribe(boardState => {
-      if (!boardState) return;
 
-      this.boardState = boardState;
-    });
-
-    this.sessionService.session.subscribe(session => {
-      if (!session) return;
-      
-      this.options = session.options;
-    })
   }
 
   getTitle(letter: Letter): string {

@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, forkJoin } from 'rxjs';
 import { SessionService } from './session.service';
 import { Session } from '../models/session.interface';
+import { FiveLetterDictionaryURL, FullDictionaryURL, SevenLetterDictionaryURL, SixLetterDictionaryURL } from '../constants';
 
 @Injectable({
   providedIn: 'root'
@@ -12,11 +13,6 @@ export class DictionaryService {
   private dictionary: string[] = [];
   cache: Map<number, string[]> = new Map<number, string[]>();
   session: Session;
-
-  private fullDictionaryURL = "assets/dictionary.json"
-  private fiveLetterDictionaryURL = "assets/five-letter-words.json";
-  private sixLetterDictionaryURL = "assets/six-letter-words.json";
-  private sevenLetterDictionaryURL = "assets/seven-letter-words.json";
 
   constructor(
     private http: HttpClient,
@@ -31,27 +27,29 @@ export class DictionaryService {
   }
 
   public generateWord(wordLength: number) {
-    let words = this.getWords(wordLength);
+    let wordList = this.getWordList(wordLength);
+    
+    let randomIndex = Math.floor(Math.random() * wordList.length);
 
-    let randomWord = words[Math.floor(Math.random() * words.length)];
+    let randomWord = wordList[randomIndex];
 
     return randomWord.toLocaleUpperCase();
   }
 
-  private getWords(length: number): string[] {
-    let words;
+  private getWordList(length: number): string[] {
+    let wordList;
 
     if (this.session.options.extremeMode) {
-      words = this.dictionary.filter(word => word.length === length);
+      wordList = this.dictionary.filter(word => word.length === length);
     } else {
-      words = this.cache.get(length);
+      wordList = this.cache.get(length);
     }
 
-    return words ? words : [];
+    return wordList ? wordList : [];
   }
 
   public hasWord(word: string): boolean {
-    let curatedList: string[] = this.getWords(word.length);
+    let curatedList: string[] = this.getWordList(word.length);
 
     //  Check the curated list first since its smaller
     if (curatedList.includes(word.toLocaleLowerCase())) {
@@ -63,13 +61,12 @@ export class DictionaryService {
   }
 
   private fetchDictionary(): void {
-    const fullDictionary = this.http.get(this.fullDictionaryURL);
-    const dictionaryOne = this.http.get(this.fiveLetterDictionaryURL);
-    const dictionaryTwo = this.http.get(this.sixLetterDictionaryURL);
-    const dictionaryThree = this.http.get(this.sevenLetterDictionaryURL);
+    const fullDictionary = this.http.get(FullDictionaryURL);
+    const fiveLetterWordList = this.http.get(FiveLetterDictionaryURL);
+    const sixLetterWordList = this.http.get(SixLetterDictionaryURL);
+    const sevenLetterWordList = this.http.get(SevenLetterDictionaryURL);
 
-
-    forkJoin([fullDictionary, dictionaryOne, dictionaryTwo, dictionaryThree]).subscribe(data => {
+    forkJoin([fullDictionary, fiveLetterWordList, sixLetterWordList, sevenLetterWordList]).subscribe(data => {
       let dictionary = data[0] as string[];
       let fiveLetterWords = data[1] as string[];
       let sixLetterWords = data[2] as string[];

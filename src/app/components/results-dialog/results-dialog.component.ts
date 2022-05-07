@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialogRef } from '@angular/material/dialog';
+import { combineLatest } from 'rxjs';
 import { ThreeStarSymbol, TwoStarSymbol, GreenBlock, GreyBlock, OneStarSymbol, YellowBlock, BaseURL, ShareParameter, MaxGuesses } from 'src/app/constants';
 import { BoardState, GameStatus, Letter } from 'src/app/models/board-state.interface';
 import { Options } from 'src/app/models/options.interface';
@@ -25,24 +26,23 @@ export class ResultsDialogComponent implements OnInit {
   shareButtonClicked: boolean = false;
 
   constructor(
-    private boardStateService: BoardStateService,
+    boardStateService: BoardStateService,
     private sessionService: SessionService,
     public dialogRef: MatDialogRef<ResultsDialogComponent>
-  ) { }
+  ) { 
+    combineLatest([boardStateService.boardState, sessionService.session]).subscribe(data => {
+      let boardState = data[0];
+      let session = data[1];
+
+      this.boardState = boardState;
+      this.session = session;
+      this.timeSpent = this.sessionService.formatClockTime(session.time);
+      this.setMessage();
+    });
+  }
 
   ngOnInit(): void {
-    this.boardStateService.boardState.subscribe(boardState => {
-      if (!boardState) return;
 
-      this.sessionService.session.subscribe(session => {
-        if (!session) return;
-
-        this.boardState = boardState;
-        this.session = session;
-        this.timeSpent = this.sessionService.formatClockTime(session.time);
-        this.setMessage();
-      });
-    })
   }
 
   private setMessage(): void {

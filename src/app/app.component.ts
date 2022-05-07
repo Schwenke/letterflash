@@ -13,6 +13,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { BaseURL, DarkModeClassName, ShareParameter, SiteName } from './constants';
 import { MatBottomSheet } from '@angular/material/bottom-sheet';
 import { AboutComponent } from './components/about/about.component';
+import { BehaviorSubject, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -33,14 +34,16 @@ export class AppComponent {
   darkMode: boolean = false;
 
   //  App state
-  initialized: boolean = false;
+  gameDataLoaded: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   showError: boolean = false;
   boardState: BoardState;
   session: Session;
+  shareLink: string = "";
+  gameOver: boolean = false;
 
   constructor(
-    private dictionaryService: DictionaryService,
-    private sessionService: SessionService,
+    dictionaryService: DictionaryService,
+    sessionService: SessionService,
     private boardStateService: BoardStateService,
     public dialog: MatDialog,
     private snackBar: MatSnackBar,
@@ -50,30 +53,29 @@ export class AppComponent {
     private bottomSheet: MatBottomSheet
   ) {
     this.setSiteTags();
-  }
 
-  ngOnInit(): void {
-    this.dictionaryService.initialized.subscribe(dictionaryReady => {
-      if (!dictionaryReady) return;
+    this.activatedRoute.queryParamMap.subscribe(params => {
+      this.shareLink = params.get(ShareParameter) || "";
+    });
 
-      this.sessionService.session.subscribe(session => {
-        if (!session) return;
+    combineLatest([dictionaryService.initialized, sessionService.session]).subscribe(data => {
+      let dictionaryInitialized = data[0];
+      let session = data[1];
+      let gameDataLoaded: boolean = this.gameDataLoaded.value;
 
-        this.session = session;
+      if (!dictionaryInitialized) return;
+      if (!session) return;
 
-        this.darkMode = session.options.darkMode;
+      this.session = session;
 
-        this.className = this.darkMode ? DarkModeClassName : "";
+      this.darkMode = session.options.darkMode;
 
-        if (this.initialized) return;
+      this.className = this.darkMode ? DarkModeClassName : "";
 
-        this.initialized = true;
-
-        this.activatedRoute.queryParamMap.subscribe(params => {
-          let shareLink = params.get(ShareParameter);
-          this.startGame(shareLink);
-        });
-      })
+      //  Only want to set this once as it will trigger the game to start
+      if (!gameDataLoaded) {
+        this.gameDataLoaded.next(true);
+      }
     });
 
     this.boardStateService.boardState.subscribe(boardState => {
@@ -81,36 +83,49 @@ export class AppComponent {
 
       this.boardState = boardState;
 
-      if (this.isGameOver()) {
+      this.gameOver = this.boardState.gameStatus !== GameStatus.Active;
+
+      if (this.gameOver) {
         this.openResultsDialog();
       }
 
       if (boardState.error.length > 0) {
         this.showErrorMessage(boardState.error);
       }
-    })
+    });
   }
 
-  private startGame(shareLink: string | null): void {
+  ngOnInit(): void {
+    this.gameDataLoaded.subscribe(init => {
+      if (!init) return;
+
+      this.startGame();
+    });
+  }
+
+  startGame(): void {
+    let shareLink = this.shareLink;
+    
     if (!shareLink || shareLink.length === 0) {
       this.boardStateService.initialize();
     } else {
-      try {
-        let secret: string = atob(shareLink);
-        this.boardStateService.startSharedGame(secret);
-      } catch(ex) {
-        //  Possibly mutated or incorrect format
-        this.showErrorMessage("Invalid share link");
-        this.boardStateService.initialize();
-      } finally {
-        //  Clear the URL parameter
-        window.history.pushState({}, document.title, "/");
-      }
+      this.startSharedGame();
     }
   }
 
-  isGameOver(): boolean {
-    return this.boardState.gameStatus !== GameStatus.Active;
+  startSharedGame(): void {
+    try {
+      let secret: string = atob(this.shareLink);
+      this.boardStateService.startSharedGame(secret);
+    } catch (ex) {
+      //  Possibly mutated or incorrect format
+      console.log(ex);
+      this.showErrorMessage("Invalid share link");
+      this.boardStateService.initialize();
+    } finally {
+      //  Clear the URL parameter
+      window.history.pushState({}, document.title, "/");
+    }
   }
 
   private setSiteTags(): void {
@@ -168,11 +183,6 @@ export class AppComponent {
   concede(): void {
     this.optionSideNav.toggle();
     this.boardStateService.concede();
-  }
-
-  viewResults(): void {
-    this.optionSideNav.toggle();
-    this.openResultsDialog();
   }
 
   openResultsDialog(): void {

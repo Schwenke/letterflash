@@ -13,12 +13,14 @@ export class StatsComponent implements OnInit {
 
   constructor(
     private sessionService: SessionService
-    ) { }
+    ) { 
+      this.sessionService.session.subscribe(session => {
+        this.stats = session.stats;
+      });
+    }
 
   ngOnInit(): void {
-    this.sessionService.session.subscribe(session => {
-      this.stats = session.stats;
-    })
+
   }
 
   getGamesPlayed(): string {

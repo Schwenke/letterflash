@@ -1,5 +1,9 @@
 <div class="container">
     <div class="about-header">
+        <p class="about-text-item">
+            Time spent: {{gameTime}}
+        </p>
+
         <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button"
             (click)="closePanel()">
             <mat-icon class="icon" aria-hidden="true">clear</mat-icon>
@@ -14,9 +18,8 @@
     <div class="about-row">
         <p class="about-text-item">Author: Ben Schwenke</p>
         <p class="about-text-item">Think a word is missing? Verify it is in the <a role="link" class="about-link"
-                target="_blank" rel="noopener noreferrer" href="https://www.merriam-webster.com/">Merriam-Webster
-                dictionary</a> and contact me!</p>
-        <p class="about-text-item">Recently added words: FUTON, OUIJA, GLUTE, SPORK, WIMPS</p>
+            target="_blank" rel="noopener noreferrer" href="https://www.merriam-webster.com/">Merriam-Webster
+            dictionary</a> and contact me!</p>
     </div>
 
     <div class="about-row">

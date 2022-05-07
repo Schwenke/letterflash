@@ -35,12 +35,12 @@
 
 .error-snackbar {
     background-color: black;
-    color: mat.get-color-from-palette($warn, 'default');
+    color: white;
 }
 
 .error-snackbar--dark {
     background-color: white;
-    color: mat.get-color-from-palette($warn, 'A700');
+    color: black;
 }
 
 html, body { 

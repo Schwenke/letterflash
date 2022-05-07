@@ -1,6 +1,6 @@
-<mat-progress-spinner class="spinner" *ngIf="!initialized" mode="indeterminate"></mat-progress-spinner>
+<mat-progress-spinner class="spinner" *ngIf="!gameDataLoaded" mode="indeterminate"></mat-progress-spinner>
 
-<mat-sidenav-container class="app-container" *ngIf="initialized">
+<mat-sidenav-container class="app-container" *ngIf="gameDataLoaded | async">
 
     <!-- FAQ left side nav -->
     <mat-sidenav role="region" class="sidenav" autoFocus="false" #faq>
@@ -10,12 +10,14 @@
     <!-- Options right side nav -->
     <mat-sidenav role="region" class="sidenav" autoFocus="false" #options position="end">
         <app-options (newGameClicked)="startNewGame()" (viewHistoryClicked)="viewHistory()"
-            (viewStatsClicked)="viewStats()" (closeButtonClicked)="options.toggle()" (concedeClicked)="concede()"
-            (viewResultsClicked)="viewResults()"></app-options>
+            (viewStatsClicked)="viewStats()" (closeButtonClicked)="options.toggle()" (concedeClicked)="concede()">
+        </app-options>
     </mat-sidenav>
 
     <!-- Main body -->
     <mat-sidenav-content class="game" role="main">
+
+        <!-- Header -->
         <div class="game-header" role="banner">
             <!-- DEBUG -->
             <!-- Secret: {{session.secret}} -->
@@ -24,9 +26,9 @@
                 <mat-icon class="icon-button" (click)="openAbout()" aria-label="About">info_outline</mat-icon>
             </div>
 
-            <h1 *ngIf="showGame && !isGameOver()" aria-label="Letter Flash" class="game-title">Letter Flash</h1>
+            <h1 *ngIf="showGame && !gameOver" aria-label="Letter Flash" class="game-title">Letter Flash</h1>
 
-            <button mat-raised-button role="button" color="accent" *ngIf="isGameOver() && !(showHistory || showStats)"
+            <button mat-raised-button role="button" color="accent" *ngIf="gameOver && !(showHistory || showStats)"
                 (click)="openResultsDialog()">View results</button>
 
             <button mat-raised-button role="button" color="accent" *ngIf="showHistory || showStats"
@@ -37,12 +39,16 @@
             </div>
         </div>
 
+        <!-- History view -->
         <app-history [ngClass]="{'hidden': !showHistory}" class="history-board"></app-history>
 
+        <!-- Statistics view -->
         <app-stats [ngClass]="{'hidden': !showStats}" class="stats-board"></app-stats>
 
+        <!-- Game board view -->
         <app-game-board [ngClass]="{'hidden': !showGame, 'shake': showError}" class="game-board"></app-game-board>
 
+        <!-- Keyboard -->
         <app-keyboard [ngClass]="{'hidden': !showGame}" class="game-keyboard"></app-keyboard>
 
     </mat-sidenav-content>

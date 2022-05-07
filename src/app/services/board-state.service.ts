@@ -93,6 +93,8 @@ export class BoardStateService {
       if (gameIsActive && !document.hidden) {
         ++this.session.time;
 
+        this.sessionService.session.next(this.session);
+
         //  Auto-update the session every 30 seconds
         if (this.session.time % 30 === 0) {
           this.sessionService.save();
@@ -205,10 +207,6 @@ export class BoardStateService {
     return boardState.rowIndex >= MaxGuesses;
   }
 
-  /**
-   * Stops the timer, sets the new game status, and pushes the observable
-   * @param boardState 
-   */
   private endCurrentGame(gameStatus: GameStatus): void {
     let boardState: BoardState = this.boardState.value;
 
@@ -222,7 +220,7 @@ export class BoardStateService {
   public removeInput(): void {
     let boardState: BoardState = this.boardState.value;
 
-    //  Cannot remove input - already at the first column
+    //  First column, can't remove further
     if (boardState.columnIndex === -1) return;
 
     let word = this.getCurrentWord(boardState);
@@ -242,7 +240,7 @@ export class BoardStateService {
 
     let maxColumnIndex = this.wordLength - 1;
 
-    //  Can't append any more characters - word is at max length
+    //  Last column, can't append any more
     if (boardState.columnIndex === maxColumnIndex) return;
 
     //  Only let users enter alphabetical characters a-Z
@@ -284,8 +282,7 @@ export class BoardStateService {
     let timeOut: number = 100;
 
     //  Give enough time for the pending animation to finish before attempting to commit, which can trigger another animation
-    //  If the animations collide, then the flip never plays and causes some weirdness to happen with the pending
-
+    //  If the animations collide, then the flip never plays or other strange behaviors happen
     window.setTimeout(() => {
       this.processGuess();
     }, timeOut);
@@ -300,8 +297,8 @@ export class BoardStateService {
 
     this.boardState.next(boardState);
 
+    //  User entered an invalid guess - don't process further
     if (boardState.error.length > 0) {
-      //  User input error - don't process further
       return;
     }
 
@@ -346,7 +343,7 @@ export class BoardStateService {
 
     //  Next, look for partial matches - correct letter in the incorrect position
     //  The loops are done separately so we do not accidentally mark a word with multiples of the same correct clue twice - E.g. Secret word "HUMAN" and guess "AVIAN"
-    //  Specifically ignore letters marked as perfect so we do not overwrite perfect status - can happen e.g. in 7 word mode when secret is FEDERAL and guess is FELLOWS
+    //  Specifically ignore letters marked as perfect so we do not overwrite perfect status - can happen when secret is FEDERAL and guess is FELLOWS
     for (let i = 0; i < guess.length; i++) {
       let guessLetter = guess[i];
       let boardStateLetter = boardState.words[boardState.rowIndex].letters[i];
@@ -371,7 +368,7 @@ export class BoardStateService {
   }
 
   private validate(guess: string): string {
-    //  If they won the game, save performance by returning early
+    //  Exit early if they won
     if (guess === this.session.secret) return "";
 
     if (!guess || guess.trim() === "") {
@@ -459,6 +456,4 @@ export class BoardStateService {
   private resetTimer(): void {
     this.session.time = 0;
   }
-
-
 }

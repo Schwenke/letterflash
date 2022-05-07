@@ -1,8 +1,10 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Options } from 'src/app/models/options.interface';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { SessionService } from 'src/app/services/session.service';
-import { GameStatus } from 'src/app/models/board-state.interface';
+import { BoardState, GameStatus } from 'src/app/models/board-state.interface';
+import { combineLatest } from 'rxjs';
+import { Session } from 'src/app/models/session.interface';
+import { Options } from 'src/app/models/options.interface';
 
 @Component({
   selector: 'app-options',
@@ -18,23 +20,23 @@ export class OptionsComponent implements OnInit {
   @Output() closeButtonClicked = new EventEmitter<boolean>();
 
   options: Options = {} as Options;
-  gameOver: boolean = false;
+  disableConcede: boolean = false;
 
   constructor(
-    private boardStateService: BoardStateService,
+    boardStateService: BoardStateService,
     private sessionService: SessionService
-  ) { }
+  ) { 
+    combineLatest([sessionService.session, boardStateService.boardState]).subscribe(data => {
+      let session: Session = data[0];
+      let boardState: BoardState = data[1];
+
+      this.options = session.options;
+      this.disableConcede = (boardState.gameStatus !== GameStatus.Active || session.guesses.length === 0)
+    });
+  }
 
   ngOnInit(): void {
-    this.sessionService.session.subscribe(session => {
-      if (!session) return;
-      
-      this.options = session.options;
-    });
 
-    this.boardStateService.boardState.subscribe(boardState => {
-      this.gameOver = boardState.gameStatus !== GameStatus.Active;
-    });
   }
 
   closePanel(): void {

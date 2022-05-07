@@ -27,3 +27,9 @@ export const BaseURL = "https://www.letterflash.com/"
 export const SiteName = "Letter Flash";
 export const ShareParameter = "share";
 export const DarkModeClassName = "darkMode";
+
+//  Dictionary asset URLs
+export const FullDictionaryURL = "assets/dictionary.json"
+export const FiveLetterDictionaryURL = "assets/five-letter-words.json";
+export const SixLetterDictionaryURL = "assets/six-letter-words.json";
+export const SevenLetterDictionaryURL = "assets/seven-letter-words.json";

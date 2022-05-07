@@ -1,4 +1,5 @@
 import { Component, HostListener, OnInit } from '@angular/core';
+import { combineLatest } from 'rxjs';
 import { BACKSPACE, ENTER } from 'src/app/constants';
 import { BoardState, GameStatus } from 'src/app/models/board-state.interface';
 import { Key, Keyboard } from 'src/app/models/keyboard.interface';
@@ -24,29 +25,23 @@ export class KeyboardComponent implements OnInit {
   options: Options;
 
   constructor(
-    private keyboardService: KeyboardService,
+    keyboardService: KeyboardService,
     private boardStateService: BoardStateService,
-    private sessionService: SessionService
-  ) { }
+    sessionService: SessionService
+  ) { 
+    combineLatest([keyboardService.keyboard, boardStateService.boardState, sessionService.session]).subscribe(data => {
+      let keyboard = data[0];
+      let boardState = data[1];
+      let session = data[2];
 
-  ngOnInit(): void {
-    this.keyboardService.keyboard.subscribe(keyboard => {
-      if (!keyboard) return;
-      
       this.keyboard = keyboard;
-    });
-
-    this.boardStateService.boardState.subscribe(boardState => {
-      if (!boardState) return;
-
       this.boardState = boardState;
-    });
-
-    this.sessionService.session.subscribe(session => {
-      if (!session) return;
-
       this.options = session.options;
     });
+  }
+
+  ngOnInit(): void {
+
   }
 
   @HostListener('window:keydown', ['$event'])
