@@ -20,7 +20,7 @@
     </div>
 
     <div class="options-row">
-        <mat-slide-toggle matTooltipPosition="right" (change)="storeOptions()"
+        <mat-slide-toggle matTooltipPosition="right" (change)="storeOptions()" [disabled]="!disableConcede"
             matTooltip="Guesses must include all previous clues" class="toggle" aria-label="Hard mode"
             [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
         <label class="options-check" *ngIf="options.hardMode">✔</label>

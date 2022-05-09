@@ -31,7 +31,7 @@ export class OptionsComponent implements OnInit {
       let boardState: BoardState = data[1];
 
       this.options = session.options;
-      this.disableConcede = (boardState.gameStatus !== GameStatus.Active || session.guesses.length === 0)
+      this.disableConcede = (boardState.gameStatus !== GameStatus.Active || session.guesses.length === 0);
     });
   }
 

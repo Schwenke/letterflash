@@ -203,9 +203,7 @@ export class AppComponent {
 
     this.showError = true;
 
-    let snackbarBodyClass: string = this.darkMode ? "error-snackbar--dark" : "error-snackbar";
-
-    this.snackBar.open(errorMessage, "Dismiss", { panelClass: snackbarBodyClass, verticalPosition: "top", horizontalPosition: "center", duration: 2500 });
+    this.snackBar.open(errorMessage, "", { panelClass: "error-snackbar", verticalPosition: "top", horizontalPosition: "center", duration: 2000 });
 
     //  Give animation time to play and finish
     setTimeout(() => {

@@ -43,7 +43,7 @@ export class BoardStateService {
 
   public startNewGame(): void {
     this.reset();
-    //  If a user starts a new game, clear out existing session secret and guesses
+    //  Overwrite the previous session
     this.updateSession();
   }
 
@@ -71,7 +71,7 @@ export class BoardStateService {
 
     this.resetBoard();
 
-    //  Obliterate old session
+    //  Overwrite the previous session
     this.updateSession();
 
     this.resetTimer();
@@ -81,24 +81,27 @@ export class BoardStateService {
 
   /**
    * Starts the game timer (used for results, stats, history)
-   * Runs while game is active and auto updates session every 60s to track time between refreshes
+   * Auto-updates the session every 30 seconds while game is active
    */
   private startTimer(): void {
     timer(0, 1000).subscribe(ellapsedCycles => {
+      //  Game is not the active browser tab
+      if (document.hidden) return;
+      //  No guesses made so far
+      if (this.session.guesses.length === 0) return;
+
       let boardState: BoardState = this.boardState.value;
 
-      let gameIsActive: boolean = boardState.gameStatus === GameStatus.Active && this.session.guesses.length > 0;
+      //  Game is over
+      if (boardState.gameStatus !== GameStatus.Active) return;
 
-      //  Tick every second while game is active and game is set as the active tab in browser
-      if (gameIsActive && !document.hidden) {
-        ++this.session.time;
+      ++this.session.time;
 
-        this.sessionService.session.next(this.session);
+      this.sessionService.session.next(this.session);
 
-        //  Auto-update the session every 30 seconds
-        if (this.session.time % 30 === 0) {
-          this.sessionService.save();
-        }
+      //  Auto-update the session every 30 seconds
+      if (this.session.time % 30 === 0) {
+        this.sessionService.save();
       }
     });
   }
@@ -371,77 +374,115 @@ export class BoardStateService {
     //  Exit early if they won
     if (guess === this.session.secret) return "";
 
-    if (!guess || guess.trim() === "") {
-      return "Please enter a word";
-    }
+    let validGuessLength = this.validateGuessLength(guess);
 
-    let wordLength = this.wordLength;
-
-    if (guess.length !== wordLength) {
-      return `Word length must be ${wordLength}`;
+    if (!validGuessLength) {
+      return `Not enough letters`;
     }
 
     if (this.guessedPreviously(guess)) {
-      return "Word has already been used";
+      return "Already guessed";
     }
 
-    if (!this.validateHardMode(guess)) {
-      return "Word must use all previous clues";
+    let errorMessage = this.validateHardMode(guess);
+
+    if (errorMessage.length > 0) {
+      return errorMessage;
     }
 
     if (!this.dictionaryService.hasWord(guess)) {
-      return "Word not found in dictionary";
+      return "Not in dictionary";
     }
 
     return "";
   }
 
-  private validateHardMode(guess: string): boolean {
+  private validateGuessLength(guess: string): boolean {
+
+    if (!guess) return false;
+    if (guess.trim() === "") return false;
+    if (guess.length !== this.wordLength) return false;
+
+    return true;
+  }
+
+  private validateHardMode(guess: string): string {
     //  not enabled
-    if (!this.session.options.hardMode) return true;
+    if (!this.session.options.hardMode) return "";
 
-    let correctlyGuessedLetters = this.getCorrectlyGuessedLetters();
+    let boardState: BoardState = this.boardState.value;
 
-    // no correct guesses so far
-    if (correctlyGuessedLetters.length === 0) return true;
+    //  No previous guesses
+    if (boardState.rowIndex === 0) return "";
 
-    for (let i = 0; i < correctlyGuessedLetters.length; i++) {
-      let letter = correctlyGuessedLetters[i];
-      let index = guess.indexOf(letter);
+    let previousWord = boardState.words[boardState.rowIndex - 1];
+    let partialClues = [];
 
-      if (index === -1) {
-        //  the guess doesn't contain the letter
-        return false;
+    for (let i = 0; i < previousWord.letters.length; i++) {
+      let letter = previousWord.letters[i];
+
+      if (letter.perfect) {
+        let guessLetter = guess[i];
+
+        if (guessLetter !== letter.value) {
+          let ordinalPosition = this.translateIndex(i);
+          return `${ordinalPosition} letter must be ${letter.value}`;
+        }
+      }
+
+      if (letter.partial) {
+        partialClues.push(letter.value);
       }
     }
 
-    return true;
+    for (let i = 0; i < guess.length; i++) {
+      let letter = guess[i];
+      let clueIndex = partialClues.indexOf(letter);
+
+      if (clueIndex > -1) {
+        partialClues.splice(clueIndex, 1);
+      }
+    }
+
+    if (partialClues.length === 1) {
+      return `Letter ${partialClues[0]} missing from guess`;
+    }
+
+    if (partialClues.length > 1) {
+      return `Letters ${partialClues.join(", ")} missing from guess`;
+    }
+
+    return "";
+  }
+
+  /**
+   * Translates the given index into an ordinal
+   * @param index 
+   * @returns 
+   */
+  private translateIndex(index: number): string {
+    switch (index) {
+      case 1:
+        return "Second";
+      case 2:
+        return "Third";
+      case 3:
+        return "Fourth";
+      case 4:
+        return "Fifth";
+      case 5:
+        return "Sixth";
+      case 6:
+        return "Seventh";
+      default:
+        return "First";
+    }
   }
 
   private guessedPreviously(guess: string): boolean {
     let previousGuesses: string[] = this.session.guesses;
 
     return previousGuesses.includes(guess);
-  }
-
-  private getCorrectlyGuessedLetters(): string[] {
-    let boardState: BoardState = this.boardState.value;
-
-    let correctGuesses: string[] = [];
-
-    for (let i = 0; i < boardState.rowIndex; i++) {
-      let row = boardState.words[i];
-
-      for (let k = 0; k < row.letters.length; k++) {
-        let letter = row.letters[k];
-
-        if (letter.perfect || letter.partial) {
-          correctGuesses.push(letter.value);
-        }
-      }
-    }
-
-    return correctGuesses;
   }
 
   /** MISC */

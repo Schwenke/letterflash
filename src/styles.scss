@@ -28,20 +28,15 @@
 
 .mat-simple-snackbar {
     font-size: large;
-    font-weight: 400;
+    font-weight: 500;
 }
 
-/* -- Material component overrides */
-
 .error-snackbar {
-    background-color: black;
+    background-color: mat.get-color-from-palette($warn, 'A700');
     color: white;
 }
 
-.error-snackbar--dark {
-    background-color: white;
-    color: black;
-}
+/* -- Material component overrides */
 
 html, body { 
     height: 100%; 
