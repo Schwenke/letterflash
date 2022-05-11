@@ -38,11 +38,10 @@ export class AppComponent {
   showError: boolean = false;
   boardState: BoardState;
   session: Session;
-  shareLink: string = "";
   gameOver: boolean = false;
 
   constructor(
-    dictionaryService: DictionaryService,
+    private dictionaryService: DictionaryService,
     sessionService: SessionService,
     private boardStateService: BoardStateService,
     public dialog: MatDialog,
@@ -54,16 +53,10 @@ export class AppComponent {
   ) {
     this.setSiteTags();
 
-    this.activatedRoute.queryParamMap.subscribe(params => {
-      this.shareLink = params.get(ShareParameter) || "";
-    });
-
-    combineLatest([dictionaryService.initialized, sessionService.session]).subscribe(data => {
-      let dictionaryInitialized = data[0];
-      let session = data[1];
+    combineLatest([dictionaryService.initialized, sessionService.session]).subscribe(([dictionaryInit, session]) => {
       let gameDataLoaded: boolean = this.gameDataLoaded.value;
 
-      if (!dictionaryInitialized) return;
+      if (!dictionaryInit) return;
       if (!session) return;
 
       this.session = session;
@@ -99,32 +92,41 @@ export class AppComponent {
     this.gameDataLoaded.subscribe(init => {
       if (!init) return;
 
-      this.startGame();
+      //  Check for a share link
+      this.activatedRoute.queryParamMap.subscribe(params => {
+        let shareLink = params.get(ShareParameter) || "";
+
+        if (shareLink.length === 0) {
+          //  Start a normal game
+          this.boardStateService.initialize();
+        } else {
+          this.startSharedGame(shareLink);
+        }
+
+        //  Clear the URL parameter
+        window.history.pushState({}, document.title, "/");
+      });
     });
   }
 
-  startGame(): void {
-    let shareLink = this.shareLink;
-    
-    if (!shareLink || shareLink.length === 0) {
-      this.boardStateService.initialize();
-    } else {
-      this.startSharedGame();
-    }
-  }
+  startSharedGame(shareLink: string): void {
+    let secret: string = "";
 
-  startSharedGame(): void {
+    //  Malformed links may cause a browser exception when decoding
     try {
-      let secret: string = atob(this.shareLink);
+      secret = atob(shareLink);
+    } catch(ex) {
+      console.error(ex);
+    }
+
+    let secretValid: boolean = secret.length > 0 && this.dictionaryService.hasWord(secret);
+
+    if (secretValid) {
       this.boardStateService.startSharedGame(secret);
-    } catch (ex) {
-      //  Possibly mutated or incorrect format
-      console.log(ex);
+    } else {
+      console.warn("Share link copied incorrectly or word not found in dictionary. Previous session will be loaded instead.");
       this.showErrorMessage("Invalid share link");
       this.boardStateService.initialize();
-    } finally {
-      //  Clear the URL parameter
-      window.history.pushState({}, document.title, "/");
     }
   }
 
@@ -136,15 +138,15 @@ export class AppComponent {
     this.metaService.addTag({ charset: "utf-8" });
 
     //  Misc
-    this.metaService.addTag({ name: "description", content: "An open source word puzzle game you can share with friends" });
+    this.metaService.addTag({ name: "description", content: "A free, open source word puzzle game you can share with friends" });
     this.metaService.addTag({ name: "viewport", content: "webswidth=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0ite" });
     this.metaService.addTag({ name: "author", content: "Ben Schwenke" });
-    this.metaService.addTag({ name: "twitter:card", content: "summary_large_image" });
+    this.metaService.addTag({ name: "twitter:card", content: "summary" });
 
     //  OpenGraph
     this.metaService.addTag({ property: "og:type", content: "website" });
     this.metaService.addTag({ property: "og:title", content: SiteName });
-    this.metaService.addTag({ property: "og:description", content: "An open source word puzzle game you can share with friends" });
+    this.metaService.addTag({ property: "og:description", content: "A free, open source word puzzle game you can share with friends" });
     this.metaService.addTag({ property: "og:url", content: BaseURL });
     this.metaService.addTag({ property: "og:image", content: "https://i.imgur.com/P5hzOI8.png" });
   }

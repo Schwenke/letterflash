@@ -30,10 +30,7 @@ export class ResultsDialogComponent implements OnInit {
     private sessionService: SessionService,
     public dialogRef: MatDialogRef<ResultsDialogComponent>
   ) { 
-    combineLatest([boardStateService.boardState, sessionService.session]).subscribe(data => {
-      let boardState = data[0];
-      let session = data[1];
-
+    combineLatest([boardStateService.boardState, sessionService.session]).subscribe(([boardState, session]) => {
       this.boardState = boardState;
       this.session = session;
       this.timeSpent = this.sessionService.formatClockTime(session.time);

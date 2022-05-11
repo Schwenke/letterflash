@@ -26,10 +26,7 @@ export class OptionsComponent implements OnInit {
     boardStateService: BoardStateService,
     private sessionService: SessionService
   ) { 
-    combineLatest([sessionService.session, boardStateService.boardState]).subscribe(data => {
-      let session: Session = data[0];
-      let boardState: BoardState = data[1];
-
+    combineLatest([sessionService.session, boardStateService.boardState]).subscribe(([session, boardState]) => {
       this.options = session.options;
       this.disableConcede = (boardState.gameStatus !== GameStatus.Active || session.guesses.length === 0);
     });

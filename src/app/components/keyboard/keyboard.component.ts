@@ -29,11 +29,7 @@ export class KeyboardComponent implements OnInit {
     private boardStateService: BoardStateService,
     sessionService: SessionService
   ) { 
-    combineLatest([keyboardService.keyboard, boardStateService.boardState, sessionService.session]).subscribe(data => {
-      let keyboard = data[0];
-      let boardState = data[1];
-      let session = data[2];
-
+    combineLatest([keyboardService.keyboard, boardStateService.boardState, sessionService.session]).subscribe(([keyboard, boardState, session]) => {
       this.keyboard = keyboard;
       this.boardState = boardState;
       this.options = session.options;

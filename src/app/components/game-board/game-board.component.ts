@@ -19,10 +19,7 @@ export class GameBoardComponent implements OnInit {
     boardStateService: BoardStateService,
     sessionService: SessionService
   ) {
-    combineLatest([boardStateService.boardState, sessionService.session]).subscribe(data => {
-      let boardState = data[0];
-      let session = data[1];
-
+    combineLatest([boardStateService.boardState, sessionService.session]).subscribe(([boardState, session]) => {
       this.boardState = boardState;
       this.options = session.options;
     });
