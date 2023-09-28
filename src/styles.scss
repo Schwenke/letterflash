@@ -10,14 +10,14 @@
 //  If you specify typography styles for the components you use elsewhere, you should delete this line.
 //  If you don't need the default component typographies but still want the hierarchy styles,
 //  you can delete this line and instead use:
-//    `@include mat.legacy-typography-hierarchy(mat.define-legacy-typography-config());`
-@include mat.all-legacy-component-typographies();
-@include mat.legacy-core();
+//    `@include mat.legacy-typography-hierarchy(mat.define-typography-config());`
+@include mat.all-component-typographies();
+@include mat.core();
 
-@include mat.all-legacy-component-themes($light-theme);
+@include mat.all-component-themes($light-theme);
 
 .darkMode {
-    @include mat.all-legacy-component-colors($dark-theme);
+    @include mat.all-component-colors($dark-theme);
 }
 
 .darkMode .mat-drawer-backdrop.mat-drawer-shown {
@@ -26,16 +26,16 @@
 
 /* Material component overrides -- */
 
-.mat-paginator-container {
+.mat-mdc-paginator-container {
     min-height: 45px;
 }
 
-.mat-paginator-range-label {
+.mat-mdc-paginator-range-label {
     width: 120px;
     margin-right: 24px !important;
 }
 
-.mat-simple-snackbar {
+.mat-mdc-simple-snack-bar {
     font-size: large;
     font-weight: 500;
 }
@@ -61,11 +61,11 @@ body {
   }
 
 @media only screen and (max-width: 450px) {
-    .mat-simple-snackbar {
+    .mat-mdc-simple-snack-bar {
         font-size: medium;
     }
 
-    .mat-paginator-range-label {
+    .mat-mdc-paginator-range-label {
         width: 100px;
     }
 }
