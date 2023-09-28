@@ -3,9 +3,9 @@ import { BoardState, GameStatus } from './models/board-state.interface';
 import { BoardStateService } from './services/board-state.service';
 import { DictionaryService } from './services/dictionary.service';
 import { SessionService } from './services/session.service';
-import { MatDialog } from '@angular/material/dialog';
+import { MatLegacyDialog as MatDialog } from '@angular/material/legacy-dialog';
 import { ResultsDialogComponent } from './components/results-dialog/results-dialog.component'
-import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatLegacySnackBar as MatSnackBar } from '@angular/material/legacy-snack-bar';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Session } from './models/session.interface';
 import { ActivatedRoute } from '@angular/router';
