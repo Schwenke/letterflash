@@ -6,6 +6,7 @@
         transform: scale(1.4);
         opacity: .4;
     }
+
     to {
         transform: scale(1.0);
         opacity: 1;
@@ -45,31 +46,31 @@
     justify-content: center;
     align-items: center;
     font-weight: 700;
-    
+
     &-empty {
         @extend .letter;
-        border: 2px solid #d3d6da;
+        border: 2px solid var(--lf-unused-light);
 
         &.darkMode {
-            border: 2px solid mat.get-color-from-palette($primary, 'darker');
+            border: 2px solid mat-color($primary, 'darker');
         }
     }
 
     &-pending {
         @extend .letter;
         @extend .letter-pop;
-        border: 2px solid mat.get-color-from-palette($primary, 'darker');
+        border: 2px solid mat-color($primary, 'darker');
 
         &.darkMode {
-            border: 2px solid mat.get-color-from-palette($primary, 'default');
+            border: 2px solid mat-color($primary, 'default');
         }
     }
 
     &-miss {
         @extend .letter;
         @extend .letter-flash;
-        background-color: mat.get-color-from-palette($primary, 'darker');
-        border: 2px solid mat.get-color-from-palette($primary, 'darker');
+        background-color: var(--lf-used-light);
+        border: 2px solid var(--lf-used-light);
 
         &.darkMode {
             background-color: #4b4b4e;
@@ -80,15 +81,15 @@
     &-perfect {
         @extend .letter;
         @extend .letter-flash;
-        background-color: mat.get-color-from-palette($perfect, 'default');
-        border: 2px solid mat.get-color-from-palette($perfect, 'default');
+        background-color: mat-color($perfect, 'default');
+        border: 2px solid mat-color($perfect, 'default');
     }
-    
+
     &-partial {
         @extend .letter;
         @extend .letter-flash;
-        background-color: mat.get-color-from-palette($partial, 'default');
-        border: 2px solid mat.get-color-from-palette($partial, 'default');
+        background-color: mat-color($partial, 'default');
+        border: 2px solid mat-color($partial, 'default');
     }
 }
 
@@ -101,8 +102,8 @@
     animation: flash .8s linear;
 
     @for $i from 1 through 7 {
-        &:nth-child(#{$i}) { 
-          animation-delay: (0.05s * $i);
+        &:nth-child(#{$i}) {
+            animation-delay: (0.05s * $i);
         }
-     }
+    }
 }

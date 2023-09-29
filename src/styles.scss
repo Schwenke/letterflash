@@ -16,6 +16,14 @@
 
 @include mat.all-component-themes($light-theme);
 
+:root {
+    // Color constants
+    --lf-unused-light: #d3d6da;
+    --lf-unused-dark: #818384;
+    --lf-used-light: #787c7e;
+    --lf-used-dark: #424242;
+}
+
 .darkMode {
     @include mat.all-component-colors($dark-theme);
 }

@@ -35,32 +35,32 @@
 
     &--unused {
         @extend .key;
-        background-color: #BDBDBD;
+        background-color: var(--lf-unused-light) !important;
 
         &.darkMode {
-            background-color: #818384;
+            background-color: var(--lf-unused-dark) !important;
         }
     }
 
     &--used {
         @extend .key;
-        color: white;
-        background-color: #616161;
+        color: white !important;
+        background-color: var(--lf-used-light) !important;
 
         &.darkMode {
-            background-color: #424242;
+            background-color: var(--lf-used-dark) !important;
         }
     }
 
     &--partial {
         @extend .key;
-        color: white;
-        background-color: mat.get-color-from-palette($partial, 'default');
+        color: white !important;
+        background-color: mat.get-color-from-palette($partial, 'default') !important;
     }
 
     &--perfect {
         @extend .key;
-        color: white;
-        background-color: mat.get-color-from-palette($perfect, 'default');
+        color: white !important;
+        background-color: mat.get-color-from-palette($perfect, 'default') !important;
     }
 }
