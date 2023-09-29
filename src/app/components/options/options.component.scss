@@ -42,7 +42,7 @@
     font-size: large;
 }
 
-.mat-button-toggle-checked {
+.mat-button-toggle-appearance-standard.mat-button-toggle-checked {
     background-color: mat-color($accent);
     color: mat-color($accent, default-contrast);
 }

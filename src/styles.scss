@@ -51,7 +51,7 @@
 }
 
 .mdc-form-field {
-    font-size: large;
+    --mat-slide-toggle-label-text-size: large;
 }
 
 /* -- Material component overrides */
@@ -83,6 +83,6 @@ body {
     }
 
     .mdc-form-field {
-        font-size: medium;
+        --mat-slide-toggle-label-text-size: medium;
     }
 }
