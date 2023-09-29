@@ -115,7 +115,7 @@ export class AppComponent {
     //  Malformed links may cause a browser exception when decoding
     try {
       secret = atob(shareLink);
-    } catch(ex) {
+    } catch (ex) {
       console.error(ex);
     }
 
@@ -205,7 +205,7 @@ export class AppComponent {
 
     this.showError = true;
 
-    this.snackBar.open(errorMessage, "", { panelClass: "error-snackbar", verticalPosition: "top", horizontalPosition: "center", duration: 2000 });
+    this.snackBar.open(errorMessage, "", { panelClass: ['error-snackbar'], verticalPosition: "top", horizontalPosition: "center", duration: 2000 });
 
     //  Give animation time to play and finish
     setTimeout(() => {

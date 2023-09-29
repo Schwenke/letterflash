@@ -28,11 +28,11 @@
 
             <h1 *ngIf="showGame && !gameOver" aria-label="Letter Flash" class="game-title">Letter Flash</h1>
 
-            <button mat-raised-button role="button" color="accent" *ngIf="gameOver && !(showHistory || showStats)"
+            <button mat-raised-button color="accent" *ngIf="gameOver && !(showHistory || showStats)"
                 (click)="openResultsDialog()">View results</button>
 
-            <button mat-raised-button role="button" color="accent" *ngIf="showHistory || showStats"
-                (click)="viewGame()">Return to game</button>
+            <button mat-raised-button color="accent" *ngIf="showHistory || showStats" (click)="viewGame()">Return to
+                game</button>
 
             <div class="settings-icon-container">
                 <mat-icon class="icon-button" (click)="options.toggle()" aria-label="Options">settings</mat-icon>

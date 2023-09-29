@@ -1,9 +1,8 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { BoardStateService } from 'src/app/services/board-state.service';
 import { SessionService } from 'src/app/services/session.service';
-import { BoardState, GameStatus } from 'src/app/models/board-state.interface';
+import { GameStatus } from 'src/app/models/board-state.interface';
 import { combineLatest } from 'rxjs';
-import { Session } from 'src/app/models/session.interface';
 import { Options } from 'src/app/models/options.interface';
 
 @Component({
@@ -25,7 +24,7 @@ export class OptionsComponent implements OnInit {
   constructor(
     boardStateService: BoardStateService,
     private sessionService: SessionService
-  ) { 
+  ) {
     combineLatest([sessionService.session, boardStateService.boardState]).subscribe(([session, boardState]) => {
       this.options = session.options;
       this.disableConcede = (boardState.gameStatus !== GameStatus.Active || session.guesses.length === 0);

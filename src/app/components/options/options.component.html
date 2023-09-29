@@ -1,8 +1,7 @@
 <div class="options-container" aria-labelledby="pageTitle">
     <div class="options-header">
-        <button mat-raised-button aria-label="Close window" role="button" color="accent" class="close-button"
-            (click)="closePanel()">
-            <mat-icon class="icon" aria-hidden="true">clear</mat-icon>
+        <button mat-raised-button aria-label="Close window" color="accent" class="close-button" (click)="closePanel()">
+            Close
         </button>
     </div>
 
@@ -14,40 +13,41 @@
 
     <div class="options-row">
         <mat-slide-toggle matTooltipPosition="right" (change)="storeOptions()"
-            matTooltip="Changes the color theme to a darker one" class="toggle" aria-label="Dark mode"
+            matTooltip="Changes the color theme to a darker one" aria-label="Dark mode"
             [(ngModel)]="options.darkMode">Dark mode</mat-slide-toggle>
-        <label class="options-check" *ngIf="options.darkMode">✔</label>
     </div>
 
     <div class="options-row">
         <mat-slide-toggle matTooltipPosition="right" (change)="storeOptions()" [disabled]="!disableConcede"
-            matTooltip="Guesses must include all previous clues" class="toggle" aria-label="Hard mode"
+            matTooltip="Guesses must include all previous clues" aria-label="Hard mode"
             [(ngModel)]="options.hardMode">Hard mode</mat-slide-toggle>
-        <label class="options-check" *ngIf="options.hardMode">✔</label>
     </div>
 
     <div class="options-row">
         <mat-slide-toggle matTooltipPosition="right" (change)="storeOptions()"
-            matTooltip="Secret can be any word in dictionary" class="toggle" aria-label="Extreme mode"
+            matTooltip="Secret can be any word in dictionary" aria-label="Extreme mode"
             [(ngModel)]="options.extremeMode">Extreme mode</mat-slide-toggle>
-        <label class="options-check" *ngIf="options.extremeMode">✔</label>
     </div>
 
     <div class="options-row">
-        <fieldset class="field-set">
-            <legend class="section-header">Word length</legend>
-            <mat-divider class="divider"></mat-divider>
+        <h1 class="section-header">Word length</h1>
+    </div>
 
-            <mat-radio-group role="radiogroup" class="radio-group" [(ngModel)]="options.wordLength"
-                (change)="storeOptions()" [value]="options.wordLength">
-                <mat-radio-button matTooltip="New games will generate 5 letter words" matTooltipPosition="right"
-                    aria-label="Word length 5" role="radio" class="radio-button" value=5>5</mat-radio-button>
-                <mat-radio-button matTooltip="New games will generate 6 letter words" matTooltipPosition="right"
-                    aria-label="Word length 6" role="radio" class="radio-button" value=6>6</mat-radio-button>
-                <mat-radio-button matTooltip="New games will generate 7 letter words" matTooltipPosition="right"
-                    aria-label="Word length 7" role="radio" class="radio-button" value=7>7</mat-radio-button>
-            </mat-radio-group>
-        </fieldset>
+    <mat-divider class="divider"></mat-divider>
+
+    <div class="options-row">
+        <mat-button-toggle-group class="button-toggle-group" #group="matButtonToggleGroup"
+            [(ngModel)]="options.wordLength" [value]="options.wordLength" (change)="storeOptions()">
+            <mat-button-toggle class="button-toggle" value="5" aria-label="Text align left">
+                5
+            </mat-button-toggle>
+            <mat-button-toggle class="button-toggle" value="6" aria-label="Text align center">
+                6
+            </mat-button-toggle>
+            <mat-button-toggle class="button-toggle" value="7" aria-label="Text align right">
+                7
+            </mat-button-toggle>
+        </mat-button-toggle-group>
     </div>
 
     <div class="options-row">
@@ -59,13 +59,18 @@
     <div class="options-row">
         <div class="button-container">
             <button mat-raised-button matTooltipPosition="right" aria-label="View history"
-                matTooltip="View up to 100 recent games" role="button" class="options-button" color="accent"
-                type="button" (click)="viewHistory()">History <mat-icon class="icon" aria-hidden="true">history
-                </mat-icon></button>
+                matTooltip="View up to 100 recent games" class="options-view-button" color="accent" type="button"
+                (click)="viewHistory()">
+                History
+                <mat-icon class="icon" aria-hidden="true">history</mat-icon>
+            </button>
 
             <button mat-raised-button matTooltipPosition="right" aria-label="View stats"
-                matTooltip="View game statistics" role="button" class="options-button" color="accent" type="button"
-                (click)="viewStats()">Statistics <mat-icon class="icon" aria-hidden="true">equalizer</mat-icon></button>
+                matTooltip="View game statistics" class="options-view-button" color="accent" type="button"
+                (click)="viewStats()">
+                Statistics
+                <mat-icon class="icon" aria-hidden="true">equalizer</mat-icon>
+            </button>
         </div>
     </div>
 
@@ -78,11 +83,11 @@
     <div class="options-row">
         <div class="button-container">
             <button mat-raised-button matTooltipPosition="right" aria-label="New game" matTooltip="Starts a new game"
-                role="button" class="options-button" color="accent" type="button" onclick="this.blur()"
-                (click)="startNewGame()">Start new game</button>
+                class="options-button" color="accent" type="button" onclick="this.blur()" (click)="startNewGame()">Start
+                new game</button>
 
             <button mat-raised-button [disabled]="disableConcede" matTooltipPosition="right" aria-label="Concede"
-                matTooltip="Ends the current game" role="button" class="options-button" color="accent" type="button"
+                matTooltip="Ends the current game" class="options-button" color="accent" type="button"
                 onclick="this.blur()" (click)="concede()">Concede</button>
         </div>
     </div>

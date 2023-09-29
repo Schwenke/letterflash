@@ -35,37 +35,54 @@
     margin-right: 24px !important;
 }
 
-.mat-mdc-simple-snack-bar {
-    font-size: large;
-    font-weight: 500;
+.error-snackbar {
+    background-color: mat-color($warn, 'A700');
+    color: white;
 }
 
-.error-snackbar {
-    background-color: mat.get-color-from-palette($warn, 'A700');
-    color: white;
+.mat-mdc-snack-bar-container {
+    &.error-snackbar {
+        --mdc-snackbar-container-color: mat-color($warn, 'A700');
+        --mat-mdc-snack-bar-button-color: white;
+        --mdc-snackbar-supporting-text-color: white;
+        --mdc-snackbar-supporting-text-size: large;
+        --mdc-snackbar-supporting-text-weight: 500;
+    }
+}
+
+.mdc-form-field {
+    font-size: large;
 }
 
 /* -- Material component overrides */
 
-html, body { 
-    height: 100%; 
+html,
+body {
+    height: 100%;
 }
 
-body { 
-    margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif;
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
 .app-root {
     display: block;
     height: 100%;
-  }
+}
 
 @media only screen and (max-width: 450px) {
-    .mat-mdc-simple-snack-bar {
-        font-size: medium;
+    .mat-mdc-snack-bar-container {
+        &.error-snackbar {
+            --mdc-snackbar-supporting-text-size: medium;
+        }
     }
 
     .mat-mdc-paginator-range-label {
         width: 100px;
+    }
+
+    .mdc-form-field {
+        font-size: medium;
     }
 }

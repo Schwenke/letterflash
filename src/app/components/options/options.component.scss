@@ -1,3 +1,6 @@
+@use '@angular/material' as mat;
+@import "../../../themeVariables";
+
 .options-container {
     display: flex;
     flex-direction: column;
@@ -13,11 +16,6 @@
     height: 50px;
 }
 
-.close-button {
-    min-width: 30px;
-    transform: scale(.9);
-}
-
 .options-row {
     display: flex;
     flex-direction: row;
@@ -29,33 +27,24 @@
 }
 
 .section-header {
-    font-size: x-large;
+    font-size: large;
     font-weight: 500;
     margin-bottom: 0;
 }
 
-.options-check {
-    font-size: x-large;
-    margin-left: .5rem;
-    color: #00C853;
+.button-toggle-group {
+    margin-top: 0.25em;
 }
 
-.field-set {
-    width: 150px;
-}
-
-.radio-group {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  
-.radio-button {
-    margin: 5px;
-}
-
-.toggle {
+.button-toggle {
+    padding-left: 8px;
+    padding-right: 8px;
     font-size: large;
+}
+
+.mat-button-toggle-checked {
+    background-color: mat-color($accent);
+    color: mat-color($accent, default-contrast);
 }
 
 .options-button {
@@ -64,19 +53,20 @@
     margin-top: .5em;
 }
 
+.options-view-button {
+    @extend .options-button;
+    justify-content: initial;
+}
+
 .button-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.icon {
-    transform: scale(.9);
-}
-
 @media only screen and (max-width: 450px) {
     .options-row {
-        padding: .5em 0 .25em .5em;
+        padding: .5em 0 .5em .5em;
     }
 
     .options-button {
@@ -85,17 +75,5 @@
 
     .section-header {
         font-size: medium;
-    }
-
-    .options-check {
-        font-size: medium;
-    }
-
-    .toggle {
-        font-size: small;
-    }
-
-    .field-set {
-        width: 100px;
     }
 }
