@@ -32,6 +32,10 @@
     background-color: rgba(0, 0, 0, 0.6);
 }
 
+.darkMode .mat-mdc-dialog-container {
+    --mdc-dialog-container-color: white;
+}
+
 /* Material component overrides -- */
 
 .mat-mdc-paginator-container {

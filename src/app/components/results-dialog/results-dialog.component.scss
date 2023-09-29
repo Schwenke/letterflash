@@ -5,8 +5,8 @@
 }
 
 .content {
-    width: 200px;
-    height: 250px;
+    width: 225px;
+    height: 275px;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -15,6 +15,8 @@
 .close-button {
     align-self: flex-end;
     min-width: 30px;
+    margin-top: 5px;
+    margin-right: 5px;
     transform: scale(.9);
 }
 
@@ -25,10 +27,12 @@
 
 .message-tries {
     font-size: large;
-    text-align: center;  
+    text-align: center;
 }
 
 .dialog-button {
     font-size: medium;
     height: 50px;
+    margin-left: 10px;
+    margin-right: 10px;
 }
